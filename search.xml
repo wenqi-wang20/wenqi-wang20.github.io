@@ -1,26 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/11/14/hello-world/</url>
-    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
-<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Machine Learning</title>
     <url>/2021/11/16/Machine-Learning/</url>
     <content><![CDATA[<h3 id="初识深度学习"><a href="#初识深度学习" class="headerlink" title="初识深度学习"></a>初识深度学习</h3>]]></content>
@@ -29,67 +9,6 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MIPS汇编语言（一）</title>
-    <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<h3 id="MIPS汇编语言入门"><a href="#MIPS汇编语言入门" class="headerlink" title="MIPS汇编语言入门"></a>MIPS汇编语言入门</h3><p>MIPS(Millions of Instructions Per Second)</p>
-<p><strong>Classic flow</strong>:</p>
-<ul>
-<li>Fetch instruction</li>
-<li>Read registers</li>
-<li>Arithmetic operation</li>
-<li>Memory access</li>
-<li>Write back</li>
-</ul>
-<p>Five steps and four cycles(Read and write registers cost only half a cycle).</p>
-<p>Delay slot:</p>
-<p>After the jump and branch condition, there is a delay slot to fill a non-related operation(usually a n operation before the branch).</p>
-<h3 id="How-a-program-excutes"><a href="#How-a-program-excutes" class="headerlink" title="How a program excutes"></a>How a program excutes</h3><ul>
-<li><p>genera 3-operand format</p>
-<pre><code class="assembly">op    dest, src1, src2
-</code></pre>
-</li>
-</ul>
-<h3 id="MIPS-instructions-amp-memory-organization"><a href="#MIPS-instructions-amp-memory-organization" class="headerlink" title="MIPS instructions &amp; memory organization"></a>MIPS instructions &amp; memory organization</h3><ul>
-<li><p>type of instructions</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png" alt="image-20211117001847724"></p>
-<ul>
-<li>Data operations<ul>
-<li>Arithmetic(add, substrct……)</li>
-<li>Logical(and, or, not, xor……)</li>
-</ul>
-</li>
-<li>Data transfer<ul>
-<li>Load(Memory -&gt; Register)</li>
-<li>Store(Register -&gt; Memory)</li>
-</ul>
-</li>
-<li>Sequencing<ul>
-<li>Branch(conditional, &gt;, &lt;, ==……)</li>
-<li>Jump(unconditional, goto……)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Registers</p>
-<ul>
-<li>32 General Purpose Registers</li>
-<li>**Very important!! **<ul>
-<li><strong>ALL the values for instructions must come from registers!</strong></li>
-<li><strong>R0 is always zero!!</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Data-operations-amp-transfers"><a href="#Data-operations-amp-transfers" class="headerlink" title="Data operations &amp; transfers"></a>Data operations &amp; transfers</h3><h3 id="Sequencing"><a href="#Sequencing" class="headerlink" title="Sequencing"></a>Sequencing</h3>]]></content>
-      <categories>
-        <category>Assembly Language</category>
-      </categories>
-      <tags>
-        <tag>MIPS</tag>
       </tags>
   </entry>
   <entry>
@@ -225,6 +144,87 @@ to this setting;
       </categories>
       <tags>
         <tag>Federated Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/11/14/hello-world/</url>
+    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
+<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>MIPS汇编语言（一）</title>
+    <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h3 id="MIPS汇编语言入门"><a href="#MIPS汇编语言入门" class="headerlink" title="MIPS汇编语言入门"></a>MIPS汇编语言入门</h3><p>MIPS(Millions of Instructions Per Second)</p>
+<p><strong>Classic flow</strong>:</p>
+<ul>
+<li>Fetch instruction</li>
+<li>Read registers</li>
+<li>Arithmetic operation</li>
+<li>Memory access</li>
+<li>Write back</li>
+</ul>
+<p>Five steps and four cycles(Read and write registers cost only half a cycle).</p>
+<p>Delay slot:</p>
+<p>After the jump and branch condition, there is a delay slot to fill a non-related operation(usually a n operation before the branch).</p>
+<h3 id="How-a-program-excutes"><a href="#How-a-program-excutes" class="headerlink" title="How a program excutes"></a>How a program excutes</h3><ul>
+<li><p>genera 3-operand format</p>
+<pre><code class="assembly">op    dest, src1, src2
+</code></pre>
+</li>
+</ul>
+<h3 id="MIPS-instructions-amp-memory-organization"><a href="#MIPS-instructions-amp-memory-organization" class="headerlink" title="MIPS instructions &amp; memory organization"></a>MIPS instructions &amp; memory organization</h3><ul>
+<li><p>type of instructions</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png" alt="image-20211117001847724"></p>
+<ul>
+<li>Data operations<ul>
+<li>Arithmetic(add, substrct……)</li>
+<li>Logical(and, or, not, xor……)</li>
+</ul>
+</li>
+<li>Data transfer<ul>
+<li>Load(Memory -&gt; Register)</li>
+<li>Store(Register -&gt; Memory)</li>
+</ul>
+</li>
+<li>Sequencing<ul>
+<li>Branch(conditional, &gt;, &lt;, ==……)</li>
+<li>Jump(unconditional, goto……)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Registers</p>
+<ul>
+<li>32 General Purpose Registers</li>
+<li>**Very important!! **<ul>
+<li><strong>ALL the values for instructions must come from registers!</strong></li>
+<li><strong>R0 is always zero!!</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Data-operations-amp-transfers"><a href="#Data-operations-amp-transfers" class="headerlink" title="Data operations &amp; transfers"></a>Data operations &amp; transfers</h3><h3 id="Sequencing"><a href="#Sequencing" class="headerlink" title="Sequencing"></a>Sequencing</h3>]]></content>
+      <categories>
+        <category>Assembly Language</category>
+      </categories>
+      <tags>
+        <tag>MIPS</tag>
       </tags>
   </entry>
 </search>
