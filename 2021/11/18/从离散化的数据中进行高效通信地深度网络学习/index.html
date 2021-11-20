@@ -115,8 +115,8 @@
 <p>上面是针对模型非独立同分布作出的假设。下面作者考虑如何对联邦学习的通信进行优化。显然的是，在计算中心，用有足够的带宽和稳定的通信，那么针对计算量的优化是很有必要的；但是联邦学习的环境下，用户节点的带宽甚至无法超过1MB/s，而且像手机等移动设备，通常用户只会在充电、使用未计量的WIFI时才会主动参与计算，这限制了通信；另一方面，考虑到现代设备比如手机都有着相对较快的处理器以及GPU，每台设备上自己的数据集也是非常小的尺度，在多数模型下，计算所带来的消耗和通信相比，几乎可以忽略不计。**所以，作者给出的优化方法就是，在客户端本地使用额外的计算，来减少需要通信的轮数，具体来说是以下两个方面：</p>
 <blockquote>
 <ul>
-<li> <em><strong>increased parallelism</strong></em>, where we use more clients working independently between each communication round.</li>
-<li><em><strong>increased computation on each client</strong></em>, where rather than performing a simple computation like a gradient calculation, each client performs a more complex calculation between each communication round.</li>
+<li> <em>increased parallelism</em>, where we use more clients working independently between each communication round.</li>
+<li><em>increased computation on each client</em>, where rather than performing a simple computation like a gradient calculation, each client performs a more complex calculation between each communication round.</li>
 </ul>
 </blockquote>
 <p>相较于增加数据的并发性，作者在实验中的方法是增加在每台客户端上的计算量，不仅仅再是简单的梯度计算。</p>
