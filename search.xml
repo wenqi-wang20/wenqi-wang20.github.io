@@ -95,8 +95,19 @@
   <entry>
     <title>联邦学习（一）</title>
     <url>/2021/11/18/%E4%BB%8E%E7%A6%BB%E6%95%A3%E5%8C%96%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%AD%E8%BF%9B%E8%A1%8C%E9%AB%98%E6%95%88%E9%80%9A%E4%BF%A1%E5%9C%B0%E6%B7%B1%E5%BA%A6%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p>今天我们来看一下联邦学习的开山论文<code>Communication-Efficient Learning</code></p>
-]]></content>
+    <content><![CDATA[<p>今天我们来看一下联邦学习的开山论文<code>Communication-Efficient Learning of Deep Networks from Decentralized Data</code>，简单介绍一下这个东西出现的背景。起因是谷歌的输入法想要做一个训练模型，基于谷歌超大体量的全球用户，他们的工程师提出了以下的解决问题的流程：</p>
+<ul>
+<li>Problems: Google wants to train a model using users’ data</li>
+<li>Solutions:<ul>
+<li> Centralized learning</li>
+<li> Collect users’ data</li>
+<li> Train a model on the cluster</li>
+</ul>
+</li>
+<li><strong>challenge</strong>: Users may refuse to upload their data, especially sensitive data to Google’s Server</li>
+</ul>
+<p><strong>问题显而易见，那么大量的隐私数据，用户是不可能允许你全部上传到服务器端进行训练的，</strong>即使你谷歌无心，也难以保证其他的恶意用户不会窃取你的隐私。所以我们才会发现问题，也就有了这篇论文的诞生，下面我们开始详细地跟着论文过一遍，这也是我第一次看这种学术论文。</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3>]]></content>
       <categories>
         <category>联邦学习</category>
       </categories>
