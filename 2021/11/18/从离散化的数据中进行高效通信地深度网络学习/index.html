@@ -124,7 +124,7 @@
 <p>同时作者也提到了诸如$Neverova$和$Shori \ and \ Shmatikov$等研究团队都在考虑用户数据的隐私敏感问题，也采取了一定的措施来防止，但是依然没有考虑到上述的两点问题。等等多种算法都不能完美地解决联邦学习中存在的问题。</p>
 <p>作者考虑的（参数化）算法是简单的做一次平均，也就是说每一个客户端利用本地的数据训练一个最小化$Loss$函数的模型，然后这些模型将被平均成为全局模型。作者也指出，在$IID$情况下，这种方法训练出的本地模型甚至比全局模型更优，当然，是在某些特殊的状况。</p>
 <h2 id="The-FederatedAveraging-Algorithm"><a href="#The-FederatedAveraging-Algorithm" class="headerlink" title="The FederatedAveraging Algorithm"></a>The FederatedAveraging Algorithm</h2><p>在这一部分作者开始介绍著名的<code>FedAvg</code>算法。首先，作者指出最近的深度学习的研究几乎都是依赖于随机梯度下降的方法$(SGD)$；而事实上很多的研究进展也都是可以理解为在调整模型的结构（或者是损失函数）来使得模型可以实现通过简单的基于梯度的优化。</p>
-<p>根据已有的前人的实验结果可以发现，SGD是可以应用在联邦优化上的。只不过之前的在数据中心做的实验，为了提高效率，都是采取小的batch，多的rounds。但是考虑到在联邦学习中，参与计算的客户端可以很多，而且不必考虑<code>wall-clock time</code>的损失问题。</p>
+<p>根据已有的前人的实验结果可以发现，$SGD$是可以应用在联邦优化上的。只不过之前的在数据中心做的实验，为了提高效率，都是采取小的batch，多的rounds。但是考虑到在联邦学习中，参与计算的客户端可以很多，而且不必考虑<code>wall-clock time</code>的损失问题，所以作者的实验都是基于较大的批尺寸的同步随机梯度下降法。每次从所有客户端中随机选择一部分，大小为C，</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
