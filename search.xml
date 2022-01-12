@@ -381,61 +381,44 @@ parent: ~
       </tags>
   </entry>
   <entry>
-    <title>有聊</title>
-    <url>/2021/11/21/%E6%97%A0%E8%81%8A/</url>
-    <content><![CDATA[<p>我到要看看 到底有没有成功的放上来！</p>
-<p>今天是智能体部会</p>
-<p>用wwq的电脑</p>
-<p>发现</p>
-<p>键盘</p>
-<p>非常的不习惯</p>
-<p>为什么会打出飞铲</p>
-<p>这是个啥玩意</p>
-<p>哈哈哈哈哈</p>
-<p>好有趣啊</p>
-<p>这是一个下棋的神奇的问题</p>
-<p>我们怎么判断该下哪一步呢</p>
-<p>1）用概率</p>
-<p>==&gt;但是总不能一直搜下去吧  蒙特卡洛树 往下随机搜索几层</p>
-<p>但是目前假设每一种走子概率都是相等的</p>
-<p>这键盘好奇怪啊啊啊啊啊</p>
-<p>超级无敌不顺手</p>
-<p>这显然不合理</p>
-<p>==&gt; 设计走子方案更符合该游戏设计</p>
-<p>哈哈哈哈wwq是个笨蛋</p>
-<ol start="2">
-<li><p>踩点</p>
-<p>踩点越多，当然越准</p>
-</li>
-</ol>
-<p>==&gt;提高算力</p>
-<p>wwq大居居</p>
-<p>说好请我喝奶茶的</p>
-<p>说话不算话</p>
-<p>生气！</p>
-<p>居然没事又贴了键盘膜！！</p>
-<p>按不动啊真的</p>
-<p>我买了一个粉粉嫩嫩的 超级好看的键盘膜</p>
-<p>可就是按不动</p>
-<p>就拆掉了</p>
-<p>你这个</p>
-<p>又不好看</p>
-<p>没事干嘛要加！！</p>
-<p>wwq是大猪猪</p>
-<p>我悄悄跟你说</p>
-<p>：</p>
-<p>刘天骐是世界上最最机智的女人！</p>
-<p>？？？？？？？？？？</p>
-<p>这键盘</p>
-<p>居然</p>
-<p>打不出我</p>
-<p>神圣的名字！！</p>
-<p>！！！！！！</p>
-<p>友谊的小船</p>
-<p>说翻就翻</p>
-]]></content>
+    <title>颜色基础、图像模型、Phong光照模型</title>
+    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
+<h2 id="颜色模型"><a href="#颜色模型" class="headerlink" title="颜色模型"></a>颜色模型</h2><p>RGB模型</p>
+<p>CMY模型（是RGB的补色，或者说减色模型）</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
+<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
+<h2 id="像素"><a href="#像素" class="headerlink" title="像素"></a>像素</h2><h2 id="三角网格模型"><a href="#三角网格模型" class="headerlink" title="三角网格模型"></a>三角网格模型</h2><p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型"><a href="#光照模型" class="headerlink" title="光照模型"></a>光照模型</h2><ul>
+<li>局部光照明</li>
+<li>全局光照明</li>
+</ul>
+<h2 id="Phong模型"><a href="#Phong模型" class="headerlink" title="Phong模型"></a>Phong模型</h2><p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
+<ul>
+<li>漫反射效果</li>
+<li>镜面反射效果</li>
+<li>环境光效果</li>
+</ul>
+<h2 id="光栅图形学"><a href="#光栅图形学" class="headerlink" title="光栅图形学"></a>光栅图形学</h2>]]></content>
+      <categories>
+        <category>Computer-Graphics</category>
+      </categories>
       <tags>
-        <tag>好好玩啊</tag>
+        <tag>Phong模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cocos Creator使用心得（一）</title>
+    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
+]]></content>
+      <categories>
+        <category>游戏引擎</category>
+      </categories>
+      <tags>
+        <tag>Cocos</tag>
       </tags>
   </entry>
 </search>
