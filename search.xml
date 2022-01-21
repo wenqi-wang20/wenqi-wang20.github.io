@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Machine Learning</title>
+    <url>/2021/11/16/Machine-Learning/</url>
+    <content><![CDATA[<h3 id="初识深度学习"><a href="#初识深度学习" class="headerlink" title="初识深度学习"></a>初识深度学习</h3>]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cocos Creator使用心得（一）</title>
+    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
+]]></content>
+      <categories>
+        <category>游戏引擎</category>
+      </categories>
+      <tags>
+        <tag>Cocos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/11/25/Delphi/</url>
+    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。<br>提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。<br><img src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+</ul>
+<h2 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h2><p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。<br>本篇论文的优化：<br>线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。<br>非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。<br>然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。<br>把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。<br><img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>MIPS汇编语言（一）</title>
     <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h3 id="MIPS汇编语言入门"><a href="#MIPS汇编语言入门" class="headerlink" title="MIPS汇编语言入门"></a>MIPS汇编语言入门</h3><p>MIPS(Millions of Instructions Per Second)</p>
@@ -59,55 +91,6 @@
       </categories>
       <tags>
         <tag>MIPS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>YML配置文件使用小结（二）</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2 id="步骤一：使用python脚本爬取网络图片并且进行压缩"><a href="#步骤一：使用python脚本爬取网络图片并且进行压缩" class="headerlink" title="步骤一：使用python脚本爬取网络图片并且进行压缩"></a>步骤一：使用python脚本爬取网络图片并且进行压缩</h2><p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png"></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png"></p>
-<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
-<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png"></p>
-<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二：-读入YAML文件并且对其进行修改"><a href="#步骤二：-读入YAML文件并且对其进行修改" class="headerlink" title="步骤二： 读入YAML文件并且对其进行修改"></a>步骤二： 读入YAML文件并且对其进行修改</h2><p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
-<ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p>
-</li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p>
-</li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p>
-</li>
-</ul>
-<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png"></p>
-]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
-      <tags>
-        <tag>YML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/11/25/Delphi/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
-<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。<br>提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。<br><img src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
-</ul>
-<h2 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h2><p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。<br>本篇论文的优化：<br>线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。<br>非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。<br>然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。<br>把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。<br><img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Machine Learning</title>
-    <url>/2021/11/16/Machine-Learning/</url>
-    <content><![CDATA[<h3 id="初识深度学习"><a href="#初识深度学习" class="headerlink" title="初识深度学习"></a>初识深度学习</h3>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -171,122 +154,32 @@ parent: ~
       </tags>
   </entry>
   <entry>
-    <title>联邦学习论文汇总</title>
-    <url>/2021/11/18/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<h4 id="总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐"><a href="#总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐" class="headerlink" title="总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐"></a>总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐</h4><ul>
-<li><p>Google的第一篇论文：</p>
-<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v54/mcmahan17a.html">Communication-Efficient Learning of Deep Networks from Decentralized Data</a></p>
+    <title>YML配置文件使用小结（二）</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
+<h2 id="步骤一：使用python脚本爬取网络图片并且进行压缩"><a href="#步骤一：使用python脚本爬取网络图片并且进行压缩" class="headerlink" title="步骤一：使用python脚本爬取网络图片并且进行压缩"></a>步骤一：使用python脚本爬取网络图片并且进行压缩</h2><p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png"></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png"></p>
+<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
+<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png"></p>
+<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
+<h2 id="步骤二：-读入YAML文件并且对其进行修改"><a href="#步骤二：-读入YAML文件并且对其进行修改" class="headerlink" title="步骤二： 读入YAML文件并且对其进行修改"></a>步骤二： 读入YAML文件并且对其进行修改</h2><p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<ul>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p>
 </li>
-<li><p>综述类型：</p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.04977">Advances and Open Problems in Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3298981">Federated machine learning: Concept and applications</a></p>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p>
 </li>
-<li><p>联邦学习算法与通信优化：</p>
-<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/2810103.2813687">Privacy-Preserving Deep Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1902.00146">Agnostic Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.12022">Bayesian Nonparametric Federated Learning of Neural Networks</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2002.06440">Federated learning with matched averaging</a> (该文内容基于上面一篇文章的工作)</p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1610.05492">Federated learning: Strategies for improving communication efficiency</a></p>
-<p><a href="https://link.zhihu.com/?target=http://papers.nips.cc/paper/7029-federated-multi-task-learning">Federated multi-task learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1812.06127">Federated optimization in heterogeneous networks</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.10497">Fair resource allocation in federated learning</a> （与上面一篇同作者）</p>
-<p><a href="https://link.zhihu.com/?target=https://www2.eecs.berkeley.edu/Pubs/TechRpts/2020/EECS-2020-57.pdf">Communication-Efficient Federated Learning with Sketching</a></p>
-<p><a href="https://link.zhihu.com/?target=https://proceedings.icml.cc/paper/2020/file/8682cc30db9c025ecd3fee433f8ab54c-Paper.pdf">FedBoost: Communication-Efficient Algorithms for Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2004.10342">Federated Learning with Only Positive Labels</a></p>
-<p><a href="https://link.zhihu.com/?target=https://proceedings.icml.cc/paper/2020/file/c15da1f2b5e5ed6e6837a3802f0d1593-Supplemental.pdf">Scaffold: Stochastic controlled averaging for federated learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://www.ijcai.org/Proceedings/2020/0642.pdf">Federated Meta-Learning for Fraudulent Credit Card Detection</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.09323">Federated Learning with Communication Delay in Edge Networks</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2009.02557">FLFE: A Communication-Efficient and Privacy-Preserving Federated Feature Engineering Framework</a></p>
-</li>
-<li><p>联邦元学习：</p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.00818">Federated learning with personalization layers</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1909.12488">Improving federated learning personalization via model agnostic meta learning</a></p>
-</li>
-<li><p>联邦学习安全问题：</p>
-<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3133956.3134012">Deep models under the GAN: information leakage from collaborative deep learning</a></p>
-<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v108/bagdasaryan20a.html">How to backdoor federated learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1910.05467">Quantification of the Leakage in Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v97/bhagoji19a.html">Analyzing federated learning through an adversarial lens</a></p>
-<p><a href="https://link.zhihu.com/?target=http://papers.nips.cc/paper/9617-deep-leakage-from-gradients">Deep leakage from gradients</a></p>
-</li>
-<li><p>联邦学习公平与贡献评估</p>
-<p><a href="https://link.zhihu.com/?target=https://www.researchgate.net/profile/Zichen_Chen8/publication/342804903_A_Multi-player_Game_for_Studying_Federated_Learning_Incentive_Schemes/links/5f3b756d458515b7292a535f/A-Multi-player-Game-for-Studying-Federated-Learning-Incentive-Schemes.pdf">A Multi-player Game for Studying Federated Learning Incentive Schemes</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2009.03510">A Real-time Contribution Measurement Method for Participants in Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.12161">Collaborative Fairness in Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2004.10386">Hierarchically Fair Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/8851649/">Incentive design for efficient federated learning in mobile networks: A contract theory approach</a></p>
-<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/9006179/">Measure contribution of participants in federated learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/9006327/">Profit Allocation for Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.04519">Interpret federated learning with shapley values</a></p>
-</li>
-<li><p>联邦学习与计算机视觉</p>
-<p><a href="https://link.zhihu.com/?target=http://web.pkusz.edu.cn/adsp/files/2019/11/AAAI-FenglinL.1027.pdf">Federated Learning for Vision-and-Language Grounding Problems.</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.11560">Performance Optimization for Federated Person Re-identification via Benchmark Analysis</a></p>
-</li>
-<li><p>联邦学习与推荐系统</p>
-<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3394486.3403176">FedFast: Going Beyond Average for Faster Training of Federated Recommender Systems</a></p>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p>
 </li>
 </ul>
-<p>整体来说，开山之作<a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v54/mcmahan17a.html">Communication-Efficient Learning of Deep Networks from Decentralized Data</a>和综合概述<a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.04977">Advances and Open Problems in Federated Learning</a>是需要优先阅读的。进度先记录到这里。</p>
+<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png"></p>
 ]]></content>
       <categories>
-        <category>联邦学习</category>
+        <category>配置文件语言</category>
       </categories>
       <tags>
-        <tag>Federated Learning</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/11/14/hello-world/</url>
-    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
-<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>基于高效同态加密的Cross-silo联邦学习</title>
-    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><blockquote>
-<p>回顾<a href="https://www.zhihu.com/search?q=%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=%E5%AE%89%E5%85%A8%E8%81%9A%E5%90%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">安全聚合</a>（e.g., 求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。<br>本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。<br><em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
-</blockquote>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193"></p>
-<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>前人的量化方案：将一个 $y \in \left [ -1, 1 \right]$的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
-<p><img src="https://www.zhihu.com/equation?tex=Q(g)=%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]"> 是就近<a href="https://www.zhihu.com/search?q=%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">取整函数</a>（rounding function）;<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D+n%5Ccdot+min" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]"> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个量化梯度之和。</p>
-<p>但是上述量化方法存在一定的问题：</p>
-<blockquote>
-<ol>
-<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(%5Ccdot)" alt="[公式]"> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 的取值；</li>
-<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=%E6%AD%A3%E8%B4%9F%E6%A2%AF%E5%BA%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=%E7%B4%AF%E5%8A%A0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">累加值</a>容易导致溢出；</li>
-<li>不能区分正溢出和负溢出。</li>
-</ol>
-</blockquote>
-<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
-<blockquote>
-<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；<br>\2. 关于<a href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%82%B9%E5%AF%B9%E7%A7%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1,1%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128,127%5D" alt="[公式]"> ，那么 <img src="https://www.zhihu.com/equation?tex=(-1+1)%5CRightarrow(-128+127)=-1" alt="[公式]"> ，结果错误；<br>\3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=%E9%87%8F%E5%8C%96%E6%95%B0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
-</blockquote>
-<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha,0%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-(2%5Er-1),0%5D" alt="[公式]"> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0,%5Calpha%5D" alt="[公式]">量化到 <img src="https://www.zhihu.com/equation?tex=%5B0,(2%5Er-1)%5D" alt="[公式]"> 。；公式化表示如下：<br><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q(g)=+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil,+g%5Cin+%5B-%5Calpha,0%5D;%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor,+g+%5Cin+%5B0,%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]"> 分别是向上取整和向下取整函数；<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n/2%5Er" alt="[公式]"> ；<br>进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]"> 便有了两种编码方式。</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261"></p>
-<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>实验的最终表现也是体现出$BatchCrypt$和$stock$相比在通信和计算上都有着很大的提升，但是和$Plaintext Learning$相比还是有很大的进步空间。</p>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" />
-
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" />
-
-]]></content>
-      <tags>
-        <tag>联邦学习</tag>
+        <tag>YML</tag>
       </tags>
   </entry>
   <entry>
@@ -381,6 +274,214 @@ parent: ~
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/11/14/hello-world/</url>
+    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
+<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>基于高效同态加密的Cross-silo联邦学习</title>
+    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><blockquote>
+<p>回顾<a href="https://www.zhihu.com/search?q=%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=%E5%AE%89%E5%85%A8%E8%81%9A%E5%90%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">安全聚合</a>（e.g., 求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。<br>本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。<br><em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
+</blockquote>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193"></p>
+<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>前人的量化方案：将一个 $y \in \left [ -1, 1 \right]$的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
+<p><img src="https://www.zhihu.com/equation?tex=Q(g)=%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]"> 是就近<a href="https://www.zhihu.com/search?q=%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">取整函数</a>（rounding function）;<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D+n%5Ccdot+min" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]"> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个量化梯度之和。</p>
+<p>但是上述量化方法存在一定的问题：</p>
+<blockquote>
+<ol>
+<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(%5Ccdot)" alt="[公式]"> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 的取值；</li>
+<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=%E6%AD%A3%E8%B4%9F%E6%A2%AF%E5%BA%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=%E7%B4%AF%E5%8A%A0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">累加值</a>容易导致溢出；</li>
+<li>不能区分正溢出和负溢出。</li>
+</ol>
+</blockquote>
+<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
+<blockquote>
+<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；<br>\2. 关于<a href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%82%B9%E5%AF%B9%E7%A7%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1,1%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128,127%5D" alt="[公式]"> ，那么 <img src="https://www.zhihu.com/equation?tex=(-1+1)%5CRightarrow(-128+127)=-1" alt="[公式]"> ，结果错误；<br>\3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=%E9%87%8F%E5%8C%96%E6%95%B0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
+</blockquote>
+<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha,0%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-(2%5Er-1),0%5D" alt="[公式]"> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0,%5Calpha%5D" alt="[公式]">量化到 <img src="https://www.zhihu.com/equation?tex=%5B0,(2%5Er-1)%5D" alt="[公式]"> 。；公式化表示如下：<br><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q(g)=+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil,+g%5Cin+%5B-%5Calpha,0%5D;%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor,+g+%5Cin+%5B0,%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]"> 分别是向上取整和向下取整函数；<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n/2%5Er" alt="[公式]"> ；<br>进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]"> 便有了两种编码方式。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261"></p>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>实验的最终表现也是体现出$BatchCrypt$和$stock$相比在通信和计算上都有着很大的提升，但是和$Plaintext Learning$相比还是有很大的进步空间。</p>
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" />
+
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" />
+
+]]></content>
+      <tags>
+        <tag>联邦学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>有聊</title>
+    <url>/2021/11/21/%E6%97%A0%E8%81%8A/</url>
+    <content><![CDATA[<p>我到要看看 到底有没有成功的放上来！</p>
+<p>今天是智能体部会</p>
+<p>用wwq的电脑</p>
+<p>发现</p>
+<p>键盘</p>
+<p>非常的不习惯</p>
+<p>为什么会打出飞铲</p>
+<p>这是个啥玩意</p>
+<p>哈哈哈哈哈</p>
+<p>好有趣啊</p>
+<p>这是一个下棋的神奇的问题</p>
+<p>我们怎么判断该下哪一步呢</p>
+<p>1）用概率</p>
+<p>==&gt;但是总不能一直搜下去吧  蒙特卡洛树 往下随机搜索几层</p>
+<p>但是目前假设每一种走子概率都是相等的</p>
+<p>这键盘好奇怪啊啊啊啊啊</p>
+<p>超级无敌不顺手</p>
+<p>这显然不合理</p>
+<p>==&gt; 设计走子方案更符合该游戏设计</p>
+<p>哈哈哈哈wwq是个笨蛋</p>
+<ol start="2">
+<li><p>踩点</p>
+<p>踩点越多，当然越准</p>
+</li>
+</ol>
+<p>==&gt;提高算力</p>
+<p>wwq大居居</p>
+<p>说好请我喝奶茶的</p>
+<p>说话不算话</p>
+<p>生气！</p>
+<p>居然没事又贴了键盘膜！！</p>
+<p>按不动啊真的</p>
+<p>我买了一个粉粉嫩嫩的 超级好看的键盘膜</p>
+<p>可就是按不动</p>
+<p>就拆掉了</p>
+<p>你这个</p>
+<p>又不好看</p>
+<p>没事干嘛要加！！</p>
+<p>wwq是大猪猪</p>
+<p>我悄悄跟你说</p>
+<p>：</p>
+<p>刘天骐是世界上最最机智的女人！</p>
+<p>？？？？？？？？？？</p>
+<p>这键盘</p>
+<p>居然</p>
+<p>打不出我</p>
+<p>神圣的名字！！</p>
+<p>！！！！！！</p>
+<p>友谊的小船</p>
+<p>说翻就翻</p>
+]]></content>
+      <tags>
+        <tag>好好玩啊</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度学习中的对抗性攻击与防御</title>
+    <url>/2022/01/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%AF%B9%E6%8A%97%E6%80%A7%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/</url>
+    <content><![CDATA[<p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial Intelligence—Feature Article. Adversarial Attacks and Defenses in Deep Learning, Kui Ren , Tianhang Zheng  , Zhan Qin ,Xue Liu。这篇文章首先介绍深度学习的算法基础，然后指出了某些防御技术的能力，看起来更像是一篇综述性文章。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h4 id="对抗性样本"><a href="#对抗性样本" class="headerlink" title="对抗性样本"></a>对抗性样本</h4><p>首先我们先了解一下对抗性样本是什么，在大规模部署DL模型的时候，会有一些加入干扰的样本，这些样本会使得人类无法察觉，但是模型会在不知不觉中做出错误的预测，从而使得训练的成果产生一些严重的偏差和影响。</p>
+<p>通过威胁模型，可以将对抗性攻击分为白盒攻击$white-box$，灰盒攻击$grey-box$和黑盒攻击。顾名思义，白盒就是指对于对方的模型有了充分充足的了解，包括体系结构参数等等。在灰盒模型中，仅限于了解模型的结构；在黑盒模型中，则仅能通过调用查询来生成对抗性样本。</p>
+<h4 id="攻击方法"><a href="#攻击方法" class="headerlink" title="攻击方法"></a>攻击方法</h4><p>在这些威胁模型的框架之内，有很多对抗性样本攻击算法提出，比如以下的几种：</p>
+<ul>
+<li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS) algorithm</li>
+<li>快速梯度符号法the fast gradient sign method (FGSM)</li>
+<li>基本迭代法/投影梯度下降the basic iterative method (BIM)/projected gradient descent (PGD)</li>
+<li>分布式对抗性攻击distributionally adversarial attack</li>
+<li>Carlini and Wagner (C&amp;W) attacks</li>
+<li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack (JSMA)</li>
+<li>（我也不知道是什么） DeepFool</li>
+</ul>
+<h4 id="防御方法"><a href="#防御方法" class="headerlink" title="防御方法"></a>防御方法</h4><p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
+<h2 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h2><p>首先我们来进行一些准备性质的工作。<br>$$<br>D(x,x’)&lt;\eta,f(x’)\ne f(x)=y \<br>这时，我们称\eta为一个小的扰动(perturbation)，x’为一个对抗性样本。<br>$$<br>相对应的优化损失我们都采取交叉熵的方式来定义<br>$$<br>J(\theta,x,y)表示在权重\theta下的优化损失。 \<br>特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)<br>$$<br>关于<a href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
+<p>同时还进行了$L_p \ distance \ metric$的定义：<br>$$<br>\left | \mathbf{v} \right |_p = (\sum\left | \mathbf{v_i}\right |^p)^{1/p}<br>$$</p>
+<h2 id="Adversarial-Attacks"><a href="#Adversarial-Attacks" class="headerlink" title="Adversarial Attacks"></a>Adversarial Attacks</h2><h4 id="L-BFGS-Algorithm"><a href="#L-BFGS-Algorithm" class="headerlink" title="L-BFGS Algorithm"></a>L-BFGS Algorithm</h4><p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰$L_p$范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong><br>$$<br>min \left | \mathbf{x-x’} \right |_p \ subjects \ to \ f(x’) \ne y’<br>$$</p>
+<h4 id="Fast-gradient-sign-method"><a href="#Fast-gradient-sign-method" class="headerlink" title="Fast gradient sign method"></a>Fast gradient sign method</h4><p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。<br>$$<br>x’=x+\epsilon·sign[\nabla_xJ(\theta,x,y’)]<br>$$</p>
+<h4 id="BIM-amp-PGD"><a href="#BIM-amp-PGD" class="headerlink" title="BIM &amp; PGD"></a>BIM &amp; PGD</h4><p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
+<h4 id="Momentum-iterative-attack"><a href="#Momentum-iterative-attack" class="headerlink" title="Momentum iterative attack"></a>Momentum iterative attack</h4><p>基于动量优化器灵感的设计。待了解。</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>Adversarial_Attacks</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>联邦学习论文汇总</title>
+    <url>/2021/11/18/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<h4 id="总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐"><a href="#总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐" class="headerlink" title="总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐"></a>总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐</h4><ul>
+<li><p>Google的第一篇论文：</p>
+<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v54/mcmahan17a.html">Communication-Efficient Learning of Deep Networks from Decentralized Data</a></p>
+</li>
+<li><p>综述类型：</p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.04977">Advances and Open Problems in Federated Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3298981">Federated machine learning: Concept and applications</a></p>
+</li>
+<li><p>联邦学习算法与通信优化：</p>
+<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/2810103.2813687">Privacy-Preserving Deep Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1902.00146">Agnostic Federated Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.12022">Bayesian Nonparametric Federated Learning of Neural Networks</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2002.06440">Federated learning with matched averaging</a> (该文内容基于上面一篇文章的工作)</p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1610.05492">Federated learning: Strategies for improving communication efficiency</a></p>
+<p><a href="https://link.zhihu.com/?target=http://papers.nips.cc/paper/7029-federated-multi-task-learning">Federated multi-task learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1812.06127">Federated optimization in heterogeneous networks</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.10497">Fair resource allocation in federated learning</a> （与上面一篇同作者）</p>
+<p><a href="https://link.zhihu.com/?target=https://www2.eecs.berkeley.edu/Pubs/TechRpts/2020/EECS-2020-57.pdf">Communication-Efficient Federated Learning with Sketching</a></p>
+<p><a href="https://link.zhihu.com/?target=https://proceedings.icml.cc/paper/2020/file/8682cc30db9c025ecd3fee433f8ab54c-Paper.pdf">FedBoost: Communication-Efficient Algorithms for Federated Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2004.10342">Federated Learning with Only Positive Labels</a></p>
+<p><a href="https://link.zhihu.com/?target=https://proceedings.icml.cc/paper/2020/file/c15da1f2b5e5ed6e6837a3802f0d1593-Supplemental.pdf">Scaffold: Stochastic controlled averaging for federated learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://www.ijcai.org/Proceedings/2020/0642.pdf">Federated Meta-Learning for Fraudulent Credit Card Detection</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.09323">Federated Learning with Communication Delay in Edge Networks</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2009.02557">FLFE: A Communication-Efficient and Privacy-Preserving Federated Feature Engineering Framework</a></p>
+</li>
+<li><p>联邦元学习：</p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.00818">Federated learning with personalization layers</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1909.12488">Improving federated learning personalization via model agnostic meta learning</a></p>
+</li>
+<li><p>联邦学习安全问题：</p>
+<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3133956.3134012">Deep models under the GAN: information leakage from collaborative deep learning</a></p>
+<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v108/bagdasaryan20a.html">How to backdoor federated learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1910.05467">Quantification of the Leakage in Federated Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v97/bhagoji19a.html">Analyzing federated learning through an adversarial lens</a></p>
+<p><a href="https://link.zhihu.com/?target=http://papers.nips.cc/paper/9617-deep-leakage-from-gradients">Deep leakage from gradients</a></p>
+</li>
+<li><p>联邦学习公平与贡献评估</p>
+<p><a href="https://link.zhihu.com/?target=https://www.researchgate.net/profile/Zichen_Chen8/publication/342804903_A_Multi-player_Game_for_Studying_Federated_Learning_Incentive_Schemes/links/5f3b756d458515b7292a535f/A-Multi-player-Game-for-Studying-Federated-Learning-Incentive-Schemes.pdf">A Multi-player Game for Studying Federated Learning Incentive Schemes</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2009.03510">A Real-time Contribution Measurement Method for Participants in Federated Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.12161">Collaborative Fairness in Federated Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2004.10386">Hierarchically Fair Federated Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/8851649/">Incentive design for efficient federated learning in mobile networks: A contract theory approach</a></p>
+<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/9006179/">Measure contribution of participants in federated learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/9006327/">Profit Allocation for Federated Learning</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.04519">Interpret federated learning with shapley values</a></p>
+</li>
+<li><p>联邦学习与计算机视觉</p>
+<p><a href="https://link.zhihu.com/?target=http://web.pkusz.edu.cn/adsp/files/2019/11/AAAI-FenglinL.1027.pdf">Federated Learning for Vision-and-Language Grounding Problems.</a></p>
+<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.11560">Performance Optimization for Federated Person Re-identification via Benchmark Analysis</a></p>
+</li>
+<li><p>联邦学习与推荐系统</p>
+<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3394486.3403176">FedFast: Going Beyond Average for Faster Training of Federated Recommender Systems</a></p>
+</li>
+</ul>
+<p>整体来说，开山之作<a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v54/mcmahan17a.html">Communication-Efficient Learning of Deep Networks from Decentralized Data</a>和综合概述<a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.04977">Advances and Open Problems in Federated Learning</a>是需要优先阅读的。进度先记录到这里。</p>
+]]></content>
+      <categories>
+        <category>联邦学习</category>
+      </categories>
+      <tags>
+        <tag>Federated Learning</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>颜色基础、图像模型、Phong光照模型</title>
     <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
@@ -395,11 +496,23 @@ parent: ~
 <li>全局光照明</li>
 </ul>
 <h2 id="Phong模型"><a href="#Phong模型" class="headerlink" title="Phong模型"></a>Phong模型</h2><p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果： </p>
 <ul>
-<li>漫反射效果</li>
-<li>镜面反射效果</li>
-<li>环境光效果</li>
+<li><p>漫反射效果 $I_d=I_iK_d*(L·N)$</p>
+</li>
+<li><p>镜面反射效果 $I_s=I_iK_s*(R·V)$</p>
+</li>
+<li><p>环境光效果 $I_a=I_iK_a$</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png"></p>
+</li>
+</ul>
+<h4 id="明暗处理"><a href="#明暗处理" class="headerlink" title="明暗处理"></a>明暗处理</h4><h4 id="视点变换和视点对象"><a href="#视点变换和视点对象" class="headerlink" title="视点变换和视点对象"></a>视点变换和视点对象</h4><p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<ul>
+<li>刚体变换</li>
+<li>相似变换</li>
+<li>线性变换</li>
+<li>仿射变换</li>
+<li>投影变换</li>
 </ul>
 <h2 id="光栅图形学"><a href="#光栅图形学" class="headerlink" title="光栅图形学"></a>光栅图形学</h2>]]></content>
       <categories>
@@ -407,18 +520,6 @@ parent: ~
       </categories>
       <tags>
         <tag>Phong模型</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Cocos Creator使用心得（一）</title>
-    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
-]]></content>
-      <categories>
-        <category>游戏引擎</category>
-      </categories>
-      <tags>
-        <tag>Cocos</tag>
       </tags>
   </entry>
 </search>

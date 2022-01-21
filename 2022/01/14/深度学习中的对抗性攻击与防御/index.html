@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>颜色基础、图像模型、Phong光照模型 - Drenched in my pain.</title>
+    <title>深度学习中的对抗性攻击与防御 - Drenched in my pain.</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者,"> 
+    <meta name="description" content="今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial Intelligence—Feature Article. Adversarial Attac,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -28,7 +28,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">颜色基础、图像模型、Phong光照模型</h3>
+    <h3 class="subtitle">深度学习中的对抗性攻击与防御</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -43,46 +43,36 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">颜色基础、图像模型、Phong光照模型</h1>
+        <h1 class="title">深度学习中的对抗性攻击与防御</h1>
         <div class="stuff">
-            <span>一月 12, 2022</span>
+            <span>一月 14, 2022</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Phong%E6%A8%A1%E5%9E%8B/" rel="tag">Phong模型</a></li></ul>
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Adversarial-Attacks/" rel="tag">Adversarial_Attacks</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型"><a href="#颜色模型" class="headerlink" title="颜色模型"></a>颜色模型</h2><p>RGB模型</p>
-<p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
-<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素"><a href="#像素" class="headerlink" title="像素"></a>像素</h2><h2 id="三角网格模型"><a href="#三角网格模型" class="headerlink" title="三角网格模型"></a>三角网格模型</h2><p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型"><a href="#光照模型" class="headerlink" title="光照模型"></a>光照模型</h2><ul>
-<li>局部光照明</li>
-<li>全局光照明</li>
-</ul>
-<h2 id="Phong模型"><a href="#Phong模型" class="headerlink" title="Phong模型"></a>Phong模型</h2><p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果： </p>
+            <p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial Intelligence—Feature Article. Adversarial Attacks and Defenses in Deep Learning, Kui Ren , Tianhang Zheng  , Zhan Qin ,Xue Liu。这篇文章首先介绍深度学习的算法基础，然后指出了某些防御技术的能力，看起来更像是一篇综述性文章。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h4 id="对抗性样本"><a href="#对抗性样本" class="headerlink" title="对抗性样本"></a>对抗性样本</h4><p>首先我们先了解一下对抗性样本是什么，在大规模部署DL模型的时候，会有一些加入干扰的样本，这些样本会使得人类无法察觉，但是模型会在不知不觉中做出错误的预测，从而使得训练的成果产生一些严重的偏差和影响。</p>
+<p>通过威胁模型，可以将对抗性攻击分为白盒攻击$white-box$，灰盒攻击$grey-box$和黑盒攻击。顾名思义，白盒就是指对于对方的模型有了充分充足的了解，包括体系结构参数等等。在灰盒模型中，仅限于了解模型的结构；在黑盒模型中，则仅能通过调用查询来生成对抗性样本。</p>
+<h4 id="攻击方法"><a href="#攻击方法" class="headerlink" title="攻击方法"></a>攻击方法</h4><p>在这些威胁模型的框架之内，有很多对抗性样本攻击算法提出，比如以下的几种：</p>
 <ul>
-<li><p>漫反射效果 $I_d=I_iK_d*(L·N)$</p>
-</li>
-<li><p>镜面反射效果 $I_s=I_iK_s*(R·V)$</p>
-</li>
-<li><p>环境光效果 $I_a=I_iK_a$</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png"></p>
-</li>
+<li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS) algorithm</li>
+<li>快速梯度符号法the fast gradient sign method (FGSM)</li>
+<li>基本迭代法/投影梯度下降the basic iterative method (BIM)/projected gradient descent (PGD)</li>
+<li>分布式对抗性攻击distributionally adversarial attack</li>
+<li>Carlini and Wagner (C&amp;W) attacks</li>
+<li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack (JSMA)</li>
+<li>（我也不知道是什么） DeepFool</li>
 </ul>
-<h4 id="明暗处理"><a href="#明暗处理" class="headerlink" title="明暗处理"></a>明暗处理</h4><h4 id="视点变换和视点对象"><a href="#视点变换和视点对象" class="headerlink" title="视点变换和视点对象"></a>视点变换和视点对象</h4><p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
-<ul>
-<li>刚体变换</li>
-<li>相似变换</li>
-<li>线性变换</li>
-<li>仿射变换</li>
-<li>投影变换</li>
-</ul>
-<h2 id="光栅图形学"><a href="#光栅图形学" class="headerlink" title="光栅图形学"></a>光栅图形学</h2>
+<h4 id="防御方法"><a href="#防御方法" class="headerlink" title="防御方法"></a>防御方法</h4><p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
+<h2 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h2><p>首先我们来进行一些准备性质的工作。<br>$$<br>D(x,x’)&lt;\eta,f(x’)\ne f(x)=y \<br>这时，我们称\eta为一个小的扰动(perturbation)，x’为一个对抗性样本。<br>$$<br>相对应的优化损失我们都采取交叉熵的方式来定义<br>$$<br>J(\theta,x,y)表示在权重\theta下的优化损失。 \<br>特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)<br>$$<br>关于<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
+<p>同时还进行了$L_p \ distance \ metric$的定义：<br>$$<br>\left | \mathbf{v} \right |_p = (\sum\left | \mathbf{v_i}\right |^p)^{1/p}<br>$$</p>
+<h2 id="Adversarial-Attacks"><a href="#Adversarial-Attacks" class="headerlink" title="Adversarial Attacks"></a>Adversarial Attacks</h2><h4 id="L-BFGS-Algorithm"><a href="#L-BFGS-Algorithm" class="headerlink" title="L-BFGS Algorithm"></a>L-BFGS Algorithm</h4><p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰$L_p$范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong><br>$$<br>min \left | \mathbf{x-x’} \right |_p \ subjects \ to \ f(x’) \ne y’<br>$$</p>
+<h4 id="Fast-gradient-sign-method"><a href="#Fast-gradient-sign-method" class="headerlink" title="Fast gradient sign method"></a>Fast gradient sign method</h4><p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。<br>$$<br>x’=x+\epsilon·sign[\nabla_xJ(\theta,x,y’)]<br>$$</p>
+<h4 id="BIM-amp-PGD"><a href="#BIM-amp-PGD" class="headerlink" title="BIM &amp; PGD"></a>BIM &amp; PGD</h4><p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
+<h4 id="Momentum-iterative-attack"><a href="#Momentum-iterative-attack" class="headerlink" title="Momentum iterative attack"></a>Momentum iterative attack</h4><p>基于动量优化器灵感的设计。待了解。</p>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
