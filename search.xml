@@ -577,7 +577,7 @@ x'=x+\epsilon·sign[\nabla_xJ(\theta,x,y')]</script><h4 id="BIM-amp-PGD"><a href
   <entry>
     <title>DLG的代码实现</title>
     <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。近期</p>
+    <content><![CDATA[<p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a href="paperswithcode.com">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
 ]]></content>
       <categories>
         <category>深度学习</category>
