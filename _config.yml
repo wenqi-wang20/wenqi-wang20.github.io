@@ -57,7 +57,7 @@ prismjs:
   tab_replace: ""
 prism_plugin:
   mode: "preprocess"
-  theme: "atom-dark"
+  theme: "twilight"
   line_number: false
 
 # Home page setting
