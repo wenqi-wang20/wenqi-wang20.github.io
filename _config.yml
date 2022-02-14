@@ -55,6 +55,10 @@ prismjs:
   preprocess: true
   line_number: true
   tab_replace: ""
+prism_plugin:
+  mode: "preprocess"
+  theme: "atom-dark"
+  line_number: false
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
