@@ -69,38 +69,38 @@
 <li>数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</li>
 <li>纯量（scalars）：单个的、不可再分的值</li>
 </ul>
-<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre><code class="yaml"># conf.yml
+<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre><code class="lang-yaml"># conf.yml
 animal: pets
 hash: &#123; name: Steve, foo: bar &#125;
 </code></pre>
 <p>转化为json为：</p>
-<pre><code class="json">// conf.json
+<pre><code class="lang-json">// conf.json
 &#123;
     &#123; &quot;animal&quot;: &quot;pets&quot; &#125;,
     &#123; &quot;hash&quot;: &#123; &quot;name&quot;: &quot;Steve&quot;, &quot;foo&quot;: &quot;bar&quot; &#125; &#125;
 &#125;
 </code></pre>
-<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre><code class="yaml"># conf.yml
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre><code class="lang-yaml"># conf.yml
 Animal:
  - Cat
  - Dog
  - Goldfish
 </code></pre>
 <p>转化为json为：</p>
-<pre><code class="json">//conf.json
+<pre><code class="lang-json">//conf.json
 &#123; &quot;Animal&quot;: [ &quot;Cat&quot;, &quot;Dog&quot;, &quot;Goldfish&quot; ] &#125;
 </code></pre>
-<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre><code class="yaml"># conf.yml
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre><code class="lang-yaml"># conf.yml
 # 正常情况下字符串不用写引号
 str: 这是一行字符串
 # 字符串内有空格或者特殊字符时需要加引号
 str: &#39;内容： 字符串&#39;
 </code></pre>
-<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre><code class="yaml"># conf.yml
+<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre><code class="lang-yaml"># conf.yml
 parent: ~
 </code></pre>
 <p>等价于json中的</p>
-<pre><code class="json">&#123; &quot;parent&quot;: null &#125;
+<pre><code class="lang-json">&#123; &quot;parent&quot;: null &#125;
 </code></pre>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
@@ -139,8 +139,6 @@ parent: ~
 </div>
 
 
-    </div>
-
     <script type="text/javascript" src="../source/libs/codeBlock/codeBlockFunction.js"></script>
     <!-- 代码语言 -->
     <script type="text/javascript" src="../source/libs/codeBlock/codeBLang.js"></script>
@@ -150,7 +148,9 @@ parent: ~
     <!-- 代码块收缩 -->
     <script type="text/javascript" src="../source/libs/codeBlock/codeShrink.js"></script> 
     <!-- 代码块折行 -->
-    <style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+    <style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>    </div>
+
+
 </div>
 
 
