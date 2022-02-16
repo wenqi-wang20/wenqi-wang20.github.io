@@ -1,5 +1,5 @@
 git status
 git add --all
-git commit -m "mac部署"
-git push origin master:source
+git commit -m "win部署"
+git push origin source:source
 hexo clean && hexo g && hexo d
