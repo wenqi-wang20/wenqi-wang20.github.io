@@ -332,61 +332,6 @@ then, \quad w_{t+1} \gets \sum_{k=1}^K \frac {n_{k}}{n} w_{t+1}^{k}</script><p>�
       </tags>
   </entry>
   <entry>
-    <title>有聊</title>
-    <url>/2021/11/21/%E6%97%A0%E8%81%8A/</url>
-    <content><![CDATA[<p>我到要看看 到底有没有成功的放上来！</p>
-<p>今天是智能体部会</p>
-<p>用wwq的电脑</p>
-<p>发现</p>
-<p>键盘</p>
-<p>非常的不习惯</p>
-<p>为什么会打出飞铲</p>
-<p>这是个啥玩意</p>
-<p>哈哈哈哈哈</p>
-<p>好有趣啊</p>
-<p>这是一个下棋的神奇的问题</p>
-<p>我们怎么判断该下哪一步呢</p>
-<p>1）用概率</p>
-<p>==&gt;但是总不能一直搜下去吧  蒙特卡洛树 往下随机搜索几层</p>
-<p>但是目前假设每一种走子概率都是相等的</p>
-<p>这键盘好奇怪啊啊啊啊啊</p>
-<p>超级无敌不顺手</p>
-<p>这显然不合理</p>
-<p>==&gt; 设计走子方案更符合该游戏设计</p>
-<p>哈哈哈哈wwq是个笨蛋</p>
-<p>2) 踩点</p>
-<p>   踩点越多，当然越准</p>
-<p>==&gt;提高算力</p>
-<p>wwq大居居</p>
-<p>说好请我喝奶茶的</p>
-<p>说话不算话</p>
-<p>生气！</p>
-<p>居然没事又贴了键盘膜！！</p>
-<p>按不动啊真的</p>
-<p>我买了一个粉粉嫩嫩的 超级好看的键盘膜</p>
-<p>可就是按不动</p>
-<p>就拆掉了</p>
-<p>你这个</p>
-<p>又不好看</p>
-<p>没事干嘛要加！！</p>
-<p>wwq是大猪猪</p>
-<p>我悄悄跟你说</p>
-<p>：</p>
-<p>刘天骐是世界上最最机智的女人！</p>
-<p>？？？？？？？？？？</p>
-<p>这键盘</p>
-<p>居然</p>
-<p>打不出我</p>
-<p>神圣的名字！！</p>
-<p>！！！！！！</p>
-<p>友谊的小船</p>
-<p>说翻就翻</p>
-]]></content>
-      <tags>
-        <tag>好好玩啊</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>深度神经网络中的梯度泄露问题</title>
     <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
@@ -577,9 +522,9 @@ x'=x+\epsilon·sign[\nabla_xJ(\theta,x,y')]</script><h4 id="BIM-amp-PGD"><a href
   <entry>
     <title>DLG的代码实现</title>
     <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a href="https://www.paperswithcode.com">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
+    <content><![CDATA[<p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a href="https://www.paperswithcode.com/">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
 <p>作者的源代码其实思路比较简单，首先利用$torchvision$库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络$LeNet$和$ResNet$两种方法，我使用第一种方法，卷积通道数为12。</p>
-<pre><code class="lang-python">class LeNet(nn.Module):
+<pre><code class="python">class LeNet(nn.Module):
     def __init__(self):
         super(LeNet, self).__init__()
         act = nn.Sigmoid
@@ -603,14 +548,16 @@ x'=x+\epsilon·sign[\nabla_xJ(\theta,x,y')]</script><h4 id="BIM-amp-PGD"><a href
         return out
 </code></pre>
 <p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了$’str’ \ object \ has \ no \ attribute \ ‘…’$，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
-<pre><code class="lang-python">import ssl
+<pre><code class="python">import ssl
 
 # 取消安全证书的检验，方便下载数据
 ssl._create_default_https_context = ssl._create_unverified_context
 </code></pre>
-<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看$dummy \ input$如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将$torch.manual_seed()$的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" /></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" /></p>
+<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看$dummy \ input$如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将$torch.manualseed()$的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" />
+
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" />
+
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试$dummy \ imput$的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
 ]]></content>
       <categories>
@@ -618,6 +565,35 @@ ssl._create_default_https_context = ssl._create_unverified_context
       </categories>
       <tags>
         <tag>梯度泄漏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pycharm 环境变量问题</title>
+    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel desktop虚拟机。</p>
+<blockquote>
+<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+</blockquote>
+<p>言归正传，我遇到的问题如下：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png"></p>
+<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
+<pre><code class="bash">ModuleNotFoundError: No Module named &#39;fedml_api&#39;
+</code></pre>
+<p>的错误。实在是让我很破防。</p>
+<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
+<pre><code class="python">import sys
+sys.path.append()
+</code></pre>
+<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
+<pre><code class="bash">echo $PYTHONPATH
+</code></pre>
+<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
+]]></content>
+      <categories>
+        <category>Ubuntu</category>
+      </categories>
+      <tags>
+        <tag>Pycharm</tag>
       </tags>
   </entry>
 </search>
