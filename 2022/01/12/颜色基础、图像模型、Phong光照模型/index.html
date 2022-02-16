@@ -54,28 +54,37 @@
         </div>
         <div class="content markdown">
             <p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型"><a href="#颜色模型" class="headerlink" title="颜色模型"></a>颜色模型</h2><p>RGB模型</p>
+<h2 id="颜色模型">颜色模型</h2>
+<p>RGB模型</p>
 <p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of
+brightness亮度），使用圆锥来表示颜色。</p>
 <p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素"><a href="#像素" class="headerlink" title="像素"></a>像素</h2><h2 id="三角网格模型"><a href="#三角网格模型" class="headerlink" title="三角网格模型"></a>三角网格模型</h2><p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型"><a href="#光照模型" class="headerlink" title="光照模型"></a>光照模型</h2><ul>
+<h2 id="像素">像素</h2>
+<h2 id="三角网格模型">三角网格模型</h2>
+<p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量
+：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型">光照模型</h2>
+<ul>
 <li>局部光照明</li>
 <li>全局光照明</li>
 </ul>
-<h2 id="Phong模型"><a href="#Phong模型" class="headerlink" title="Phong模型"></a>Phong模型</h2><p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果： </p>
+<h2 id="phong模型">Phong模型</h2>
+<p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
 <ul>
-<li><p>漫反射效果 $I_d&#x3D;I_iK_d*(L·N)$</p>
-</li>
-<li><p>镜面反射效果 $I_s&#x3D;I_iK_s*(R·V)$</p>
-</li>
-<li><p>环境光效果 $I_a&#x3D;I_iK_a$</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png"></p>
-</li>
+<li><p>漫反射效果 <span
+class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
+<li><p>镜面反射效果 <span
+class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
+<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
 </ul>
-<h4 id="明暗处理"><a href="#明暗处理" class="headerlink" title="明暗处理"></a>明暗处理</h4><h4 id="视点变换和视点对象"><a href="#视点变换和视点对象" class="headerlink" title="视点变换和视点对象"></a>视点变换和视点对象</h4><p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<h4 id="明暗处理">明暗处理</h4>
+<p>#### 视点变换和视点对象</p>
+<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
 <ul>
 <li>刚体变换</li>
 <li>相似变换</li>
@@ -83,7 +92,8 @@
 <li>仿射变换</li>
 <li>投影变换</li>
 </ul>
-<h2 id="光栅图形学"><a href="#光栅图形学" class="headerlink" title="光栅图形学"></a>光栅图形学</h2>
+<h2 id="光栅图形学">光栅图形学</h2>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -124,21 +134,6 @@
 </div>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 
@@ -205,25 +200,6 @@
 </div>
 
 
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 

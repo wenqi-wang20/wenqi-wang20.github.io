@@ -56,83 +56,196 @@
             <p>今天我们来看一下联邦学习的开山论文<code>Communication-Efficient Learning of Deep Networks from Decentralized Data</code>，简单介绍一下这个东西出现的背景。起因是谷歌的输入法想要做一个训练模型，基于谷歌超大体量的全球用户，他们的工程师提出了以下的解决问题的流程：</p>
 <blockquote>
 <ul>
-<li>Problems: Google wants to train a model using users’ data</li>
-<li>Solutions:<ul>
+<li>Problems: Google wants to train a model using users' data</li>
+<li>Solutions:
+<ul>
 <li>Centralized learning</li>
-<li>Collect users’ data</li>
+<li>Collect users' data</li>
 <li>Train a model on the cluster</li>
-</ul>
-</li>
-<li><strong>challenge</strong>: Users may refuse to upload their data, especially sensitive data to Google’s Server</li>
+</ul></li>
+<li><strong>challenge</strong>: Users may refuse to upload their data,
+especially sensitive data to Google's Server</li>
 </ul>
 </blockquote>
-<p><strong>问题显而易见，那么大量的隐私数据，用户是不可能允许你全部上传到服务器端进行训练的，</strong> 即使你谷歌无心，也难以保证其他的恶意用户不会窃取你的隐私。所以我们才会发现问题，也就有了这篇论文的诞生，下面我们开始详细地跟着论文过一遍。</p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><blockquote>
-<p>Increasingly, phones and tablets are the primary computing devices for many people. The powerful sensors on these devices (including cameras, microphones, and GPS), combined with the fact they are frequently carried, means they have access to an unprecedented amount of data, much of it private in nature.</p>
+<p><strong>问题显而易见，那么大量的隐私数据，用户是不可能允许你全部上传到服务器端进行训练的，</strong>
+即使你谷歌无心，也难以保证其他的恶意用户不会窃取你的隐私。所以我们才会发现问题，也就有了这篇论文的诞生，下面我们开始详细地跟着论文过一遍。</p>
+<h2 id="introduction">Introduction</h2>
+<blockquote>
+<p>Increasingly, phones and tablets are the primary computing devices
+for many people. The powerful sensors on these devices (including
+cameras, microphones, and GPS), combined with the fact they are
+frequently carried, means they have access to an unprecedented amount of
+data, much of it private in nature.</p>
 </blockquote>
 <p>首先这一段指出了联邦学习的主体就将集中在手机、平板等智能移动终端上，并且指出了数据隐私问题，我们不能直接将用户的数据赤裸裸地传到Server上进行训练。这样会导致隐私泄露。</p>
 <blockquote>
 <ul>
-<li>Instead, each client computes an update to the current global model maintained by the server, and only this update is communicated…….</li>
-<li>Since these updates are specific to improving the current model, there is no reason to store them once they have been applied.</li>
+<li>Instead, each client computes an update to the current global model
+maintained by the server, and only this update is
+communicated.......</li>
+<li>Since these updates are specific to improving the current model,
+there is no reason to store them once they have been applied.</li>
 </ul>
 </blockquote>
-<p>然后文章指出了一种方法就是：<strong>每个客户端自身利用自己的数据更新当前服务端的全局模型，然后只将这一小部分上传</strong> ，这样就使得至少从表面上看起来，客户的隐私始终没有离开client端。</p>
+<p>然后文章指出了一种方法就是：<strong>每个客户端自身利用自己的数据更新当前服务端的全局模型，然后只将这一小部分上传</strong>
+，这样就使得至少从表面上看起来，客户的隐私始终没有离开client端。</p>
 <blockquote>
 <ul>
-<li><p>the identification of the problem of training on decentralized data from mobile devices as an important research direction;</p>
-</li>
-<li><p>the selection of a straightforward and practical algorithm that can be applied to this setting;</p>
-</li>
-<li><p>an extensive empirical evaluation of the proposed approach. More concretely, we introduce the FederatedAveraging algorithm, which combines local stochastic gradient descent (SGD) on each client with a server that performs model averaging.</p>
-</li>
+<li><p>the identification of the problem of training on decentralized
+data from mobile devices as an important research direction;</p></li>
+<li><p>the selection of a straightforward and practical algorithm that
+can be applied to this setting;</p></li>
+<li><p>an extensive empirical evaluation of the proposed approach. More
+concretely, we introduce the FederatedAveraging algorithm, which
+combines local stochastic gradient descent (SGD) on each client with a
+server that performs model averaging.</p></li>
 </ul>
 </blockquote>
 <p>在这里作者渐渐给我们展开一个模型了，名字叫<code>FederatedAveraging</code>的算法，大致是想要让<code>devices</code>在各自利用随机梯度下降（SGD）训练数据，然后传给<code>Server</code>。然后作者号称这个模型是可以做到在非独立同分布（NON-IID）数据下的鲁棒性，并且可以减少分布式学习中的通信轮数。</p>
-<h4 id="Federated-Learning"><a href="#Federated-Learning" class="headerlink" title="Federated Learning"></a>Federated Learning</h4><blockquote>
-<ol>
-<li>Training on real-world data from mobile devices provides a distinct advantage over training on proxy data that is generally available in the data center. </li>
-<li>This data is privacy sensitive or large in size (compared to the size of the model), so it is preferable not to log it to the data center purely for the purpose of model training (in service of the focused collection principle). </li>
-<li>For supervised tasks, labels on the data can be inferred naturally from user interaction.</li>
+<h4 id="federated-learning">Federated Learning</h4>
+<blockquote>
+<ol type="1">
+<li>Training on real-world data from mobile devices provides a distinct
+advantage over training on proxy data that is generally available in the
+data center.</li>
+<li>This data is privacy sensitive or large in size (compared to the
+size of the model), so it is preferable not to log it to the data center
+purely for the purpose of model training (in service of the focused
+collection principle).</li>
+<li>For supervised tasks, labels on the data can be inferred naturally
+from user interaction.</li>
 </ol>
 </blockquote>
-<p>然后作者给出了适用于联邦学习的应用问题，总结来说就是有三点特性：<strong>一是适用于需要更加真实的来自于现实生活的数据，这一点是数据中心的样板数据无法比拟的优势；二是这些数据是相当隐私或者相当庞大的，不适用于完全传输到服务中心进行训练；三是对于监督任务，数据标签很容易就能从用户交互中获得。</strong> 紧接着，作者举出了很明显的两个例子：<em><strong>image classification</strong></em>和<em><strong>language models</strong></em>，仔细分析会发现这些都满足上面的三点特性，并且分别可以将卷积神经网络和递归神经网络应用模型。</p>
-<h4 id="Privacy"><a href="#Privacy" class="headerlink" title="Privacy"></a>Privacy</h4><p>这里作者简单地argue了一下联邦学习对于隐私泄露的风险仅仅在于<code>minimal update necessary to improve a particular model</code>，并且提到会在文章最后简单介绍一下和差分隐私算法的结合。</p>
-<h4 id="Federated-Optimization"><a href="#Federated-Optimization" class="headerlink" title="Federated Optimization"></a>Federated Optimization</h4><blockquote>
+<p>然后作者给出了适用于联邦学习的应用问题，总结来说就是有三点特性：<strong>一是适用于需要更加真实的来自于现实生活的数据，这一点是数据中心的样板数据无法比拟的优势；二是这些数据是相当隐私或者相当庞大的，不适用于完全传输到服务中心进行训练；三是对于监督任务，数据标签很容易就能从用户交互中获得。</strong>
+紧接着，作者举出了很明显的两个例子：<strong><em>image
+classification</em></strong>和<strong><em>language
+models</em></strong>，仔细分析会发现这些都满足上面的三点特性，并且分别可以将卷积神经网络和递归神经网络应用模型。</p>
+<h4 id="privacy">Privacy</h4>
+<p>这里作者简单地argue了一下联邦学习对于隐私泄露的风险仅仅在于<code>minimal update necessary to improve a particular model</code>，并且提到会在文章最后简单介绍一下和差分隐私算法的结合。</p>
+<h4 id="federated-optimization">Federated Optimization</h4>
+<blockquote>
 <ul>
-<li>**Non-IID: **    The training data on a given client is typically based on the usage of the mobile device by a particular user, and hence any particular user’s local dataset will not be representative of the population distribution.</li>
-<li>**Unbalanced: **     The training data on a given client is typically based on the usage of the mobile device by a particular user, and hence any particular user’s local dataset will not be representative of the population distribution.</li>
-<li>**Massively distributed: **    We expect the number of clients participating in an optimization to be much larger than the average number of examples per client.</li>
-<li>**Limited communication: **     Mobile devices are frequently offline or on slow or expensive connections.</li>
+<li><strong>Non-IID: </strong> The training data on a given client is
+typically based on the usage of the mobile device by a particular user,
+and hence any particular user’s local dataset will not be representative
+of the population distribution.</li>
+<li><strong>Unbalanced: </strong> The training data on a given client is
+typically based on the usage of the mobile device by a particular user,
+and hence any particular user’s local dataset will not be representative
+of the population distribution.</li>
+<li><strong>Massively distributed: </strong> We expect the number of
+clients participating in an optimization to be much larger than the
+average number of examples per client.</li>
+<li><strong>Limited communication: </strong> Mobile devices are
+frequently offline or on slow or expensive connections.</li>
 </ul>
 </blockquote>
-<p>总的来说，联邦学习比一般的分布式机器学习要考虑的优化问题更多一点。作者给出了其中的四点（当然其实还有更多的问题等待着暴露），第一是各个节点没办法实现数据的<strong>独立同分布</strong> ，每个手机的数据特点显然也无法概括整体的数据集；第二是<strong>不平衡性</strong> ，显然有些用户的使用频率、数据质量可能高于另一些用户，那么如何分配权重也是一个很大的问题；第三就是<strong>超大体量的分布式计算</strong> ，显然用户的数量已经远远超过了在实验室中的样例；第四是<strong>交流的限制性</strong> ，我们都知道手机等移动端设备肯定会经常出现不稳定的现状，掉线、低带宽的通信都是问题。作者重点argue的是 Non-IID和不平衡性。</p>
+<p>总的来说，联邦学习比一般的分布式机器学习要考虑的优化问题更多一点。作者给出了其中的四点（当然其实还有更多的问题等待着暴露），第一是各个节点没办法实现数据的<strong>独立同分布</strong>
+，每个手机的数据特点显然也无法概括整体的数据集；第二是<strong>不平衡性</strong>
+，显然有些用户的使用频率、数据质量可能高于另一些用户，那么如何分配权重也是一个很大的问题；第三就是<strong>超大体量的分布式计算</strong>
+，显然用户的数量已经远远超过了在实验室中的样例；第四是<strong>交流的限制性</strong>
+，我们都知道手机等移动端设备肯定会经常出现不稳定的现状，掉线、低带宽的通信都是问题。作者重点argue的是
+Non-IID和不平衡性。</p>
 <blockquote>
-<p>There is a fixed set of K clients, each with a fixed local dataset. At the beginning of each round, a random fraction C of clients is selected, and the server sends the current global algorithm state to each of these clients (e.g., the current model parameters).</p>
+<p>There is a fixed set of K clients, each with a fixed local dataset.
+At the beginning of each round, a random fraction C of clients is
+selected, and the server sends the current global algorithm state to
+each of these clients (e.g., the current model parameters).</p>
 </blockquote>
-<p>作者首先做了一个实验，固定K个Client，每个Client都持有一定的本地数据。**从中随机挑选一部分客户端 ** ，服务器将<code>model parameters</code>发送给这些客户端，客户端利用本地的数据集进行运算，并且将更新后的参数发送给服务端，服务端整合数据以后重复上述过程，继续发送给客户端。（至于为什么只选择一部分Clients，作者给出的解释是<code>We only select a fraction of clients for effificiency, as our experiments show diminishing returns for adding more clients beyond a certain point.</code>）换言之，是为了实验的效率考虑。</p>
-<p>对于大部分非凸神经网络，我们考虑以下的公式是普适的：<br>$$<br>\min <em>{ w \in \mathbb{ R }^{ d } } f(w) \quad \text { where } \quad f(w) \stackrel{ \operatorname{ def } } { &#x3D; } \frac { 1 } { n } \sum</em>{ i&#x3D;1 }^{ n } f_{ i }(w)<br>$$<br>对于分布式机器学习的问题，我们定义如下的函数$f_{i}(w)&#x3D;l(x_{i},y_{i};w)$，来表示由$model \ parameter \ w$造成的$loss$损失$(x_{i},y_{i})$。我们假设有K个Clients，并且client k上分配到的数据集索引为$P_{k}$，并且$n_{k}&#x3D;|P_{k}|$，我们可以修改上述公式为<br>$$<br>f(w)&#x3D;\sum_{k&#x3D;1}^{K} \frac{n_{k}}{n}F_{k}(w) \quad where \quad F_{k}(w)&#x3D;\frac{1}{n_{k}}\sum_{i\in{P_{k}}}f_{i}(w).<br>$$<br>从这个式子我们可以看出，如果每个节点Client的数据是完全随机分布的话，也就是会做到$Independent \ &amp; \ Identically \ Distributed \ (IID) $，那么我们就可以得到$F_{k}(w)$的期望事实上是和$f(w)$大抵相近的，也就是每个独立节点得到的模型已经几乎可以代替全局模型。</p>
-<p>但是联邦学习中明显数据的分布是不满足$IID$的，每个用户节点都带有很强的个性，所以无法使用这种假设。作者为了破坏这种随机性，在实验中使用的是<code>(that is, F could be an arbitrarily bad approximationto f)</code>，也就是将$F_{k}$拟合为一个很糟糕的函数以至于无法很好地描述$f$。</p>
-<p>上面是针对模型非独立同分布作出的假设。下面作者考虑如何对联邦学习的通信进行优化。显然的是，在计算中心，用有足够的带宽和稳定的通信，那么针对计算量的优化是很有必要的；但是联邦学习的环境下，用户节点的带宽甚至无法超过1MB&#x2F;s，而且像手机等移动设备，通常用户只会在充电、使用未计量的WIFI时才会主动参与计算，这限制了通信；另一方面，考虑到现代设备比如手机都有着相对较快的处理器以及GPU，每台设备上自己的数据集也是非常小的尺度，在多数模型下，计算所带来的消耗和通信相比，几乎可以忽略不计。所以，作者给出的优化方法就是，在客户端本地使用额外的计算，来减少需要通信的轮数，具体来说是以下两个方面：</p>
+<p>作者首先做了一个实验，固定K个Client，每个Client都持有一定的本地数据。<strong>从中随机挑选一部分客户端
+</strong>
+，服务器将<code>model parameters</code>发送给这些客户端，客户端利用本地的数据集进行运算，并且将更新后的参数发送给服务端，服务端整合数据以后重复上述过程，继续发送给客户端。（至于为什么只选择一部分Clients，作者给出的解释是<code>We only select a fraction of clients for effificiency, as our experiments show diminishing returns for adding more clients beyond a certain point.</code>）换言之，是为了实验的效率考虑。</p>
+<p>对于大部分非凸神经网络，我们考虑以下的公式是普适的： <span
+class="math display">\[
+\min _{ w \in \mathbb{ R }^{ d } } f(w) \quad \text { where } \quad f(w)
+\stackrel{ \operatorname{ def } } { = } \frac { 1 } { n } \sum_{ i=1 }^{
+n } f_{ i }(w)
+\]</span> 对于分布式机器学习的问题，我们定义如下的函数<span
+class="math inline">\(f_{i}(w)=l(x_{i},y_{i};w)\)</span>，来表示由<span
+class="math inline">\(model \ parameter \ w\)</span>造成的<span
+class="math inline">\(loss\)</span>损失<span
+class="math inline">\((x_{i},y_{i})\)</span>。我们假设有K个Clients，并且client
+k上分配到的数据集索引为<span
+class="math inline">\(P_{k}\)</span>，并且<span
+class="math inline">\(n_{k}=|P_{k}|\)</span>，我们可以修改上述公式为
+<span class="math display">\[
+f(w)=\sum_{k=1}^{K} \frac{n_{k}}{n}F_{k}(w) \quad where \quad
+F_{k}(w)=\frac{1}{n_{k}}\sum_{i\in{P_{k}}}f_{i}(w).
+\]</span>
+从这个式子我们可以看出，如果每个节点Client的数据是完全随机分布的话，也就是会做到$Independent
+ &amp;  Identically  Distributed  (IID) <span
+class="math inline">\(，那么我们就可以得到\)</span>F_{k}(w)<span
+class="math inline">\(的期望事实上是和\)</span>f(w)$大抵相近的，也就是每个独立节点得到的模型已经几乎可以代替全局模型。</p>
+<p>但是联邦学习中明显数据的分布是不满足<span
+class="math inline">\(IID\)</span>的，每个用户节点都带有很强的个性，所以无法使用这种假设。作者为了破坏这种随机性，在实验中使用的是<code>(that is, F could be an arbitrarily bad approximationto f)</code>，也就是将<span
+class="math inline">\(F_{k}\)</span>拟合为一个很糟糕的函数以至于无法很好地描述<span
+class="math inline">\(f\)</span>。</p>
+<p>上面是针对模型非独立同分布作出的假设。下面作者考虑如何对联邦学习的通信进行优化。显然的是，在计算中心，用有足够的带宽和稳定的通信，那么针对计算量的优化是很有必要的；但是联邦学习的环境下，用户节点的带宽甚至无法超过1MB/s，而且像手机等移动设备，通常用户只会在充电、使用未计量的WIFI时才会主动参与计算，这限制了通信；另一方面，考虑到现代设备比如手机都有着相对较快的处理器以及GPU，每台设备上自己的数据集也是非常小的尺度，在多数模型下，计算所带来的消耗和通信相比，几乎可以忽略不计。所以，作者给出的优化方法就是，在客户端本地使用额外的计算，来减少需要通信的轮数，具体来说是以下两个方面：</p>
 <blockquote>
 <ul>
-<li><em>increased parallelism</em>, where we use more clients working independently between each communication round.</li>
-<li><em>increased computation on each client</em>, where rather than performing a simple computation like a gradient calculation, each client performs a more complex calculation between each communication round.</li>
+<li><em>increased parallelism</em>, where we use more clients working
+independently between each communication round.</li>
+<li><em>increased computation on each client</em>, where rather than
+performing a simple computation like a gradient calculation, each client
+performs a more complex calculation between each communication
+round.</li>
 </ul>
 </blockquote>
 <p>相较于增加数据的并发性，作者在实验中的方法是增加在每台客户端上的计算量，不仅仅再是简单的梯度计算。</p>
-<h4 id="Related-work"><a href="#Related-work" class="headerlink" title="Related work"></a>Related work</h4><p>总结前人在分布式计算中作出的贡献，$McDonald$等人研究了通过逐轮迭代平均本地训练模型的方法进行分布式训练；$Zhang$等人也研究了通过一种”软”平均的方式来实现异步分布训练。这些研究成果最大的问题就是要么只考虑到了数据中心少量的$worker \ node$s集合，要么就是忽略了数据的$Unbalance$和$Non-IID$特性，而这些恰恰都是联邦学习的特征。</p>
-<p>同时作者也提到了诸如$Neverova$和$Shori \ and \ Shmatikov$等研究团队都在考虑用户数据的隐私敏感问题，也采取了一定的措施来防止，但是依然没有考虑到上述的两点问题。等等多种算法都不能完美地解决联邦学习中存在的问题。</p>
-<p>作者考虑的（参数化）算法是简单的做一次平均，也就是说每一个客户端利用本地的数据训练一个最小化$Loss$函数的模型，然后这些模型将被平均成为全局模型。作者也指出，在$IID$情况下，这种方法训练出的本地模型甚至比全局模型更优，当然，是在某些特殊的状况。</p>
-<h2 id="The-FederatedAveraging-Algorithm"><a href="#The-FederatedAveraging-Algorithm" class="headerlink" title="The FederatedAveraging Algorithm"></a>The FederatedAveraging Algorithm</h2><p>在这一部分作者开始介绍著名的<code>FedAvg</code>算法。首先，作者指出最近的深度学习的研究几乎都是依赖于随机梯度下降的方法$(SGD)$；而事实上很多的研究进展也都是可以理解为在调整模型的结构（或者是损失函数）来使得模型可以实现通过简单的基于梯度的优化。</p>
-<p>根据已有的前人的实验结果可以发现，$SGD$是可以应用在联邦优化上的。只不过之前的在数据中心做的实验，为了提高效率，都是采取小的batch，多的rounds。但是考虑到在联邦学习中，参与计算的客户端可以很多，而且不必考虑<code>wall-clock time</code>的损失问题，所以作者的实验都是基于较大的批尺寸的同步随机梯度下降法。每次从所有客户端中随机选择一部分，比例大小为C，这里当$C&#x3D;1$时，也就是全批次的非随机梯度下降算法。我们称这种算法为$FederatedSGD$或$FedSGD$。</p>
-<p>一种典型的算法是，当$C&#x3D;1$时，在一个固定的学习率$\eta$和客户端数量$k$中，每一个节点应用以下的梯度计算：<br>$$<br>g_{k}&#x3D;\nabla{F_{k}(w_t)}<br>$$<br>然后中央服务器汇合这些梯度并且做一次全局的更新：<br>$$<br>w_{t+1} \gets w_{t}-\eta\sum_{k&#x3D;1}^{K} \frac {n_{k}}{n} g_{k}&#x3D;w_{t}-\eta\nabla f(w_{t})<br>$$<br><strong>一种等价的变换就是对于每个节点来说都利用本地的数据集做一次参数的更新，然后将这些更新后的结果交给中央服务器，中央服务器对这些本地已经局部梯度更新后的参数再做加权平均。</strong> 这也就是整个联邦学习$FederatedAveraging$的核心：<br>$$<br>\forall{k}, \quad  w_{t+1}^{k} \gets w_{t}- \eta g_{k} \<br>then, \quad w_{t+1} \gets \sum_{k&#x3D;1}^K \frac {n_{k}}{n} w_{t+1}^{k}<br>$$<br>因此，到了这一步我们就已经搞清楚了整个$FedAvg$算法的要点，那就是把梯度计算和模型参数更新全部下放到客户端节点中去，然后各个client相当于直接将模型参数传回云端，云端的服务器最终只需要简单地对这些模型作加权平均处理，然后再下放到各个客户端作为新一轮训练的模型参数。这样的话也带来了很大的一个便捷那就是，<strong>本地客户端可以多次重复进行梯度下降的过程</strong>，以期在更少的全局轮数内获得更好的拟合效果。针对每个客户端设备的计算量，有如下的衡量参数：</p>
+<h4 id="related-work">Related work</h4>
+<p>总结前人在分布式计算中作出的贡献，<span
+class="math inline">\(McDonald\)</span>等人研究了通过逐轮迭代平均本地训练模型的方法进行分布式训练；<span
+class="math inline">\(Zhang\)</span>等人也研究了通过一种"软"平均的方式来实现异步分布训练。这些研究成果最大的问题就是要么只考虑到了数据中心少量的<span
+class="math inline">\(worker \
+node\)</span>s集合，要么就是忽略了数据的<span
+class="math inline">\(Unbalance\)</span>和<span
+class="math inline">\(Non-IID\)</span>特性，而这些恰恰都是联邦学习的特征。</p>
+<p>同时作者也提到了诸如<span
+class="math inline">\(Neverova\)</span>和<span
+class="math inline">\(Shori \ and \
+Shmatikov\)</span>等研究团队都在考虑用户数据的隐私敏感问题，也采取了一定的措施来防止，但是依然没有考虑到上述的两点问题。等等多种算法都不能完美地解决联邦学习中存在的问题。</p>
+<p>作者考虑的（参数化）算法是简单的做一次平均，也就是说每一个客户端利用本地的数据训练一个最小化<span
+class="math inline">\(Loss\)</span>函数的模型，然后这些模型将被平均成为全局模型。作者也指出，在<span
+class="math inline">\(IID\)</span>情况下，这种方法训练出的本地模型甚至比全局模型更优，当然，是在某些特殊的状况。</p>
+<h2 id="the-federatedaveraging-algorithm">The FederatedAveraging
+Algorithm</h2>
+<p>在这一部分作者开始介绍著名的<code>FedAvg</code>算法。首先，作者指出最近的深度学习的研究几乎都是依赖于随机梯度下降的方法<span
+class="math inline">\((SGD)\)</span>；而事实上很多的研究进展也都是可以理解为在调整模型的结构（或者是损失函数）来使得模型可以实现通过简单的基于梯度的优化。</p>
+<p>根据已有的前人的实验结果可以发现，<span
+class="math inline">\(SGD\)</span>是可以应用在联邦优化上的。只不过之前的在数据中心做的实验，为了提高效率，都是采取小的batch，多的rounds。但是考虑到在联邦学习中，参与计算的客户端可以很多，而且不必考虑<code>wall-clock time</code>的损失问题，所以作者的实验都是基于较大的批尺寸的同步随机梯度下降法。每次从所有客户端中随机选择一部分，比例大小为C，这里当<span
+class="math inline">\(C=1\)</span>时，也就是全批次的非随机梯度下降算法。我们称这种算法为<span
+class="math inline">\(FederatedSGD\)</span>或<span
+class="math inline">\(FedSGD\)</span>。</p>
+<p>一种典型的算法是，当<span
+class="math inline">\(C=1\)</span>时，在一个固定的学习率<span
+class="math inline">\(\eta\)</span>和客户端数量<span
+class="math inline">\(k\)</span>中，每一个节点应用以下的梯度计算： <span
+class="math display">\[
+g_{k}=\nabla{F_{k}(w_t)}
+\]</span> 然后中央服务器汇合这些梯度并且做一次全局的更新： <span
+class="math display">\[
+w_{t+1} \gets w_{t}-\eta\sum_{k=1}^{K} \frac {n_{k}}{n}
+g_{k}=w_{t}-\eta\nabla f(w_{t})
+\]</span>
+<strong>一种等价的变换就是对于每个节点来说都利用本地的数据集做一次参数的更新，然后将这些更新后的结果交给中央服务器，中央服务器对这些本地已经局部梯度更新后的参数再做加权平均。</strong>
+这也就是整个联邦学习<span
+class="math inline">\(FederatedAveraging\)</span>的核心： <span
+class="math display">\[
+\forall{k}, \quad  w_{t+1}^{k} \gets w_{t}- \eta g_{k} \\
+then, \quad w_{t+1} \gets \sum_{k=1}^K \frac {n_{k}}{n} w_{t+1}^{k}
+\]</span> 因此，到了这一步我们就已经搞清楚了整个<span
+class="math inline">\(FedAvg\)</span>算法的要点，那就是把梯度计算和模型参数更新全部下放到客户端节点中去，然后各个client相当于直接将模型参数传回云端，云端的服务器最终只需要简单地对这些模型作加权平均处理，然后再下放到各个客户端作为新一轮训练的模型参数。这样的话也带来了很大的一个便捷那就是，<strong>本地客户端可以多次重复进行梯度下降的过程</strong>，以期在更少的全局轮数内获得更好的拟合效果。针对每个客户端设备的计算量，有如下的衡量参数：</p>
 <blockquote>
-<p><em><strong>C</strong></em>：the fraction of clients that perform computation on each round;</p>
-<p><em><strong>E</strong></em>：the number of training passes each client makes over its local dataset on each round;</p>
-<p><em><strong>B</strong></em>：the local minibatch size used for client updates.</p>
+<p><strong><em>C</em></strong>：the fraction of clients that perform
+computation on each round;</p>
+<p><strong><em>E</em></strong>：the number of training passes each
+client makes over its local dataset on each round;</p>
+<p><strong><em>B</em></strong>：the local minibatch size used for client
+updates.</p>
 </blockquote>
-<p>简单解释一下，就是：C代表的是每轮计算中参与的设备比例；E代表的是每个节点每轮中本地的训练次数；B代表的是本地训练中每次拿出的batch size。那么这样一来一个拥有$n_{k}$个样例，</p>
+<p>简单解释一下，就是：C代表的是每轮计算中参与的设备比例；E代表的是每个节点每轮中本地的训练次数；B代表的是本地训练中每次拿出的batch
+size。那么这样一来一个拥有<span
+class="math inline">\(n_{k}\)</span>个样例，</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -174,21 +287,6 @@
 </div>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 
@@ -255,25 +353,6 @@
 </div>
 
 
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 

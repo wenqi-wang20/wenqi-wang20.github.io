@@ -10,11 +10,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="MIPS汇编语言入门MIPS(Millions of Instructions Per Second)
+    <meta name="description" content="MIPS汇编语言入门
+MIPS(Millions of Instructions Per Second)
 Classic flow:
 
 Fetch instruction
-Read registers,"> 
+Read register,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -57,7 +58,8 @@ Read registers,">
 
         </div>
         <div class="content markdown">
-            <h3 id="MIPS汇编语言入门"><a href="#MIPS汇编语言入门" class="headerlink" title="MIPS汇编语言入门"></a>MIPS汇编语言入门</h3><p>MIPS(Millions of Instructions Per Second)</p>
+            <h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
+<p>MIPS(Millions of Instructions Per Second)</p>
 <p><strong>Classic flow</strong>:</p>
 <ul>
 <li>Fetch instruction</li>
@@ -66,48 +68,57 @@ Read registers,">
 <li>Memory access</li>
 <li>Write back</li>
 </ul>
-<p>Five steps and four cycles(Read and write registers cost only half a cycle).</p>
+<p>Five steps and four cycles(Read and write registers cost only half a
+cycle).</p>
 <p>Delay slot:</p>
-<p>After the jump and branch condition, there is a delay slot to fill a non-related operation(usually a n operation before the branch).</p>
-<h3 id="How-a-program-excutes"><a href="#How-a-program-excutes" class="headerlink" title="How a program excutes"></a>How a program excutes</h3><ul>
-<li><p>genera 3-operand format</p>
-<pre class=" language-assembly"><code class="language-assembly">op    dest, src1, src2
-</code></pre>
-</li>
-</ul>
-<h3 id="MIPS-instructions-amp-memory-organization"><a href="#MIPS-instructions-amp-memory-organization" class="headerlink" title="MIPS instructions &amp; memory organization"></a>MIPS instructions &amp; memory organization</h3><ul>
-<li><p>type of instructions</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png" alt="image-20211117001847724"></p>
+<p>After the jump and branch condition, there is a delay slot to fill a
+non-related operation(usually a n operation before the branch).</p>
+<h3 id="how-a-program-excutes">How a program excutes</h3>
 <ul>
-<li>Data operations<ul>
+<li><p>genera 3-operand format</p>
+<pre class="assembly"><code>op    dest, src1, src2</code></pre></li>
+</ul>
+<h3 id="mips-instructions-memory-organization">MIPS instructions &amp;
+memory organization</h3>
+<ul>
+<li><p>type of instructions</p>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png"
+alt="image-20211117001847724" />
+<figcaption aria-hidden="true">image-20211117001847724</figcaption>
+</figure>
+<ul>
+<li>Data operations
+<ul>
 <li>Arithmetic(add, substrct……)</li>
 <li>Logical(and, or, not, xor……)</li>
-</ul>
-</li>
-<li>Data transfer<ul>
+</ul></li>
+<li>Data transfer
+<ul>
 <li>Load(Memory -&gt; Register)</li>
 <li>Store(Register -&gt; Memory)</li>
-</ul>
-</li>
-<li>Sequencing<ul>
-<li>Branch(conditional, &gt;, &lt;, &#x3D;&#x3D;……)</li>
+</ul></li>
+<li>Sequencing
+<ul>
+<li>Branch(conditional, &gt;, &lt;, ==……)</li>
 <li>Jump(unconditional, goto……)</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li><p>Registers</p>
 <ul>
 <li>32 General Purpose Registers</li>
-<li>**Very important!! **<ul>
-<li><strong>ALL the values for instructions must come from registers!</strong></li>
+<li><strong>Very important!! </strong>
+<ul>
+<li><strong>ALL the values for instructions must come from
+registers!</strong></li>
 <li><strong>R0 is always zero!!</strong></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Data-operations-amp-transfers"><a href="#Data-operations-amp-transfers" class="headerlink" title="Data operations &amp; transfers"></a>Data operations &amp; transfers</h3><h3 id="Sequencing"><a href="#Sequencing" class="headerlink" title="Sequencing"></a>Sequencing</h3>
+<h3 id="data-operations-transfers">Data operations &amp; transfers</h3>
+<h3 id="sequencing">Sequencing</h3>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -148,21 +159,6 @@ Read registers,">
 </div>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 
@@ -229,25 +225,6 @@ Read registers,">
 </div>
 
 
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 

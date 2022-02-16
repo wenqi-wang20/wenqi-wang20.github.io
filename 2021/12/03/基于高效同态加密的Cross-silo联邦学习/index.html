@@ -11,7 +11,9 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
     <meta name="description" content="Background
-回顾联邦学习（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，,"> 
+
+回顾联邦学习（federated
+learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -54,31 +56,104 @@
 
         </div>
         <div class="content markdown">
-            <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><blockquote>
-<p>回顾<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%AE%89%E5%85%A8%E8%81%9A%E5%90%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">安全聚合</a>（e.g., 求和&#x2F;平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。<br>本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。<br><em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
+            <h2 id="background">Background</h2>
+<blockquote>
+<p>回顾<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=联邦学习&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">联邦学习</a>（federated
+learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=梯度更新&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=安全聚合&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">安全聚合</a>（e.g.,
+求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=同态加密&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">同态加密</a>（Homomorphic
+Encryption，HE）的方案。各种方案各有利弊。
+本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。
+<em>Main Contributions:
+本文主要提出了一种梯度量化的方法，并对量化梯度进行batch
+encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
 </blockquote>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193"></p>
-<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>前人的量化方案：将一个 $y \in \left [ -1, 1 \right]$的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
-<p><img src="https://www.zhihu.com/equation?tex=Q(g)=%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]"> 是就近<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">取整函数</a>（rounding function）;<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D+n%5Ccdot+min" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]"> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个量化梯度之和。</p>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png"
+alt="image-20211203123128193" />
+<figcaption aria-hidden="true">image-20211203123128193</figcaption>
+</figure>
+<h2 id="process">Process</h2>
+<p>前人的量化方案：将一个 <span class="math inline">\(y \in \left [ -1,
+1
+\right]\)</span>的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
+<p><img
+src="https://www.zhihu.com/equation?tex=Q%28g%29%3D%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D"
+alt="[公式]" /> ，其中 <img
+src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]" /> 是就近<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=取整函数&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">取整函数</a>（rounding
+function）; <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D%2Bn%5Ccdot+min"
+alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n"
+alt="[公式]" /> 是 <img src="https://www.zhihu.com/equation?tex=n"
+alt="[公式]" /> 个量化梯度之和。</p>
 <p>但是上述量化方法存在一定的问题：</p>
 <blockquote>
-<ol>
-<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(%5Ccdot)" alt="[公式]"> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 的取值；</li>
-<li>容易溢出。因为所有的<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E6%AD%A3%E8%B4%9F%E6%A2%AF%E5%BA%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%B4%AF%E5%8A%A0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">累加值</a>容易导致溢出；</li>
+<ol type="1">
+<li>要正确计算 <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28%5Ccdot%29"
+alt="[公式]" /> ，必须事先预知 <img
+src="https://www.zhihu.com/equation?tex=n" alt="[公式]" />
+。因此，每次加入新的用户，需要手动检验调整 <img
+src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 的取值；</li>
+<li>容易溢出。因为所有的<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=正负梯度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=累加值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">累加值</a>容易导致溢出；</li>
 <li>不能区分正溢出和负溢出。</li>
 </ol>
 </blockquote>
 <p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
 <blockquote>
-<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；<br>\2. 关于<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%82%B9%E5%AF%B9%E7%A7%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1,1%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128,127%5D" alt="[公式]"> ，那么 <img src="https://www.zhihu.com/equation?tex=(-1+1)%5CRightarrow(-128+127)=-1" alt="[公式]"> ，结果错误；<br>\3. 均匀量化。这是为了保证<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E9%87%8F%E5%8C%96%E6%95%B0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
+<p>\1.
+有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；
+\2. 关于<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=原点对称&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将
+<img src="https://www.zhihu.com/equation?tex=%5B-1%2C1%5D"
+alt="[公式]" /> 量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B-128%2C127%5D"
+alt="[公式]" /> ，那么 <img
+src="https://www.zhihu.com/equation?tex=%28-1%2B1%29%5CRightarrow%28-128%2B127%29%3D-1"
+alt="[公式]" /> ，结果错误； \3. 均匀量化。这是为了保证<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=量化数值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
 </blockquote>
-<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha,0%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-(2%5Er-1),0%5D" alt="[公式]"> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0,%5Calpha%5D" alt="[公式]">量化到 <img src="https://www.zhihu.com/equation?tex=%5B0,(2%5Er-1)%5D" alt="[公式]"> 。；公式化表示如下：<br><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q(g)=+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil,+g%5Cin+%5B-%5Calpha,0%5D;%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor,+g+%5Cin+%5B0,%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]"> 分别是向上取整和向下取整函数；<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n/2%5Er" alt="[公式]"> ；<br>进一步，实用2-bits 表示符号位（<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=sign-bits&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]"> 便有了两种编码方式。</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261"></p>
-<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>实验的最终表现也是体现出$BatchCrypt$和$stock$相比在通信和计算上都有着很大的提升，但是和$Plaintext Learning$相比还是有很大的进步空间。</p>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" />
-
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" />
-
+<p>粗略来说便是将 <img
+src="https://www.zhihu.com/equation?tex=%5B-%5Calpha%2C0%5D"
+alt="[公式]" /> 量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B-%282%5Er-1%29%2C0%5D"
+alt="[公式]" /> ，将 <img
+src="https://www.zhihu.com/equation?tex=%5B0%2C%5Calpha%5D"
+alt="[公式]" />量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B0%2C%282%5Er-1%29%5D"
+alt="[公式]" /> 。；公式化表示如下： <img
+src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q%28g%29%3D+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil%2C+g%5Cin+%5B-%5Calpha%2C0%5D%3B%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor%2C+g+%5Cin+%5B0%2C%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+"
+alt="[公式]" /> ，其中 <img
+src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil"
+alt="[公式]" /> 和 <img
+src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor"
+alt="[公式]" /> 分别是向上取整和向下取整函数； <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%2F2%5Er"
+alt="[公式]" /> ； 进一步，实用2-bits 表示符号位（<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=sign-bits&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">sign-bits</a>）。如此，
+<img src="https://www.zhihu.com/equation?tex=0" alt="[公式]" />
+便有了两种编码方式。</p>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png"
+alt="image-20211203132307261" />
+<figcaption aria-hidden="true">image-20211203132307261</figcaption>
+</figure>
+<h2 id="performance">Performance</h2>
+<p>实验的最终表现也是体现出<span
+class="math inline">\(BatchCrypt\)</span>和<span
+class="math inline">\(stock\)</span>相比在通信和计算上都有着很大的提升，但是和<span
+class="math inline">\(Plaintext
+Learning\)</span>相比还是有很大的进步空间。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" /></p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" /></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -120,21 +195,6 @@
 </div>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 
@@ -201,25 +261,6 @@
 </div>
 
 
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 

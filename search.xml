@@ -13,45 +13,140 @@
       </tags>
   </entry>
   <entry>
+    <title>MIPS汇编语言（一）</title>
+    <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
+<p>MIPS(Millions of Instructions Per Second)</p>
+<p><strong>Classic flow</strong>:</p>
+<ul>
+<li>Fetch instruction</li>
+<li>Read registers</li>
+<li>Arithmetic operation</li>
+<li>Memory access</li>
+<li>Write back</li>
+</ul>
+<p>Five steps and four cycles(Read and write registers cost only half a
+cycle).</p>
+<p>Delay slot:</p>
+<p>After the jump and branch condition, there is a delay slot to fill a
+non-related operation(usually a n operation before the branch).</p>
+<h3 id="how-a-program-excutes">How a program excutes</h3>
+<ul>
+<li><p>genera 3-operand format</p>
+<pre class="assembly"><code>op    dest, src1, src2</code></pre></li>
+</ul>
+<h3 id="mips-instructions-memory-organization">MIPS instructions &amp;
+memory organization</h3>
+<ul>
+<li><p>type of instructions</p>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png"
+alt="image-20211117001847724" />
+<figcaption aria-hidden="true">image-20211117001847724</figcaption>
+</figure>
+<ul>
+<li>Data operations
+<ul>
+<li>Arithmetic(add, substrct……)</li>
+<li>Logical(and, or, not, xor……)</li>
+</ul></li>
+<li>Data transfer
+<ul>
+<li>Load(Memory -&gt; Register)</li>
+<li>Store(Register -&gt; Memory)</li>
+</ul></li>
+<li>Sequencing
+<ul>
+<li>Branch(conditional, &gt;, &lt;, ==……)</li>
+<li>Jump(unconditional, goto……)</li>
+</ul></li>
+</ul></li>
+<li><p>Registers</p>
+<ul>
+<li>32 General Purpose Registers</li>
+<li><strong>Very important!! </strong>
+<ul>
+<li><strong>ALL the values for instructions must come from
+registers!</strong></li>
+<li><strong>R0 is always zero!!</strong></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="data-operations-transfers">Data operations &amp; transfers</h3>
+<h3 id="sequencing">Sequencing</h3>
+]]></content>
+      <categories>
+        <category>Assembly Language</category>
+      </categories>
+      <tags>
+        <tag>MIPS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Machine Learning</title>
+    <url>/2021/11/16/Machine-Learning/</url>
+    <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DLG的代码实现</title>
     <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a href="https://www.paperswithcode.com/">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
-<p>作者的源代码其实思路比较简单，首先利用$torchvision$库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络$LeNet$和$ResNet$两种方法，我使用第一种方法，卷积通道数为12。</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">LeNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        super<span class="token punctuation">(</span>LeNet<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        act <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sigmoid
-        self<span class="token punctuation">.</span>body <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>fc <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-            nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">768</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-
-    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>body<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-        out <span class="token operator">=</span> out<span class="token punctuation">.</span>view<span class="token punctuation">(</span>out<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># print(out.size())</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> out
-</code></pre>
-<p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了$’str’ \ object \ has \ no \ attribute \ ‘…’$，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> ssl
-
-<span class="token comment" spellcheck="true"># 取消安全证书的检验，方便下载数据</span>
-ssl<span class="token punctuation">.</span>_create_default_https_context <span class="token operator">=</span> ssl<span class="token punctuation">.</span>_create_unverified_context
-</code></pre>
-<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看$dummy \ input$如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将$torch.manualseed()$的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" />
-
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" />
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试$dummy \ imput$的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
+    <content><![CDATA[<p>上一章我们简单地说明了<span class="math inline">\(Deep \ Leakage \
+from \
+Gradients\)</span>具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a
+href="https://www.paperswithcode.com">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
+<p>作者的源代码其实思路比较简单，首先利用<span
+class="math inline">\(torchvision\)</span>库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络<span
+class="math inline">\(LeNet\)</span>和<span
+class="math inline">\(ResNet\)</span>两种方法，我使用第一种方法，卷积通道数为12。</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LeNet(nn.Module):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(LeNet, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        act <span class="op">=</span> nn.Sigmoid</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.body <span class="op">=</span> nn.Sequential(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">3</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            act(),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">12</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            act(),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">12</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            act(),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.fc <span class="op">=</span> nn.Sequential(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">768</span>, <span class="dv">100</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> <span class="va">self</span>.body(x)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> out.view(out.size(<span class="dv">0</span>), <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(out.size())</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> <span class="va">self</span>.fc(out)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> out</span></code></pre></div>
+<p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了<span
+class="math inline">\(&#39;str&#39; \ object \ has \ no \ attribute \
+&#39;…&#39;\)</span>，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ssl</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 取消安全证书的检验，方便下载数据</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ssl._create_default_https_context <span class="op">=</span> ssl._create_unverified_context</span></code></pre></div>
+<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看<span
+class="math inline">\(dummy \
+input\)</span>如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将<span
+class="math inline">\(torch.manualseed()\)</span>的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" /></p>
+<h3 id="总结">总结</h3>
+<p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试<span
+class="math inline">\(dummy \
+imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
 ]]></content>
       <categories>
         <category>深度学习</category>
@@ -61,223 +156,131 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
       </tags>
   </entry>
   <entry>
-    <title>MIPS汇编语言（一）</title>
-    <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<h3 id="MIPS汇编语言入门"><a href="#MIPS汇编语言入门" class="headerlink" title="MIPS汇编语言入门"></a>MIPS汇编语言入门</h3><p>MIPS(Millions of Instructions Per Second)</p>
-<p><strong>Classic flow</strong>:</p>
+    <title>Hello World</title>
+    <url>/2021/11/01/Delphi/</url>
+    <content><![CDATA[<h2 id="introduction">Introduction</h2>
 <ul>
-<li>Fetch instruction</li>
-<li>Read registers</li>
-<li>Arithmetic operation</li>
-<li>Memory access</li>
-<li>Write back</li>
+<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。
+提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。
+<img
+src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70"
+alt="在这里插入图片描述" /></li>
 </ul>
-<p>Five steps and four cycles(Read and write registers cost only half a cycle).</p>
-<p>Delay slot:</p>
-<p>After the jump and branch condition, there is a delay slot to fill a non-related operation(usually a n operation before the branch).</p>
-<h3 id="How-a-program-excutes"><a href="#How-a-program-excutes" class="headerlink" title="How a program excutes"></a>How a program excutes</h3><ul>
-<li><p>genera 3-operand format</p>
-<pre class=" language-assembly"><code class="language-assembly">op    dest, src1, src2
-</code></pre>
-</li>
-</ul>
-<h3 id="MIPS-instructions-amp-memory-organization"><a href="#MIPS-instructions-amp-memory-organization" class="headerlink" title="MIPS instructions &amp; memory organization"></a>MIPS instructions &amp; memory organization</h3><ul>
-<li><p>type of instructions</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png" alt="image-20211117001847724"></p>
-<ul>
-<li>Data operations<ul>
-<li>Arithmetic(add, substrct……)</li>
-<li>Logical(and, or, not, xor……)</li>
-</ul>
-</li>
-<li>Data transfer<ul>
-<li>Load(Memory -&gt; Register)</li>
-<li>Store(Register -&gt; Memory)</li>
-</ul>
-</li>
-<li>Sequencing<ul>
-<li>Branch(conditional, &gt;, &lt;, &#x3D;&#x3D;……)</li>
-<li>Jump(unconditional, goto……)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Registers</p>
-<ul>
-<li>32 General Purpose Registers</li>
-<li>**Very important!! **<ul>
-<li><strong>ALL the values for instructions must come from registers!</strong></li>
-<li><strong>R0 is always zero!!</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Data-operations-amp-transfers"><a href="#Data-operations-amp-transfers" class="headerlink" title="Data operations &amp; transfers"></a>Data operations &amp; transfers</h3><h3 id="Sequencing"><a href="#Sequencing" class="headerlink" title="Sequencing"></a>Sequencing</h3>]]></content>
-      <categories>
-        <category>Assembly Language</category>
-      </categories>
-      <tags>
-        <tag>MIPS</tag>
-      </tags>
+<h2 id="tech">Tech</h2>
+<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。
+本篇论文的优化：
+线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。
+非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。
+然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。
+把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。
+<img src="https://img-blog.csdnimg.cn/20201230144547607.png"
+alt="在这里插入图片描述" /></p>
+]]></content>
   </entry>
   <entry>
     <title>YML配置文件使用小结</title>
     <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
-<h2 id="什么是YML文件"><a href="#什么是YML文件" class="headerlink" title="什么是YML文件"></a>什么是YML文件</h2><p> <strong>YAML（Yet Another Markup Language）</strong>（发音 &#x2F;ˈjæməl&#x2F; ）是 一种基于<a href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
+<h2 id="什么是yml文件">什么是YML文件</h2>
+<p><strong>YAML（Yet Another Markup Language）</strong>（发音 /ˈjæməl/
+）是 一种基于<a
+href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
 <p>yaml文件是一种通用的数据串行化格式。（我们在用于模块通信的时候，会将对象序列化为通信流，高效地传输到另一个模块，并且提供反序列化还原数据）</p>
-<h2 id="基本格式"><a href="#基本格式" class="headerlink" title="基本格式"></a>基本格式</h2><p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
+<h2 id="基本格式">基本格式</h2>
+<p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
 <ul>
 <li>大小写敏感</li>
 <li>使用缩进表示层级关系</li>
 <li>缩进时不允许使用Tab键，只允许使用空格。</li>
 <li>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</li>
 </ul>
-<p>在yml文件中，$#$符号表示的注释。yaml支持的数据类型有</p>
+<p>在yml文件中，<span
+class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类型有</p>
 <ul>
-<li>对象：键值对的集合，又称为映射（mapping）&#x2F; 哈希（hashes） &#x2F; 字典（dictionary）</li>
-<li>数组：一组按次序排列的值，又称为序列（sequence） &#x2F; 列表（list）</li>
+<li>对象：键值对的集合，又称为映射（mapping）/ 哈希（hashes） /
+字典（dictionary）</li>
+<li>数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</li>
 <li>纯量（scalars）：单个的、不可再分的值</li>
 </ul>
-<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">animal</span><span class="token punctuation">:</span> pets
-<span class="token key atrule">hash</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123; name: Steve, foo: bar &amp;#125;</span>
-</code></pre>
+<h4 id="对象">对象</h4>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">animal</span><span class="kw">:</span><span class="at"> pets</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hash</span><span class="kw">:</span><span class="at"> </span><span class="kw">&#123;</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Steve</span><span class="kw">,</span><span class="at"> </span><span class="fu">foo</span><span class="kw">:</span><span class="at"> bar </span><span class="kw">&#125;</span></span></code></pre></div>
 <p>转化为json为：</p>
-<pre class=" language-json"><code class="language-json">// conf.json
-&amp;#<span class="token number">123</span><span class="token punctuation">;</span>
-    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"animal"</span><span class="token operator">:</span> <span class="token string">"pets"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"hash"</span><span class="token operator">:</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Steve"</span><span class="token punctuation">,</span> <span class="token property">"foo"</span><span class="token operator">:</span> <span class="token string">"bar"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-&amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">Animal</span><span class="token punctuation">:</span>
- <span class="token punctuation">-</span> Cat
- <span class="token punctuation">-</span> Dog
- <span class="token punctuation">-</span> Goldfish
-</code></pre>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="er">//</span> <span class="er">conf.json</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="er">&#123;</span> <span class="dt">&quot;animal&quot;</span><span class="fu">:</span> <span class="st">&quot;pets&quot;</span> <span class="fu">&#125;</span><span class="er">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">&#123;</span> <span class="dt">&quot;hash&quot;</span><span class="fu">:</span> <span class="fu">&#123;</span> <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Steve&quot;</span><span class="fu">,</span> <span class="dt">&quot;foo&quot;</span><span class="fu">:</span> <span class="st">&quot;bar&quot;</span> <span class="fu">&#125;</span> <span class="fu">&#125;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="er">&#125;</span></span></code></pre></div>
+<h4 id="数组">数组</h4>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Animal</span><span class="kw">:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Cat</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Dog</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Goldfish</span></span></code></pre></div>
 <p>转化为json为：</p>
-<pre class=" language-json"><code class="language-json">//conf.json
-&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"Animal"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"Cat"</span><span class="token punctuation">,</span> <span class="token string">"Dog"</span><span class="token punctuation">,</span> <span class="token string">"Goldfish"</span> <span class="token punctuation">]</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token comment" spellcheck="true"># 正常情况下字符串不用写引号</span>
-<span class="token key atrule">str</span><span class="token punctuation">:</span> 这是一行字符串
-<span class="token comment" spellcheck="true"># 字符串内有空格或者特殊字符时需要加引号</span>
-<span class="token key atrule">str</span><span class="token punctuation">:</span> <span class="token string">'内容： 字符串'</span>
-</code></pre>
-<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">parent</span><span class="token punctuation">:</span> <span class="token null important">~</span>
-</code></pre>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="er">//conf.json</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span> <span class="dt">&quot;Animal&quot;</span><span class="fu">:</span> <span class="ot">[</span> <span class="st">&quot;Cat&quot;</span><span class="ot">,</span> <span class="st">&quot;Dog&quot;</span><span class="ot">,</span> <span class="st">&quot;Goldfish&quot;</span> <span class="ot">]</span> <span class="fu">&#125;</span></span></code></pre></div>
+<h4 id="字符串">字符串</h4>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 正常情况下字符串不用写引号</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span><span class="kw">:</span><span class="at"> 这是一行字符串</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 字符串内有空格或者特殊字符时需要加引号</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;内容： 字符串&#39;</span></span></code></pre></div>
+<h4 id="空值">空值</h4>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">parent</span><span class="kw">:</span><span class="at"> </span><span class="ch">~</span></span></code></pre></div>
 <p>等价于json中的</p>
-<pre class=" language-json"><code class="language-json">&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"parent"</span><span class="token operator">:</span> <span class="token null">null</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span> <span class="dt">&quot;parent&quot;</span><span class="fu">:</span> <span class="kw">null</span> <span class="fu">&#125;</span></span></code></pre></div>
 ]]></content>
       <categories>
         <category>配置文件语言</category>
       </categories>
       <tags>
         <tag>YML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>YML配置文件使用小结（二）</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2 id="步骤一：使用python脚本爬取网络图片并且进行压缩"><a href="#步骤一：使用python脚本爬取网络图片并且进行压缩" class="headerlink" title="步骤一：使用python脚本爬取网络图片并且进行压缩"></a>步骤一：使用python脚本爬取网络图片并且进行压缩</h2><p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png"></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png"></p>
-<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
-<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png"></p>
-<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二：-读入YAML文件并且对其进行修改"><a href="#步骤二：-读入YAML文件并且对其进行修改" class="headerlink" title="步骤二： 读入YAML文件并且对其进行修改"></a>步骤二： 读入YAML文件并且对其进行修改</h2><p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
-<ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p>
-</li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p>
-</li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p>
-</li>
-</ul>
-<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png"></p>
-]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
-      <tags>
-        <tag>YML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Machine Learning</title>
-    <url>/2021/11/16/Machine-Learning/</url>
-    <content><![CDATA[<h3 id="初识深度学习"><a href="#初识深度学习" class="headerlink" title="初识深度学习"></a>初识深度学习</h3>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
     <title>Hello World</title>
     <url>/2021/09/01/hello-world/</url>
-    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
+    <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
+<p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
 <p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
-</code></pre>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hexo new <span class="st">&quot;My New Post&quot;</span></span></code></pre></div>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hexo server</span></code></pre></div>
 <p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hexo generate</span></code></pre></div>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hexo deploy</span></code></pre></div>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/11/01/Delphi/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
-<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。<br>提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。<br><img src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
-</ul>
-<h2 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h2><p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。<br>本篇论文的优化：<br>线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。<br>非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。<br>然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。<br>把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。<br><img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>pycharm 环境变量问题</title>
-    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel desktop虚拟机。</p>
-<blockquote>
-<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
-</blockquote>
-<p>言归正传，我遇到的问题如下：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png"></p>
-<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
-<pre class=" language-bash"><code class="language-bash">ModuleNotFoundError: No Module named <span class="token string">'fedml_api'</span>
-</code></pre>
-<p>的错误。实在是让我很破防。</p>
-<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sys
-sys<span class="token punctuation">.</span>path<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
-<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token variable">$PYTHONPATH</span>
-</code></pre>
-<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
-]]></content>
-      <categories>
-        <category>Ubuntu</category>
-      </categories>
-      <tags>
-        <tag>Pycharm</tag>
-      </tags>
   </entry>
   <entry>
     <title>联邦学习（一）</title>
@@ -285,83 +288,196 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
     <content><![CDATA[<p>今天我们来看一下联邦学习的开山论文<code>Communication-Efficient Learning of Deep Networks from Decentralized Data</code>，简单介绍一下这个东西出现的背景。起因是谷歌的输入法想要做一个训练模型，基于谷歌超大体量的全球用户，他们的工程师提出了以下的解决问题的流程：</p>
 <blockquote>
 <ul>
-<li>Problems: Google wants to train a model using users’ data</li>
-<li>Solutions:<ul>
+<li>Problems: Google wants to train a model using users' data</li>
+<li>Solutions:
+<ul>
 <li>Centralized learning</li>
-<li>Collect users’ data</li>
+<li>Collect users' data</li>
 <li>Train a model on the cluster</li>
-</ul>
-</li>
-<li><strong>challenge</strong>: Users may refuse to upload their data, especially sensitive data to Google’s Server</li>
+</ul></li>
+<li><strong>challenge</strong>: Users may refuse to upload their data,
+especially sensitive data to Google's Server</li>
 </ul>
 </blockquote>
-<p><strong>问题显而易见，那么大量的隐私数据，用户是不可能允许你全部上传到服务器端进行训练的，</strong> 即使你谷歌无心，也难以保证其他的恶意用户不会窃取你的隐私。所以我们才会发现问题，也就有了这篇论文的诞生，下面我们开始详细地跟着论文过一遍。</p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><blockquote>
-<p>Increasingly, phones and tablets are the primary computing devices for many people. The powerful sensors on these devices (including cameras, microphones, and GPS), combined with the fact they are frequently carried, means they have access to an unprecedented amount of data, much of it private in nature.</p>
+<p><strong>问题显而易见，那么大量的隐私数据，用户是不可能允许你全部上传到服务器端进行训练的，</strong>
+即使你谷歌无心，也难以保证其他的恶意用户不会窃取你的隐私。所以我们才会发现问题，也就有了这篇论文的诞生，下面我们开始详细地跟着论文过一遍。</p>
+<h2 id="introduction">Introduction</h2>
+<blockquote>
+<p>Increasingly, phones and tablets are the primary computing devices
+for many people. The powerful sensors on these devices (including
+cameras, microphones, and GPS), combined with the fact they are
+frequently carried, means they have access to an unprecedented amount of
+data, much of it private in nature.</p>
 </blockquote>
 <p>首先这一段指出了联邦学习的主体就将集中在手机、平板等智能移动终端上，并且指出了数据隐私问题，我们不能直接将用户的数据赤裸裸地传到Server上进行训练。这样会导致隐私泄露。</p>
 <blockquote>
 <ul>
-<li>Instead, each client computes an update to the current global model maintained by the server, and only this update is communicated…….</li>
-<li>Since these updates are specific to improving the current model, there is no reason to store them once they have been applied.</li>
+<li>Instead, each client computes an update to the current global model
+maintained by the server, and only this update is
+communicated.......</li>
+<li>Since these updates are specific to improving the current model,
+there is no reason to store them once they have been applied.</li>
 </ul>
 </blockquote>
-<p>然后文章指出了一种方法就是：<strong>每个客户端自身利用自己的数据更新当前服务端的全局模型，然后只将这一小部分上传</strong> ，这样就使得至少从表面上看起来，客户的隐私始终没有离开client端。</p>
+<p>然后文章指出了一种方法就是：<strong>每个客户端自身利用自己的数据更新当前服务端的全局模型，然后只将这一小部分上传</strong>
+，这样就使得至少从表面上看起来，客户的隐私始终没有离开client端。</p>
 <blockquote>
 <ul>
-<li><p>the identification of the problem of training on decentralized data from mobile devices as an important research direction;</p>
-</li>
-<li><p>the selection of a straightforward and practical algorithm that can be applied to this setting;</p>
-</li>
-<li><p>an extensive empirical evaluation of the proposed approach. More concretely, we introduce the FederatedAveraging algorithm, which combines local stochastic gradient descent (SGD) on each client with a server that performs model averaging.</p>
-</li>
+<li><p>the identification of the problem of training on decentralized
+data from mobile devices as an important research direction;</p></li>
+<li><p>the selection of a straightforward and practical algorithm that
+can be applied to this setting;</p></li>
+<li><p>an extensive empirical evaluation of the proposed approach. More
+concretely, we introduce the FederatedAveraging algorithm, which
+combines local stochastic gradient descent (SGD) on each client with a
+server that performs model averaging.</p></li>
 </ul>
 </blockquote>
 <p>在这里作者渐渐给我们展开一个模型了，名字叫<code>FederatedAveraging</code>的算法，大致是想要让<code>devices</code>在各自利用随机梯度下降（SGD）训练数据，然后传给<code>Server</code>。然后作者号称这个模型是可以做到在非独立同分布（NON-IID）数据下的鲁棒性，并且可以减少分布式学习中的通信轮数。</p>
-<h4 id="Federated-Learning"><a href="#Federated-Learning" class="headerlink" title="Federated Learning"></a>Federated Learning</h4><blockquote>
-<ol>
-<li>Training on real-world data from mobile devices provides a distinct advantage over training on proxy data that is generally available in the data center. </li>
-<li>This data is privacy sensitive or large in size (compared to the size of the model), so it is preferable not to log it to the data center purely for the purpose of model training (in service of the focused collection principle). </li>
-<li>For supervised tasks, labels on the data can be inferred naturally from user interaction.</li>
+<h4 id="federated-learning">Federated Learning</h4>
+<blockquote>
+<ol type="1">
+<li>Training on real-world data from mobile devices provides a distinct
+advantage over training on proxy data that is generally available in the
+data center.</li>
+<li>This data is privacy sensitive or large in size (compared to the
+size of the model), so it is preferable not to log it to the data center
+purely for the purpose of model training (in service of the focused
+collection principle).</li>
+<li>For supervised tasks, labels on the data can be inferred naturally
+from user interaction.</li>
 </ol>
 </blockquote>
-<p>然后作者给出了适用于联邦学习的应用问题，总结来说就是有三点特性：<strong>一是适用于需要更加真实的来自于现实生活的数据，这一点是数据中心的样板数据无法比拟的优势；二是这些数据是相当隐私或者相当庞大的，不适用于完全传输到服务中心进行训练；三是对于监督任务，数据标签很容易就能从用户交互中获得。</strong> 紧接着，作者举出了很明显的两个例子：<em><strong>image classification</strong></em>和<em><strong>language models</strong></em>，仔细分析会发现这些都满足上面的三点特性，并且分别可以将卷积神经网络和递归神经网络应用模型。</p>
-<h4 id="Privacy"><a href="#Privacy" class="headerlink" title="Privacy"></a>Privacy</h4><p>这里作者简单地argue了一下联邦学习对于隐私泄露的风险仅仅在于<code>minimal update necessary to improve a particular model</code>，并且提到会在文章最后简单介绍一下和差分隐私算法的结合。</p>
-<h4 id="Federated-Optimization"><a href="#Federated-Optimization" class="headerlink" title="Federated Optimization"></a>Federated Optimization</h4><blockquote>
+<p>然后作者给出了适用于联邦学习的应用问题，总结来说就是有三点特性：<strong>一是适用于需要更加真实的来自于现实生活的数据，这一点是数据中心的样板数据无法比拟的优势；二是这些数据是相当隐私或者相当庞大的，不适用于完全传输到服务中心进行训练；三是对于监督任务，数据标签很容易就能从用户交互中获得。</strong>
+紧接着，作者举出了很明显的两个例子：<strong><em>image
+classification</em></strong>和<strong><em>language
+models</em></strong>，仔细分析会发现这些都满足上面的三点特性，并且分别可以将卷积神经网络和递归神经网络应用模型。</p>
+<h4 id="privacy">Privacy</h4>
+<p>这里作者简单地argue了一下联邦学习对于隐私泄露的风险仅仅在于<code>minimal update necessary to improve a particular model</code>，并且提到会在文章最后简单介绍一下和差分隐私算法的结合。</p>
+<h4 id="federated-optimization">Federated Optimization</h4>
+<blockquote>
 <ul>
-<li>**Non-IID: **    The training data on a given client is typically based on the usage of the mobile device by a particular user, and hence any particular user’s local dataset will not be representative of the population distribution.</li>
-<li>**Unbalanced: **     The training data on a given client is typically based on the usage of the mobile device by a particular user, and hence any particular user’s local dataset will not be representative of the population distribution.</li>
-<li>**Massively distributed: **    We expect the number of clients participating in an optimization to be much larger than the average number of examples per client.</li>
-<li>**Limited communication: **     Mobile devices are frequently offline or on slow or expensive connections.</li>
+<li><strong>Non-IID: </strong> The training data on a given client is
+typically based on the usage of the mobile device by a particular user,
+and hence any particular user’s local dataset will not be representative
+of the population distribution.</li>
+<li><strong>Unbalanced: </strong> The training data on a given client is
+typically based on the usage of the mobile device by a particular user,
+and hence any particular user’s local dataset will not be representative
+of the population distribution.</li>
+<li><strong>Massively distributed: </strong> We expect the number of
+clients participating in an optimization to be much larger than the
+average number of examples per client.</li>
+<li><strong>Limited communication: </strong> Mobile devices are
+frequently offline or on slow or expensive connections.</li>
 </ul>
 </blockquote>
-<p>总的来说，联邦学习比一般的分布式机器学习要考虑的优化问题更多一点。作者给出了其中的四点（当然其实还有更多的问题等待着暴露），第一是各个节点没办法实现数据的<strong>独立同分布</strong> ，每个手机的数据特点显然也无法概括整体的数据集；第二是<strong>不平衡性</strong> ，显然有些用户的使用频率、数据质量可能高于另一些用户，那么如何分配权重也是一个很大的问题；第三就是<strong>超大体量的分布式计算</strong> ，显然用户的数量已经远远超过了在实验室中的样例；第四是<strong>交流的限制性</strong> ，我们都知道手机等移动端设备肯定会经常出现不稳定的现状，掉线、低带宽的通信都是问题。作者重点argue的是 Non-IID和不平衡性。</p>
+<p>总的来说，联邦学习比一般的分布式机器学习要考虑的优化问题更多一点。作者给出了其中的四点（当然其实还有更多的问题等待着暴露），第一是各个节点没办法实现数据的<strong>独立同分布</strong>
+，每个手机的数据特点显然也无法概括整体的数据集；第二是<strong>不平衡性</strong>
+，显然有些用户的使用频率、数据质量可能高于另一些用户，那么如何分配权重也是一个很大的问题；第三就是<strong>超大体量的分布式计算</strong>
+，显然用户的数量已经远远超过了在实验室中的样例；第四是<strong>交流的限制性</strong>
+，我们都知道手机等移动端设备肯定会经常出现不稳定的现状，掉线、低带宽的通信都是问题。作者重点argue的是
+Non-IID和不平衡性。</p>
 <blockquote>
-<p>There is a fixed set of K clients, each with a fixed local dataset. At the beginning of each round, a random fraction C of clients is selected, and the server sends the current global algorithm state to each of these clients (e.g., the current model parameters).</p>
+<p>There is a fixed set of K clients, each with a fixed local dataset.
+At the beginning of each round, a random fraction C of clients is
+selected, and the server sends the current global algorithm state to
+each of these clients (e.g., the current model parameters).</p>
 </blockquote>
-<p>作者首先做了一个实验，固定K个Client，每个Client都持有一定的本地数据。**从中随机挑选一部分客户端 ** ，服务器将<code>model parameters</code>发送给这些客户端，客户端利用本地的数据集进行运算，并且将更新后的参数发送给服务端，服务端整合数据以后重复上述过程，继续发送给客户端。（至于为什么只选择一部分Clients，作者给出的解释是<code>We only select a fraction of clients for effificiency, as our experiments show diminishing returns for adding more clients beyond a certain point.</code>）换言之，是为了实验的效率考虑。</p>
-<p>对于大部分非凸神经网络，我们考虑以下的公式是普适的：<br>$$<br>\min <em>{ w \in \mathbb{ R }^{ d } } f(w) \quad \text { where } \quad f(w) \stackrel{ \operatorname{ def } } { &#x3D; } \frac { 1 } { n } \sum</em>{ i&#x3D;1 }^{ n } f_{ i }(w)<br>$$<br>对于分布式机器学习的问题，我们定义如下的函数$f_{i}(w)&#x3D;l(x_{i},y_{i};w)$，来表示由$model \ parameter \ w$造成的$loss$损失$(x_{i},y_{i})$。我们假设有K个Clients，并且client k上分配到的数据集索引为$P_{k}$，并且$n_{k}&#x3D;|P_{k}|$，我们可以修改上述公式为<br>$$<br>f(w)&#x3D;\sum_{k&#x3D;1}^{K} \frac{n_{k}}{n}F_{k}(w) \quad where \quad F_{k}(w)&#x3D;\frac{1}{n_{k}}\sum_{i\in{P_{k}}}f_{i}(w).<br>$$<br>从这个式子我们可以看出，如果每个节点Client的数据是完全随机分布的话，也就是会做到$Independent \ &amp; \ Identically \ Distributed \ (IID) $，那么我们就可以得到$F_{k}(w)$的期望事实上是和$f(w)$大抵相近的，也就是每个独立节点得到的模型已经几乎可以代替全局模型。</p>
-<p>但是联邦学习中明显数据的分布是不满足$IID$的，每个用户节点都带有很强的个性，所以无法使用这种假设。作者为了破坏这种随机性，在实验中使用的是<code>(that is, F could be an arbitrarily bad approximationto f)</code>，也就是将$F_{k}$拟合为一个很糟糕的函数以至于无法很好地描述$f$。</p>
-<p>上面是针对模型非独立同分布作出的假设。下面作者考虑如何对联邦学习的通信进行优化。显然的是，在计算中心，用有足够的带宽和稳定的通信，那么针对计算量的优化是很有必要的；但是联邦学习的环境下，用户节点的带宽甚至无法超过1MB&#x2F;s，而且像手机等移动设备，通常用户只会在充电、使用未计量的WIFI时才会主动参与计算，这限制了通信；另一方面，考虑到现代设备比如手机都有着相对较快的处理器以及GPU，每台设备上自己的数据集也是非常小的尺度，在多数模型下，计算所带来的消耗和通信相比，几乎可以忽略不计。所以，作者给出的优化方法就是，在客户端本地使用额外的计算，来减少需要通信的轮数，具体来说是以下两个方面：</p>
+<p>作者首先做了一个实验，固定K个Client，每个Client都持有一定的本地数据。<strong>从中随机挑选一部分客户端
+</strong>
+，服务器将<code>model parameters</code>发送给这些客户端，客户端利用本地的数据集进行运算，并且将更新后的参数发送给服务端，服务端整合数据以后重复上述过程，继续发送给客户端。（至于为什么只选择一部分Clients，作者给出的解释是<code>We only select a fraction of clients for effificiency, as our experiments show diminishing returns for adding more clients beyond a certain point.</code>）换言之，是为了实验的效率考虑。</p>
+<p>对于大部分非凸神经网络，我们考虑以下的公式是普适的： <span
+class="math display">\[
+\min _{ w \in \mathbb{ R }^{ d } } f(w) \quad \text { where } \quad f(w)
+\stackrel{ \operatorname{ def } } { = } \frac { 1 } { n } \sum_{ i=1 }^{
+n } f_{ i }(w)
+\]</span> 对于分布式机器学习的问题，我们定义如下的函数<span
+class="math inline">\(f_{i}(w)=l(x_{i},y_{i};w)\)</span>，来表示由<span
+class="math inline">\(model \ parameter \ w\)</span>造成的<span
+class="math inline">\(loss\)</span>损失<span
+class="math inline">\((x_{i},y_{i})\)</span>。我们假设有K个Clients，并且client
+k上分配到的数据集索引为<span
+class="math inline">\(P_{k}\)</span>，并且<span
+class="math inline">\(n_{k}=|P_{k}|\)</span>，我们可以修改上述公式为
+<span class="math display">\[
+f(w)=\sum_{k=1}^{K} \frac{n_{k}}{n}F_{k}(w) \quad where \quad
+F_{k}(w)=\frac{1}{n_{k}}\sum_{i\in{P_{k}}}f_{i}(w).
+\]</span>
+从这个式子我们可以看出，如果每个节点Client的数据是完全随机分布的话，也就是会做到$Independent
+ &amp;  Identically  Distributed  (IID) <span
+class="math inline">\(，那么我们就可以得到\)</span>F_{k}(w)<span
+class="math inline">\(的期望事实上是和\)</span>f(w)$大抵相近的，也就是每个独立节点得到的模型已经几乎可以代替全局模型。</p>
+<p>但是联邦学习中明显数据的分布是不满足<span
+class="math inline">\(IID\)</span>的，每个用户节点都带有很强的个性，所以无法使用这种假设。作者为了破坏这种随机性，在实验中使用的是<code>(that is, F could be an arbitrarily bad approximationto f)</code>，也就是将<span
+class="math inline">\(F_{k}\)</span>拟合为一个很糟糕的函数以至于无法很好地描述<span
+class="math inline">\(f\)</span>。</p>
+<p>上面是针对模型非独立同分布作出的假设。下面作者考虑如何对联邦学习的通信进行优化。显然的是，在计算中心，用有足够的带宽和稳定的通信，那么针对计算量的优化是很有必要的；但是联邦学习的环境下，用户节点的带宽甚至无法超过1MB/s，而且像手机等移动设备，通常用户只会在充电、使用未计量的WIFI时才会主动参与计算，这限制了通信；另一方面，考虑到现代设备比如手机都有着相对较快的处理器以及GPU，每台设备上自己的数据集也是非常小的尺度，在多数模型下，计算所带来的消耗和通信相比，几乎可以忽略不计。所以，作者给出的优化方法就是，在客户端本地使用额外的计算，来减少需要通信的轮数，具体来说是以下两个方面：</p>
 <blockquote>
 <ul>
-<li><em>increased parallelism</em>, where we use more clients working independently between each communication round.</li>
-<li><em>increased computation on each client</em>, where rather than performing a simple computation like a gradient calculation, each client performs a more complex calculation between each communication round.</li>
+<li><em>increased parallelism</em>, where we use more clients working
+independently between each communication round.</li>
+<li><em>increased computation on each client</em>, where rather than
+performing a simple computation like a gradient calculation, each client
+performs a more complex calculation between each communication
+round.</li>
 </ul>
 </blockquote>
 <p>相较于增加数据的并发性，作者在实验中的方法是增加在每台客户端上的计算量，不仅仅再是简单的梯度计算。</p>
-<h4 id="Related-work"><a href="#Related-work" class="headerlink" title="Related work"></a>Related work</h4><p>总结前人在分布式计算中作出的贡献，$McDonald$等人研究了通过逐轮迭代平均本地训练模型的方法进行分布式训练；$Zhang$等人也研究了通过一种”软”平均的方式来实现异步分布训练。这些研究成果最大的问题就是要么只考虑到了数据中心少量的$worker \ node$s集合，要么就是忽略了数据的$Unbalance$和$Non-IID$特性，而这些恰恰都是联邦学习的特征。</p>
-<p>同时作者也提到了诸如$Neverova$和$Shori \ and \ Shmatikov$等研究团队都在考虑用户数据的隐私敏感问题，也采取了一定的措施来防止，但是依然没有考虑到上述的两点问题。等等多种算法都不能完美地解决联邦学习中存在的问题。</p>
-<p>作者考虑的（参数化）算法是简单的做一次平均，也就是说每一个客户端利用本地的数据训练一个最小化$Loss$函数的模型，然后这些模型将被平均成为全局模型。作者也指出，在$IID$情况下，这种方法训练出的本地模型甚至比全局模型更优，当然，是在某些特殊的状况。</p>
-<h2 id="The-FederatedAveraging-Algorithm"><a href="#The-FederatedAveraging-Algorithm" class="headerlink" title="The FederatedAveraging Algorithm"></a>The FederatedAveraging Algorithm</h2><p>在这一部分作者开始介绍著名的<code>FedAvg</code>算法。首先，作者指出最近的深度学习的研究几乎都是依赖于随机梯度下降的方法$(SGD)$；而事实上很多的研究进展也都是可以理解为在调整模型的结构（或者是损失函数）来使得模型可以实现通过简单的基于梯度的优化。</p>
-<p>根据已有的前人的实验结果可以发现，$SGD$是可以应用在联邦优化上的。只不过之前的在数据中心做的实验，为了提高效率，都是采取小的batch，多的rounds。但是考虑到在联邦学习中，参与计算的客户端可以很多，而且不必考虑<code>wall-clock time</code>的损失问题，所以作者的实验都是基于较大的批尺寸的同步随机梯度下降法。每次从所有客户端中随机选择一部分，比例大小为C，这里当$C&#x3D;1$时，也就是全批次的非随机梯度下降算法。我们称这种算法为$FederatedSGD$或$FedSGD$。</p>
-<p>一种典型的算法是，当$C&#x3D;1$时，在一个固定的学习率$\eta$和客户端数量$k$中，每一个节点应用以下的梯度计算：<br>$$<br>g_{k}&#x3D;\nabla{F_{k}(w_t)}<br>$$<br>然后中央服务器汇合这些梯度并且做一次全局的更新：<br>$$<br>w_{t+1} \gets w_{t}-\eta\sum_{k&#x3D;1}^{K} \frac {n_{k}}{n} g_{k}&#x3D;w_{t}-\eta\nabla f(w_{t})<br>$$<br><strong>一种等价的变换就是对于每个节点来说都利用本地的数据集做一次参数的更新，然后将这些更新后的结果交给中央服务器，中央服务器对这些本地已经局部梯度更新后的参数再做加权平均。</strong> 这也就是整个联邦学习$FederatedAveraging$的核心：<br>$$<br>\forall{k}, \quad  w_{t+1}^{k} \gets w_{t}- \eta g_{k} \<br>then, \quad w_{t+1} \gets \sum_{k&#x3D;1}^K \frac {n_{k}}{n} w_{t+1}^{k}<br>$$<br>因此，到了这一步我们就已经搞清楚了整个$FedAvg$算法的要点，那就是把梯度计算和模型参数更新全部下放到客户端节点中去，然后各个client相当于直接将模型参数传回云端，云端的服务器最终只需要简单地对这些模型作加权平均处理，然后再下放到各个客户端作为新一轮训练的模型参数。这样的话也带来了很大的一个便捷那就是，<strong>本地客户端可以多次重复进行梯度下降的过程</strong>，以期在更少的全局轮数内获得更好的拟合效果。针对每个客户端设备的计算量，有如下的衡量参数：</p>
+<h4 id="related-work">Related work</h4>
+<p>总结前人在分布式计算中作出的贡献，<span
+class="math inline">\(McDonald\)</span>等人研究了通过逐轮迭代平均本地训练模型的方法进行分布式训练；<span
+class="math inline">\(Zhang\)</span>等人也研究了通过一种"软"平均的方式来实现异步分布训练。这些研究成果最大的问题就是要么只考虑到了数据中心少量的<span
+class="math inline">\(worker \
+node\)</span>s集合，要么就是忽略了数据的<span
+class="math inline">\(Unbalance\)</span>和<span
+class="math inline">\(Non-IID\)</span>特性，而这些恰恰都是联邦学习的特征。</p>
+<p>同时作者也提到了诸如<span
+class="math inline">\(Neverova\)</span>和<span
+class="math inline">\(Shori \ and \
+Shmatikov\)</span>等研究团队都在考虑用户数据的隐私敏感问题，也采取了一定的措施来防止，但是依然没有考虑到上述的两点问题。等等多种算法都不能完美地解决联邦学习中存在的问题。</p>
+<p>作者考虑的（参数化）算法是简单的做一次平均，也就是说每一个客户端利用本地的数据训练一个最小化<span
+class="math inline">\(Loss\)</span>函数的模型，然后这些模型将被平均成为全局模型。作者也指出，在<span
+class="math inline">\(IID\)</span>情况下，这种方法训练出的本地模型甚至比全局模型更优，当然，是在某些特殊的状况。</p>
+<h2 id="the-federatedaveraging-algorithm">The FederatedAveraging
+Algorithm</h2>
+<p>在这一部分作者开始介绍著名的<code>FedAvg</code>算法。首先，作者指出最近的深度学习的研究几乎都是依赖于随机梯度下降的方法<span
+class="math inline">\((SGD)\)</span>；而事实上很多的研究进展也都是可以理解为在调整模型的结构（或者是损失函数）来使得模型可以实现通过简单的基于梯度的优化。</p>
+<p>根据已有的前人的实验结果可以发现，<span
+class="math inline">\(SGD\)</span>是可以应用在联邦优化上的。只不过之前的在数据中心做的实验，为了提高效率，都是采取小的batch，多的rounds。但是考虑到在联邦学习中，参与计算的客户端可以很多，而且不必考虑<code>wall-clock time</code>的损失问题，所以作者的实验都是基于较大的批尺寸的同步随机梯度下降法。每次从所有客户端中随机选择一部分，比例大小为C，这里当<span
+class="math inline">\(C=1\)</span>时，也就是全批次的非随机梯度下降算法。我们称这种算法为<span
+class="math inline">\(FederatedSGD\)</span>或<span
+class="math inline">\(FedSGD\)</span>。</p>
+<p>一种典型的算法是，当<span
+class="math inline">\(C=1\)</span>时，在一个固定的学习率<span
+class="math inline">\(\eta\)</span>和客户端数量<span
+class="math inline">\(k\)</span>中，每一个节点应用以下的梯度计算： <span
+class="math display">\[
+g_{k}=\nabla{F_{k}(w_t)}
+\]</span> 然后中央服务器汇合这些梯度并且做一次全局的更新： <span
+class="math display">\[
+w_{t+1} \gets w_{t}-\eta\sum_{k=1}^{K} \frac {n_{k}}{n}
+g_{k}=w_{t}-\eta\nabla f(w_{t})
+\]</span>
+<strong>一种等价的变换就是对于每个节点来说都利用本地的数据集做一次参数的更新，然后将这些更新后的结果交给中央服务器，中央服务器对这些本地已经局部梯度更新后的参数再做加权平均。</strong>
+这也就是整个联邦学习<span
+class="math inline">\(FederatedAveraging\)</span>的核心： <span
+class="math display">\[
+\forall{k}, \quad  w_{t+1}^{k} \gets w_{t}- \eta g_{k} \\
+then, \quad w_{t+1} \gets \sum_{k=1}^K \frac {n_{k}}{n} w_{t+1}^{k}
+\]</span> 因此，到了这一步我们就已经搞清楚了整个<span
+class="math inline">\(FedAvg\)</span>算法的要点，那就是把梯度计算和模型参数更新全部下放到客户端节点中去，然后各个client相当于直接将模型参数传回云端，云端的服务器最终只需要简单地对这些模型作加权平均处理，然后再下放到各个客户端作为新一轮训练的模型参数。这样的话也带来了很大的一个便捷那就是，<strong>本地客户端可以多次重复进行梯度下降的过程</strong>，以期在更少的全局轮数内获得更好的拟合效果。针对每个客户端设备的计算量，有如下的衡量参数：</p>
 <blockquote>
-<p><em><strong>C</strong></em>：the fraction of clients that perform computation on each round;</p>
-<p><em><strong>E</strong></em>：the number of training passes each client makes over its local dataset on each round;</p>
-<p><em><strong>B</strong></em>：the local minibatch size used for client updates.</p>
+<p><strong><em>C</em></strong>：the fraction of clients that perform
+computation on each round;</p>
+<p><strong><em>E</em></strong>：the number of training passes each
+client makes over its local dataset on each round;</p>
+<p><strong><em>B</em></strong>：the local minibatch size used for client
+updates.</p>
 </blockquote>
-<p>简单解释一下，就是：C代表的是每轮计算中参与的设备比例；E代表的是每个节点每轮中本地的训练次数；B代表的是本地训练中每次拿出的batch size。那么这样一来一个拥有$n_{k}$个样例，</p>
+<p>简单解释一下，就是：C代表的是每轮计算中参与的设备比例；E代表的是每个节点每轮中本地的训练次数；B代表的是本地训练中每次拿出的batch
+size。那么这样一来一个拥有<span
+class="math inline">\(n_{k}\)</span>个样例，</p>
 ]]></content>
       <categories>
         <category>联邦学习</category>
@@ -373,173 +489,226 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
   <entry>
     <title>基于高效同态加密的Cross-silo联邦学习</title>
     <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><blockquote>
-<p>回顾<a href="https://www.zhihu.com/search?q=%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=%E5%AE%89%E5%85%A8%E8%81%9A%E5%90%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">安全聚合</a>（e.g., 求和&#x2F;平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。<br>本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。<br><em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
+    <content><![CDATA[<h2 id="background">Background</h2>
+<blockquote>
+<p>回顾<a
+href="https://www.zhihu.com/search?q=联邦学习&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">联邦学习</a>（federated
+learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a
+href="https://www.zhihu.com/search?q=梯度更新&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a
+href="https://www.zhihu.com/search?q=安全聚合&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">安全聚合</a>（e.g.,
+求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a
+href="https://www.zhihu.com/search?q=同态加密&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">同态加密</a>（Homomorphic
+Encryption，HE）的方案。各种方案各有利弊。
+本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。
+<em>Main Contributions:
+本文主要提出了一种梯度量化的方法，并对量化梯度进行batch
+encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
 </blockquote>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193"></p>
-<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>前人的量化方案：将一个 $y \in \left [ -1, 1 \right]$的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
-<p><img src="https://www.zhihu.com/equation?tex=Q(g)=%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]"> 是就近<a href="https://www.zhihu.com/search?q=%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">取整函数</a>（rounding function）;<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D+n%5Ccdot+min" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]"> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个量化梯度之和。</p>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png"
+alt="image-20211203123128193" />
+<figcaption aria-hidden="true">image-20211203123128193</figcaption>
+</figure>
+<h2 id="process">Process</h2>
+<p>前人的量化方案：将一个 <span class="math inline">\(y \in \left [ -1,
+1
+\right]\)</span>的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
+<p><img
+src="https://www.zhihu.com/equation?tex=Q%28g%29%3D%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D"
+alt="[公式]" /> ，其中 <img
+src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]" /> 是就近<a
+href="https://www.zhihu.com/search?q=取整函数&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">取整函数</a>（rounding
+function）; <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D%2Bn%5Ccdot+min"
+alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n"
+alt="[公式]" /> 是 <img src="https://www.zhihu.com/equation?tex=n"
+alt="[公式]" /> 个量化梯度之和。</p>
 <p>但是上述量化方法存在一定的问题：</p>
 <blockquote>
-<ol>
-<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(%5Ccdot)" alt="[公式]"> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 的取值；</li>
-<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=%E6%AD%A3%E8%B4%9F%E6%A2%AF%E5%BA%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=%E7%B4%AF%E5%8A%A0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">累加值</a>容易导致溢出；</li>
+<ol type="1">
+<li>要正确计算 <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28%5Ccdot%29"
+alt="[公式]" /> ，必须事先预知 <img
+src="https://www.zhihu.com/equation?tex=n" alt="[公式]" />
+。因此，每次加入新的用户，需要手动检验调整 <img
+src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 的取值；</li>
+<li>容易溢出。因为所有的<a
+href="https://www.zhihu.com/search?q=正负梯度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a
+href="https://www.zhihu.com/search?q=累加值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">累加值</a>容易导致溢出；</li>
 <li>不能区分正溢出和负溢出。</li>
 </ol>
 </blockquote>
 <p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
 <blockquote>
-<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；<br>\2. 关于<a href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%82%B9%E5%AF%B9%E7%A7%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1,1%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128,127%5D" alt="[公式]"> ，那么 <img src="https://www.zhihu.com/equation?tex=(-1+1)%5CRightarrow(-128+127)=-1" alt="[公式]"> ，结果错误；<br>\3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=%E9%87%8F%E5%8C%96%E6%95%B0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
+<p>\1.
+有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；
+\2. 关于<a
+href="https://www.zhihu.com/search?q=原点对称&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将
+<img src="https://www.zhihu.com/equation?tex=%5B-1%2C1%5D"
+alt="[公式]" /> 量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B-128%2C127%5D"
+alt="[公式]" /> ，那么 <img
+src="https://www.zhihu.com/equation?tex=%28-1%2B1%29%5CRightarrow%28-128%2B127%29%3D-1"
+alt="[公式]" /> ，结果错误； \3. 均匀量化。这是为了保证<a
+href="https://www.zhihu.com/search?q=量化数值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
 </blockquote>
-<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha,0%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-(2%5Er-1),0%5D" alt="[公式]"> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0,%5Calpha%5D" alt="[公式]">量化到 <img src="https://www.zhihu.com/equation?tex=%5B0,(2%5Er-1)%5D" alt="[公式]"> 。；公式化表示如下：<br><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q(g)=+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil,+g%5Cin+%5B-%5Calpha,0%5D;%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor,+g+%5Cin+%5B0,%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]"> 分别是向上取整和向下取整函数；<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n/2%5Er" alt="[公式]"> ；<br>进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]"> 便有了两种编码方式。</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261"></p>
-<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>实验的最终表现也是体现出$BatchCrypt$和$stock$相比在通信和计算上都有着很大的提升，但是和$Plaintext Learning$相比还是有很大的进步空间。</p>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" />
-
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" />
-
+<p>粗略来说便是将 <img
+src="https://www.zhihu.com/equation?tex=%5B-%5Calpha%2C0%5D"
+alt="[公式]" /> 量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B-%282%5Er-1%29%2C0%5D"
+alt="[公式]" /> ，将 <img
+src="https://www.zhihu.com/equation?tex=%5B0%2C%5Calpha%5D"
+alt="[公式]" />量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B0%2C%282%5Er-1%29%5D"
+alt="[公式]" /> 。；公式化表示如下： <img
+src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q%28g%29%3D+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil%2C+g%5Cin+%5B-%5Calpha%2C0%5D%3B%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor%2C+g+%5Cin+%5B0%2C%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+"
+alt="[公式]" /> ，其中 <img
+src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil"
+alt="[公式]" /> 和 <img
+src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor"
+alt="[公式]" /> 分别是向上取整和向下取整函数； <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%2F2%5Er"
+alt="[公式]" /> ； 进一步，实用2-bits 表示符号位（<a
+href="https://www.zhihu.com/search?q=sign-bits&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">sign-bits</a>）。如此，
+<img src="https://www.zhihu.com/equation?tex=0" alt="[公式]" />
+便有了两种编码方式。</p>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png"
+alt="image-20211203132307261" />
+<figcaption aria-hidden="true">image-20211203132307261</figcaption>
+</figure>
+<h2 id="performance">Performance</h2>
+<p>实验的最终表现也是体现出<span
+class="math inline">\(BatchCrypt\)</span>和<span
+class="math inline">\(stock\)</span>相比在通信和计算上都有着很大的提升，但是和<span
+class="math inline">\(Plaintext
+Learning\)</span>相比还是有很大的进步空间。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" /></p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" /></p>
 ]]></content>
       <tags>
         <tag>联邦学习</tag>
       </tags>
   </entry>
   <entry>
-    <title>深度神经网络中的梯度泄露问题</title>
-    <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
-<p>过年这几天虽然没少玩，但是也没少反思自己。觉得自己现在的成绩并不是完全没有原因的。尽管对外会说来到了顶级学府，身边多了更多了优秀的伙伴和竞争对手。但是我自己的内心知道，所谓鲶鱼效应，只有竞争才能激发自己的潜能。鄙人不才，但却自认为潜能远远没有开发完全。更多的时候，我因为个人性格的原因，会经常想得很多，喜欢漫无目的地乱走。但大家都知道，<strong>如果以路灯为起点，漫无目的地乱走，最终的期望就是回到终点。</strong>2021一整年对于我来说过得并不是很好。在这个同龄人在不断进步的时代，仿佛逆水行舟，不进则退。</p>
-<p><strong>但是每个人都会经历这样一段经历吧，人生的极小值点</strong>。所以对我来说，接下来的2022年，有一些确定的目标和计划就成为了迫在眉睫的事情。我相信自己的能力，从来都是如此。从科研方向来说，我还是得要在寒假期间，最起码需要了解梯度泄露是怎么回事，并且复现出代码。剩下的我想要看完吴恩达的机器学习课程，并且对于深度学习的花园书有所了解。争取在春季学期进行1-2个论文项目的参与。必须要在大三之前有所收获。</p>
-<p>那么我们就进入正题。</p>
-<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>首先作者告诉我们，在分布式训练或者协作训练中，梯度的共享是一件很正常的事。人们通常也很放心地认为梯度并不会泄露分布的训练数据。但是这篇文章用极其大胆的猜想和实验的佐证（包括$NLP$和图像处理的两个实验都得到了非常好的效果）告诉我们梯度共享也有可能会泄露用户数据，并且称之为$Deep \ Leakage \ from \ Gradients$。并且指出了以梯度剪枝$(gradients \ pruning)$为首的一些防御方法。</p>
-<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>首先作者指出，已经有研究表明，梯度的共享会泄露一些$properties \ of \ training \ data$， 结合$GAN$就可以生成和原图像相似的图片。但是作者给出的<em><strong>DLG</strong></em>方法则声称可以还原完整的数据和标签，甚至不用借助任何其他的生成网络模型。</p>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203225947.png" style="zoom:50%;" />
-
-<p>作者提出了一种优化算法来完成这一攻击：首先随机生成一种$dummy \ inputs$，然后通过正常的梯度推导过程生成一个$dummy \ gradients$，然后<strong>这个算法并不会像一般的优化算法一样去优化模型的权重，而是会优化dummy gradients和正常的梯度之间的“距离”，然后修改dummy inputs和输入标签，使得我们的伪数据越来越接近真实的数据，最终优化算法结束的时候，就是伪数据和真实数据完全匹配的时候。</strong></p>
-<p>同时，作者还指出<strong>梯度扰动，低精度和梯度压缩三种方法中，尺度大于1e-2的高斯噪声和拉普拉斯噪声有明显的作用，20％的梯度剪枝同样也能起到保护的作用，但是半精度的方法却不起作用。</strong></p>
-<h3 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h3><p>首先注意到的是，与“深度梯度泄露”相对应的是，浅层的梯度泄露。前人的研究表示从梯度中推断训练数据的信息特征是可能的。例如在语言任务中对训练单词的梯度就可以揭露哪些单词参与了训练集，我们明显可以察觉到，这类泄露是<strong>肤浅的</strong>，并且也没有过多的作用。</p>
-<p>然后作者指出了分布式机器学习中一定会出现的梯度交换问题。并且指出了无论是哪种分布方式，去中心化或者中心化的分布式训练，都有可能存在“深度梯度泄露”的问题。</p>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203224347.png" style="zoom: 50%;" />
-
-<h3 id="Method-amp-Experiment"><a href="#Method-amp-Experiment" class="headerlink" title="Method &amp; Experiment"></a>Method &amp; Experiment</h3><p>接下来我们来看看具体的方法。</p>
-<p>首先我们关注传统的分布式学习方法，在第$t$轮训练过程中，第$i$方节点从训练集中选取$minibatch(x_{t,i},y_{t,i})$的数据来计算梯度，迭代的过程如下：<br>$$<br>\nabla{ W_{t,i} }&#x3D;\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})} } {\partial{W_t} } \<br>\nabla{W_t}&#x3D;\frac{1} {N}\sum_{j}^{N} {\nabla{W_{t,j} } } \ ; \ \ \ W_{t+1}&#x3D;W_t-\eta \nabla{W_t}<br>$$<br>以中心服务器式分布训练为例，中心服务器会获得$k$方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入。<br>$$<br>\nabla{W’} &#x3D; \frac{\partial{l(F(x’,W),y’)} } {\partial{W} } \<br>x^{‘<em>},y^{‘</em>} &#x3D; \underset{x’,y’} {argmin}\left | \nabla{W’-\nabla{W} }\right|^2<br>$$<br>在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。<br>$$<br>x^{‘i \ mod \ N}<em>{t+1} \gets x^{‘i \ mod \ N}</em>{t} - \nabla_{x^{‘i \ mod \ N}<em>{t+1} }\mathbb{D} \<br>y^{‘i \ mod \ N}</em>{t+1} \gets y^{‘i \ mod \ N}<em>{t} - \nabla</em>{y^{‘i \ mod \ N}_{t+1} }\mathbb{D}<br>$$<br><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" /></p>
-<p>这听起来是一个天方夜谭，但是从实际的实验来看，效果出奇的好，除了个别像素伪影和顺序不同以外，几乎可以完全还原所有的源数据，比前人研究的方法也要明显占优。</p>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205153618.png" style="zoom:50%;" />
-
-<h3 id="Defense-Strategy"><a href="#Defense-Strategy" class="headerlink" title="Defense Strategy"></a>Defense Strategy</h3><p>如之前的介绍所示，作者给出了三种防御的方法，其中比较有效的就是使用差分隐私$(Differential \ Privacy)$的方法来进行防御。言简意赅的说，就是给梯度加上一定的“扰动”，使得攻击者无法获得准确的梯度信息，也就没办法从梯度中还原准确的源输入。噪声的种类有高斯噪声和拉普拉斯噪声，防御的效果与噪声的种类之间没有特别明显的关系，但是和噪声的扰动尺度有明显的正相关关系。同时，作者也顺便验证了减少梯度精度的方法无法起到有效的防御效果。下面是实验结果的截图：</p>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205163716.png" style="zoom:50%;" />
-
-<p>值得注意的是，尽管成功达到一定的干扰程度之后能够起到防御作用，但是$acc$率明显下降，已经开始影响收敛效率了。</p>
-<p>最后，作者还指出了“梯度剪枝”$(gradients \ pruning)$的方法是有效的。经过实验发现，能够让$DLG$还原的原始输入有明显偏差的情况下，修剪率应该在20%以上。但是最新的误差补偿技术和梯度压缩技术可以将梯度压缩300倍的情况下不影响$acc$，远远高于阈值20%。所以可以得知梯度修剪的方法是有效的。</p>
-<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>针对分布式训练的情况来说，在这篇文章的指出下，我们已经发现，“共享梯度，使得训练数据集留在本地”的做法已经不再安全了。仅仅通过简单的修改输入和标签，来靠近标准梯度的做法，就可以完全地还原源数据，这无异给分布式和协作式学习的模式带来了新的挑战。下一节我会用代码模拟一遍作者的实验，来还原$DLG$攻击。</p>
+    <title>YML配置文件使用小结（二）</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
+<h2
+id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
+<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
+<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
+<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
+<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
+读入YAML文件并且对其进行修改</h2>
+<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<ul>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
+</ul>
+<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
 ]]></content>
       <categories>
-        <category>深度学习</category>
+        <category>配置文件语言</category>
       </categories>
       <tags>
-        <tag>梯度泄露</tag>
+        <tag>YML</tag>
       </tags>
   </entry>
   <entry>
-    <title>联邦学习论文汇总</title>
-    <url>/2021/11/18/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<h4 id="总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐"><a href="#总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐" class="headerlink" title="总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐"></a>总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐</h4><ul>
-<li><p>Google的第一篇论文：</p>
-<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v54/mcmahan17a.html">Communication-Efficient Learning of Deep Networks from Decentralized Data</a></p>
-</li>
-<li><p>综述类型：</p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.04977">Advances and Open Problems in Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3298981">Federated machine learning: Concept and applications</a></p>
-</li>
-<li><p>联邦学习算法与通信优化：</p>
-<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/2810103.2813687">Privacy-Preserving Deep Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1902.00146">Agnostic Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.12022">Bayesian Nonparametric Federated Learning of Neural Networks</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2002.06440">Federated learning with matched averaging</a> (该文内容基于上面一篇文章的工作)</p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1610.05492">Federated learning: Strategies for improving communication efficiency</a></p>
-<p><a href="https://link.zhihu.com/?target=http://papers.nips.cc/paper/7029-federated-multi-task-learning">Federated multi-task learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1812.06127">Federated optimization in heterogeneous networks</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.10497">Fair resource allocation in federated learning</a> （与上面一篇同作者）</p>
-<p><a href="https://link.zhihu.com/?target=https://www2.eecs.berkeley.edu/Pubs/TechRpts/2020/EECS-2020-57.pdf">Communication-Efficient Federated Learning with Sketching</a></p>
-<p><a href="https://link.zhihu.com/?target=https://proceedings.icml.cc/paper/2020/file/8682cc30db9c025ecd3fee433f8ab54c-Paper.pdf">FedBoost: Communication-Efficient Algorithms for Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2004.10342">Federated Learning with Only Positive Labels</a></p>
-<p><a href="https://link.zhihu.com/?target=https://proceedings.icml.cc/paper/2020/file/c15da1f2b5e5ed6e6837a3802f0d1593-Supplemental.pdf">Scaffold: Stochastic controlled averaging for federated learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://www.ijcai.org/Proceedings/2020/0642.pdf">Federated Meta-Learning for Fraudulent Credit Card Detection</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.09323">Federated Learning with Communication Delay in Edge Networks</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2009.02557">FLFE: A Communication-Efficient and Privacy-Preserving Federated Feature Engineering Framework</a></p>
-</li>
-<li><p>联邦元学习：</p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.00818">Federated learning with personalization layers</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1909.12488">Improving federated learning personalization via model agnostic meta learning</a></p>
-</li>
-<li><p>联邦学习安全问题：</p>
-<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3133956.3134012">Deep models under the GAN: information leakage from collaborative deep learning</a></p>
-<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v108/bagdasaryan20a.html">How to backdoor federated learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1910.05467">Quantification of the Leakage in Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v97/bhagoji19a.html">Analyzing federated learning through an adversarial lens</a></p>
-<p><a href="https://link.zhihu.com/?target=http://papers.nips.cc/paper/9617-deep-leakage-from-gradients">Deep leakage from gradients</a></p>
-</li>
-<li><p>联邦学习公平与贡献评估</p>
-<p><a href="https://link.zhihu.com/?target=https://www.researchgate.net/profile/Zichen_Chen8/publication/342804903_A_Multi-player_Game_for_Studying_Federated_Learning_Incentive_Schemes/links/5f3b756d458515b7292a535f/A-Multi-player-Game-for-Studying-Federated-Learning-Incentive-Schemes.pdf">A Multi-player Game for Studying Federated Learning Incentive Schemes</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2009.03510">A Real-time Contribution Measurement Method for Participants in Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.12161">Collaborative Fairness in Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2004.10386">Hierarchically Fair Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/8851649/">Incentive design for efficient federated learning in mobile networks: A contract theory approach</a></p>
-<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/9006179/">Measure contribution of participants in federated learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://ieeexplore.ieee.org/abstract/document/9006327/">Profit Allocation for Federated Learning</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1905.04519">Interpret federated learning with shapley values</a></p>
-</li>
-<li><p>联邦学习与计算机视觉</p>
-<p><a href="https://link.zhihu.com/?target=http://web.pkusz.edu.cn/adsp/files/2019/11/AAAI-FenglinL.1027.pdf">Federated Learning for Vision-and-Language Grounding Problems.</a></p>
-<p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/2008.11560">Performance Optimization for Federated Person Re-identification via Benchmark Analysis</a></p>
-</li>
-<li><p>联邦学习与推荐系统</p>
-<p><a href="https://link.zhihu.com/?target=https://dl.acm.org/doi/abs/10.1145/3394486.3403176">FedFast: Going Beyond Average for Faster Training of Federated Recommender Systems</a></p>
-</li>
-</ul>
-<p>整体来说，开山之作<a href="https://link.zhihu.com/?target=http://proceedings.mlr.press/v54/mcmahan17a.html">Communication-Efficient Learning of Deep Networks from Decentralized Data</a>和综合概述<a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1912.04977">Advances and Open Problems in Federated Learning</a>是需要优先阅读的。进度先记录到这里。</p>
+    <title>pycharm 环境变量问题</title>
+    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
+desktop虚拟机。</p>
+<blockquote>
+<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+</blockquote>
+<p>言归正传，我遇到的问题如下：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
+<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ModuleNotFoundError:</span> No Module named <span class="st">&#39;fedml_api&#39;</span></span></code></pre></div>
+<p>的错误。实在是让我很破防。</p>
+<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sys.path.append()</span></code></pre></div>
+<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PYTHONPATH</span></span></code></pre></div>
+<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
 ]]></content>
       <categories>
-        <category>联邦学习</category>
+        <category>Ubuntu</category>
       </categories>
       <tags>
-        <tag>Federated Learning</tag>
+        <tag>Pycharm</tag>
       </tags>
   </entry>
   <entry>
     <title>年度总结</title>
     <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>姓名</th>
-<th align="left">王文琦</th>
+<th style="text-align: left;">王文琦</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>生活情况</td>
-<td align="left">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
+<td
+style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>社工情况</td>
-<td align="left">计算机系学生科协智能体部开发。</td>
+<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>文体情况</td>
-<td align="left">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
+<td
+style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>实践情况</td>
-<td align="left">参加班级实践，想要在暑假组织一次实践活动</td>
+<td
+style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>个人总结</td>
-<td align="left">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<em><strong>*以及有没有的书读这个方面*</strong></em>****，****都让我感到有一些迷茫。</td>
+<td
+style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>FLAG</td>
-<td align="left"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：                                                                                                                                         1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2. 好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3. 争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5. 争取暑假的时候可以去业界完成一次实习。<br>6. 争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7. 争取明年能和室友一起出去游玩一次…………</td>
+<td
+style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
+1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
+好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
+争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
+争取暑假的时候可以去业界完成一次实习。<br>6.
+争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
+争取明年能和室友一起出去游玩一次…………</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
 <p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
 <p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
@@ -552,28 +721,149 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
+    <title>深度神经网络中的梯度泄露问题</title>
+    <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
+<p>过年这几天虽然没少玩，但是也没少反思自己。觉得自己现在的成绩并不是完全没有原因的。尽管对外会说来到了顶级学府，身边多了更多了优秀的伙伴和竞争对手。但是我自己的内心知道，所谓鲶鱼效应，只有竞争才能激发自己的潜能。鄙人不才，但却自认为潜能远远没有开发完全。更多的时候，我因为个人性格的原因，会经常想得很多，喜欢漫无目的地乱走。但大家都知道，<strong>如果以路灯为起点，漫无目的地乱走，最终的期望就是回到终点。</strong>2021一整年对于我来说过得并不是很好。在这个同龄人在不断进步的时代，仿佛逆水行舟，不进则退。</p>
+<p><strong>但是每个人都会经历这样一段经历吧，人生的极小值点</strong>。所以对我来说，接下来的2022年，有一些确定的目标和计划就成为了迫在眉睫的事情。我相信自己的能力，从来都是如此。从科研方向来说，我还是得要在寒假期间，最起码需要了解梯度泄露是怎么回事，并且复现出代码。剩下的我想要看完吴恩达的机器学习课程，并且对于深度学习的花园书有所了解。争取在春季学期进行1-2个论文项目的参与。必须要在大三之前有所收获。</p>
+<p>那么我们就进入正题。</p>
+<h3 id="abstract">Abstract</h3>
+<p>首先作者告诉我们，在分布式训练或者协作训练中，梯度的共享是一件很正常的事。人们通常也很放心地认为梯度并不会泄露分布的训练数据。但是这篇文章用极其大胆的猜想和实验的佐证（包括<span
+class="math inline">\(NLP\)</span>和图像处理的两个实验都得到了非常好的效果）告诉我们梯度共享也有可能会泄露用户数据，并且称之为<span
+class="math inline">\(Deep \ Leakage \ from \
+Gradients\)</span>。并且指出了以梯度剪枝<span
+class="math inline">\((gradients \
+pruning)\)</span>为首的一些防御方法。</p>
+<h3 id="introduction">Introduction</h3>
+<p>首先作者指出，已经有研究表明，梯度的共享会泄露一些<span
+class="math inline">\(properties \ of \ training \ data\)</span>，
+结合<span
+class="math inline">\(GAN\)</span>就可以生成和原图像相似的图片。但是作者给出的<strong><em>DLG</em></strong>方法则声称可以还原完整的数据和标签，甚至不用借助任何其他的生成网络模型。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203225947.png" style="zoom:50%;" /></p>
+<p>作者提出了一种优化算法来完成这一攻击：首先随机生成一种<span
+class="math inline">\(dummy \
+inputs\)</span>，然后通过正常的梯度推导过程生成一个<span
+class="math inline">\(dummy \
+gradients\)</span>，然后<strong>这个算法并不会像一般的优化算法一样去优化模型的权重，而是会优化dummy
+gradients和正常的梯度之间的“距离”，然后修改dummy
+inputs和输入标签，使得我们的伪数据越来越接近真实的数据，最终优化算法结束的时候，就是伪数据和真实数据完全匹配的时候。</strong></p>
+<p>同时，作者还指出<strong>梯度扰动，低精度和梯度压缩三种方法中，尺度大于1e-2的高斯噪声和拉普拉斯噪声有明显的作用，20％的梯度剪枝同样也能起到保护的作用，但是半精度的方法却不起作用。</strong></p>
+<h3 id="related-work">Related Work</h3>
+<p>首先注意到的是，与“深度梯度泄露”相对应的是，浅层的梯度泄露。前人的研究表示从梯度中推断训练数据的信息特征是可能的。例如在语言任务中对训练单词的梯度就可以揭露哪些单词参与了训练集，我们明显可以察觉到，这类泄露是<strong>肤浅的</strong>，并且也没有过多的作用。</p>
+<p>然后作者指出了分布式机器学习中一定会出现的梯度交换问题。并且指出了无论是哪种分布方式，去中心化或者中心化的分布式训练，都有可能存在“深度梯度泄露”的问题。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203224347.png" style="zoom: 50%;" /></p>
+<h3 id="method-experiment">Method &amp; Experiment</h3>
+<p>接下来我们来看看具体的方法。</p>
+<p>首先我们关注传统的分布式学习方法，在第<span
+class="math inline">\(t\)</span>轮训练过程中，第<span
+class="math inline">\(i\)</span>方节点从训练集中选取<span
+class="math inline">\(minibatch(x_{t,i},y_{t,i})\)</span>的数据来计算梯度，迭代的过程如下：
+<span class="math display">\[
+\nabla{ W_{t,i} }=\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})} }
+{\partial{W_t} } \\
+\nabla{W_t}=\frac{1} {N}\sum_{j}^{N} {\nabla{W_{t,j} } } \ ; \ \ \
+W_{t+1}=W_t-\eta \nabla{W_t}
+\]</span> 以中心服务器式分布训练为例，中心服务器会获得<span
+class="math inline">\(k\)</span>方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入。
+<span class="math display">\[
+\nabla{W&#39;} = \frac{\partial{l(F(x&#39;,W),y&#39;)} } {\partial{W} }
+\\
+x^{&#39;*},y^{&#39;*} = \underset{x&#39;,y&#39;} {argmin}\left \|
+\nabla{W&#39;-\nabla{W} }\right\|^2
+\]</span>
+在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。
+<span class="math display">\[
+x^{&#39;i \ mod \ N}_{t+1} \gets x^{&#39;i \ mod \ N}_{t} -
+\nabla_{x^{&#39;i \ mod \ N}_{t+1} }\mathbb{D} \\
+y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} -
+\nabla_{y^{&#39;i \ mod \ N}_{t+1} }\mathbb{D}
+\]</span>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" /></p>
+<p>这听起来是一个天方夜谭，但是从实际的实验来看，效果出奇的好，除了个别像素伪影和顺序不同以外，几乎可以完全还原所有的源数据，比前人研究的方法也要明显占优。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205153618.png" style="zoom:50%;" /></p>
+<h3 id="defense-strategy">Defense Strategy</h3>
+<p>如之前的介绍所示，作者给出了三种防御的方法，其中比较有效的就是使用差分隐私<span
+class="math inline">\((Differential \
+Privacy)\)</span>的方法来进行防御。言简意赅的说，就是给梯度加上一定的“扰动”，使得攻击者无法获得准确的梯度信息，也就没办法从梯度中还原准确的源输入。噪声的种类有高斯噪声和拉普拉斯噪声，防御的效果与噪声的种类之间没有特别明显的关系，但是和噪声的扰动尺度有明显的正相关关系。同时，作者也顺便验证了减少梯度精度的方法无法起到有效的防御效果。下面是实验结果的截图：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205163716.png" style="zoom:50%;" /></p>
+<p>值得注意的是，尽管成功达到一定的干扰程度之后能够起到防御作用，但是<span
+class="math inline">\(acc\)</span>率明显下降，已经开始影响收敛效率了。</p>
+<p>最后，作者还指出了“梯度剪枝”<span class="math inline">\((gradients \
+pruning)\)</span>的方法是有效的。经过实验发现，能够让<span
+class="math inline">\(DLG\)</span>还原的原始输入有明显偏差的情况下，修剪率应该在20%以上。但是最新的误差补偿技术和梯度压缩技术可以将梯度压缩300倍的情况下不影响<span
+class="math inline">\(acc\)</span>，远远高于阈值20%。所以可以得知梯度修剪的方法是有效的。</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>针对分布式训练的情况来说，在这篇文章的指出下，我们已经发现，“共享梯度，使得训练数据集留在本地”的做法已经不再安全了。仅仅通过简单的修改输入和标签，来靠近标准梯度的做法，就可以完全地还原源数据，这无异给分布式和协作式学习的模式带来了新的挑战。下一节我会用代码模拟一遍作者的实验，来还原<span
+class="math inline">\(DLG\)</span>攻击。</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>梯度泄露</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>深度学习中的对抗性攻击与防御</title>
     <url>/2022/01/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%AF%B9%E6%8A%97%E6%80%A7%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/</url>
-    <content><![CDATA[<p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial Intelligence—Feature Article. Adversarial Attacks and Defenses in Deep Learning, Kui Ren , Tianhang Zheng  , Zhan Qin ,Xue Liu。这篇文章首先介绍深度学习的算法基础，然后指出了某些防御技术的能力，看起来更像是一篇综述性文章。</p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h4 id="对抗性样本"><a href="#对抗性样本" class="headerlink" title="对抗性样本"></a>对抗性样本</h4><p>首先我们先了解一下对抗性样本是什么，在大规模部署DL模型的时候，会有一些加入干扰的样本，这些样本会使得人类无法察觉，但是模型会在不知不觉中做出错误的预测，从而使得训练的成果产生一些严重的偏差和影响。</p>
-<p>通过威胁模型，可以将对抗性攻击分为白盒攻击$white-box$，灰盒攻击$grey-box$和黑盒攻击。顾名思义，白盒就是指对于对方的模型有了充分充足的了解，包括体系结构参数等等。在灰盒模型中，仅限于了解模型的结构；在黑盒模型中，则仅能通过调用查询来生成对抗性样本。</p>
-<h4 id="攻击方法"><a href="#攻击方法" class="headerlink" title="攻击方法"></a>攻击方法</h4><p>在这些威胁模型的框架之内，有很多对抗性样本攻击算法提出，比如以下的几种：</p>
+    <content><![CDATA[<p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial
+Intelligence—Feature Article. Adversarial Attacks and Defenses in Deep
+Learning, Kui Ren , Tianhang Zheng , Zhan Qin ,Xue
+Liu。这篇文章首先介绍深度学习的算法基础，然后指出了某些防御技术的能力，看起来更像是一篇综述性文章。</p>
+<h2 id="introduction">Introduction</h2>
+<h4 id="对抗性样本">对抗性样本</h4>
+<p>首先我们先了解一下对抗性样本是什么，在大规模部署DL模型的时候，会有一些加入干扰的样本，这些样本会使得人类无法察觉，但是模型会在不知不觉中做出错误的预测，从而使得训练的成果产生一些严重的偏差和影响。</p>
+<p>通过威胁模型，可以将对抗性攻击分为白盒攻击<span
+class="math inline">\(white-box\)</span>，灰盒攻击<span
+class="math inline">\(grey-box\)</span>和黑盒攻击。顾名思义，白盒就是指对于对方的模型有了充分充足的了解，包括体系结构参数等等。在灰盒模型中，仅限于了解模型的结构；在黑盒模型中，则仅能通过调用查询来生成对抗性样本。</p>
+<h4 id="攻击方法">攻击方法</h4>
+<p>在这些威胁模型的框架之内，有很多对抗性样本攻击算法提出，比如以下的几种：</p>
 <ul>
-<li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS) algorithm</li>
+<li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS)
+algorithm</li>
 <li>快速梯度符号法the fast gradient sign method (FGSM)</li>
-<li>基本迭代法&#x2F;投影梯度下降the basic iterative method (BIM)&#x2F;projected gradient descent (PGD)</li>
+<li>基本迭代法/投影梯度下降the basic iterative method (BIM)/projected
+gradient descent (PGD)</li>
 <li>分布式对抗性攻击distributionally adversarial attack</li>
 <li>Carlini and Wagner (C&amp;W) attacks</li>
-<li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack (JSMA)</li>
+<li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack
+(JSMA)</li>
 <li>（我也不知道是什么） DeepFool</li>
 </ul>
-<h4 id="防御方法"><a href="#防御方法" class="headerlink" title="防御方法"></a>防御方法</h4><p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
-<h2 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h2><p>首先我们来进行一些准备性质的工作。<br>$$<br>D(x,x’)&lt;\eta,f(x’)\ne f(x)&#x3D;y \<br>这时，我们称\eta为一个小的扰动(perturbation)，x’为一个对抗性样本。<br>$$<br>相对应的优化损失我们都采取交叉熵的方式来定义<br>$$<br>J(\theta,x,y)表示在权重\theta下的优化损失。 \<br>特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)<br>$$<br>关于<a href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
-<p>同时还进行了$L_p \ distance \ metric$的定义：<br>$$<br>\left | \mathbf{v} \right |_p &#x3D; (\sum\left | \mathbf{v_i}\right |^p)^{1&#x2F;p}<br>$$</p>
-<h2 id="Adversarial-Attacks"><a href="#Adversarial-Attacks" class="headerlink" title="Adversarial Attacks"></a>Adversarial Attacks</h2><h4 id="L-BFGS-Algorithm"><a href="#L-BFGS-Algorithm" class="headerlink" title="L-BFGS Algorithm"></a>L-BFGS Algorithm</h4><p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰$L_p$范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong><br>$$<br>min \left | \mathbf{x-x’} \right |_p \ subjects \ to \ f(x’) \ne y’<br>$$</p>
-<h4 id="Fast-gradient-sign-method"><a href="#Fast-gradient-sign-method" class="headerlink" title="Fast gradient sign method"></a>Fast gradient sign method</h4><p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。<br>$$<br>x’&#x3D;x+\epsilon·sign[\nabla_xJ(\theta,x,y’)]<br>$$</p>
-<h4 id="BIM-amp-PGD"><a href="#BIM-amp-PGD" class="headerlink" title="BIM &amp; PGD"></a>BIM &amp; PGD</h4><p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
-<h4 id="Momentum-iterative-attack"><a href="#Momentum-iterative-attack" class="headerlink" title="Momentum iterative attack"></a>Momentum iterative attack</h4><p>基于动量优化器灵感的设计。待了解。</p>
+<h4 id="防御方法">防御方法</h4>
+<p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
+<h2 id="preliminaries">Preliminaries</h2>
+<p>首先我们来进行一些准备性质的工作。 <span class="math display">\[
+D(x,x&#39;)&lt;\eta,f(x&#39;)\ne f(x)=y \\
+这时，我们称\eta为一个小的扰动(perturbation)，x&#39;为一个对抗性样本。
+\]</span> 相对应的优化损失我们都采取交叉熵的方式来定义 <span
+class="math display">\[
+J(\theta,x,y)表示在权重\theta下的优化损失。 \\
+特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)
+\]</span> 关于<a
+href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
+<p>同时还进行了<span class="math inline">\(L_p \ distance \
+metric\)</span>的定义： <span class="math display">\[
+\left \| \mathbf{v} \right \|_p = (\sum\left | \mathbf{v_i}\right
+|^p)^{1/p}
+\]</span></p>
+<h2 id="adversarial-attacks">Adversarial Attacks</h2>
+<h4 id="l-bfgs-algorithm">L-BFGS Algorithm</h4>
+<p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰<span
+class="math inline">\(L_p\)</span>范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong>
+<span class="math display">\[
+min \left \| \mathbf{x-x&#39;} \right \|_p \ subjects \ to \ f(x&#39;)
+\ne y&#39;
+\]</span></p>
+<h4 id="fast-gradient-sign-method">Fast gradient sign method</h4>
+<p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。
+<span class="math display">\[
+x&#39;=x+\epsilon·sign[\nabla_xJ(\theta,x,y&#39;)]
+\]</span></p>
+<h4 id="bim-pgd">BIM &amp; PGD</h4>
+<p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
+<p>#### Momentum iterative attack</p>
+<p>基于动量优化器灵感的设计。待了解。</p>
 ]]></content>
       <categories>
         <category>深度学习</category>
@@ -586,28 +876,37 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
     <title>颜色基础、图像模型、Phong光照模型</title>
     <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型"><a href="#颜色模型" class="headerlink" title="颜色模型"></a>颜色模型</h2><p>RGB模型</p>
+<h2 id="颜色模型">颜色模型</h2>
+<p>RGB模型</p>
 <p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of
+brightness亮度），使用圆锥来表示颜色。</p>
 <p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素"><a href="#像素" class="headerlink" title="像素"></a>像素</h2><h2 id="三角网格模型"><a href="#三角网格模型" class="headerlink" title="三角网格模型"></a>三角网格模型</h2><p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型"><a href="#光照模型" class="headerlink" title="光照模型"></a>光照模型</h2><ul>
+<h2 id="像素">像素</h2>
+<h2 id="三角网格模型">三角网格模型</h2>
+<p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量
+：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型">光照模型</h2>
+<ul>
 <li>局部光照明</li>
 <li>全局光照明</li>
 </ul>
-<h2 id="Phong模型"><a href="#Phong模型" class="headerlink" title="Phong模型"></a>Phong模型</h2><p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果： </p>
+<h2 id="phong模型">Phong模型</h2>
+<p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
 <ul>
-<li><p>漫反射效果 $I_d&#x3D;I_iK_d*(L·N)$</p>
-</li>
-<li><p>镜面反射效果 $I_s&#x3D;I_iK_s*(R·V)$</p>
-</li>
-<li><p>环境光效果 $I_a&#x3D;I_iK_a$</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png"></p>
-</li>
+<li><p>漫反射效果 <span
+class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
+<li><p>镜面反射效果 <span
+class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
+<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
 </ul>
-<h4 id="明暗处理"><a href="#明暗处理" class="headerlink" title="明暗处理"></a>明暗处理</h4><h4 id="视点变换和视点对象"><a href="#视点变换和视点对象" class="headerlink" title="视点变换和视点对象"></a>视点变换和视点对象</h4><p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<h4 id="明暗处理">明暗处理</h4>
+<p>#### 视点变换和视点对象</p>
+<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
 <ul>
 <li>刚体变换</li>
 <li>相似变换</li>
@@ -615,12 +914,158 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
 <li>仿射变换</li>
 <li>投影变换</li>
 </ul>
-<h2 id="光栅图形学"><a href="#光栅图形学" class="headerlink" title="光栅图形学"></a>光栅图形学</h2>]]></content>
+<h2 id="光栅图形学">光栅图形学</h2>
+]]></content>
       <categories>
         <category>Computer-Graphics</category>
       </categories>
       <tags>
         <tag>Phong模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>联邦学习论文汇总</title>
+    <url>/2021/11/18/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<h4
+id="总结一下从网络上收集来的联邦学习的论文整体可能质量参差不齐">总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐</h4>
+<ul>
+<li><p>Google的第一篇论文：</p>
+<p><a
+href="https://link.zhihu.com/?target=http%3A//proceedings.mlr.press/v54/mcmahan17a.html">Communication-Efficient
+Learning of Deep Networks from Decentralized Data</a></p></li>
+<li><p>综述类型：</p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1912.04977">Advances
+and Open Problems in Federated Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//dl.acm.org/doi/abs/10.1145/3298981">Federated
+machine learning: Concept and applications</a></p></li>
+<li><p>联邦学习算法与通信优化：</p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//dl.acm.org/doi/abs/10.1145/2810103.2813687">Privacy-Preserving
+Deep Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1902.00146">Agnostic
+Federated Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1905.12022">Bayesian
+Nonparametric Federated Learning of Neural Networks</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2002.06440">Federated
+learning with matched averaging</a> (该文内容基于上面一篇文章的工作)</p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1610.05492">Federated
+learning: Strategies for improving communication efficiency</a></p>
+<p><a
+href="https://link.zhihu.com/?target=http%3A//papers.nips.cc/paper/7029-federated-multi-task-learning">Federated
+multi-task learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1812.06127">Federated
+optimization in heterogeneous networks</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1905.10497">Fair
+resource allocation in federated learning</a> （与上面一篇同作者）</p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//www2.eecs.berkeley.edu/Pubs/TechRpts/2020/EECS-2020-57.pdf">Communication-Efficient
+Federated Learning with Sketching</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//proceedings.icml.cc/paper/2020/file/8682cc30db9c025ecd3fee433f8ab54c-Paper.pdf">FedBoost:
+Communication-Efficient Algorithms for Federated Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2004.10342">Federated
+Learning with Only Positive Labels</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//proceedings.icml.cc/paper/2020/file/c15da1f2b5e5ed6e6837a3802f0d1593-Supplemental.pdf">Scaffold:
+Stochastic controlled averaging for federated learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//www.ijcai.org/Proceedings/2020/0642.pdf">Federated
+Meta-Learning for Fraudulent Credit Card Detection</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2008.09323">Federated
+Learning with Communication Delay in Edge Networks</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2009.02557">FLFE:
+A Communication-Efficient and Privacy-Preserving Federated Feature
+Engineering Framework</a></p></li>
+<li><p>联邦元学习：</p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1912.00818">Federated
+learning with personalization layers</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1909.12488">Improving
+federated learning personalization via model agnostic meta
+learning</a></p></li>
+<li><p>联邦学习安全问题：</p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//dl.acm.org/doi/abs/10.1145/3133956.3134012">Deep
+models under the GAN: information leakage from collaborative deep
+learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=http%3A//proceedings.mlr.press/v108/bagdasaryan20a.html">How
+to backdoor federated learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1910.05467">Quantification
+of the Leakage in Federated Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=http%3A//proceedings.mlr.press/v97/bhagoji19a.html">Analyzing
+federated learning through an adversarial lens</a></p>
+<p><a
+href="https://link.zhihu.com/?target=http%3A//papers.nips.cc/paper/9617-deep-leakage-from-gradients">Deep
+leakage from gradients</a></p></li>
+<li><p>联邦学习公平与贡献评估</p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//www.researchgate.net/profile/Zichen_Chen8/publication/342804903_A_Multi-player_Game_for_Studying_Federated_Learning_Incentive_Schemes/links/5f3b756d458515b7292a535f/A-Multi-player-Game-for-Studying-Federated-Learning-Incentive-Schemes.pdf">A
+Multi-player Game for Studying Federated Learning Incentive
+Schemes</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2009.03510">A
+Real-time Contribution Measurement Method for Participants in Federated
+Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2008.12161">Collaborative
+Fairness in Federated Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2004.10386">Hierarchically
+Fair Federated Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//ieeexplore.ieee.org/abstract/document/8851649/">Incentive
+design for efficient federated learning in mobile networks: A contract
+theory approach</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//ieeexplore.ieee.org/abstract/document/9006179/">Measure
+contribution of participants in federated learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//ieeexplore.ieee.org/abstract/document/9006327/">Profit
+Allocation for Federated Learning</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1905.04519">Interpret
+federated learning with shapley values</a></p></li>
+<li><p>联邦学习与计算机视觉</p>
+<p><a
+href="https://link.zhihu.com/?target=http%3A//web.pkusz.edu.cn/adsp/files/2019/11/AAAI-FenglinL.1027.pdf">Federated
+Learning for Vision-and-Language Grounding Problems.</a></p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2008.11560">Performance
+Optimization for Federated Person Re-identification via Benchmark
+Analysis</a></p></li>
+<li><p>联邦学习与推荐系统</p>
+<p><a
+href="https://link.zhihu.com/?target=https%3A//dl.acm.org/doi/abs/10.1145/3394486.3403176">FedFast:
+Going Beyond Average for Faster Training of Federated Recommender
+Systems</a></p></li>
+</ul>
+<p>整体来说，开山之作<a
+href="https://link.zhihu.com/?target=http%3A//proceedings.mlr.press/v54/mcmahan17a.html">Communication-Efficient
+Learning of Deep Networks from Decentralized Data</a>和综合概述<a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1912.04977">Advances
+and Open Problems in Federated
+Learning</a>是需要优先阅读的。进度先记录到这里。</p>
+]]></content>
+      <categories>
+        <category>联邦学习</category>
+      </categories>
+      <tags>
+        <tag>Federated Learning</tag>
       </tags>
   </entry>
 </search>

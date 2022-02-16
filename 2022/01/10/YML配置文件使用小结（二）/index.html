@@ -54,23 +54,28 @@
         </div>
         <div class="content markdown">
             <p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2 id="步骤一：使用python脚本爬取网络图片并且进行压缩"><a href="#步骤一：使用python脚本爬取网络图片并且进行压缩" class="headerlink" title="步骤一：使用python脚本爬取网络图片并且进行压缩"></a>步骤一：使用python脚本爬取网络图片并且进行压缩</h2><p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png"></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png"></p>
+<h2
+id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
 <p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
 <p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png"></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
 <p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二：-读入YAML文件并且对其进行修改"><a href="#步骤二：-读入YAML文件并且对其进行修改" class="headerlink" title="步骤二： 读入YAML文件并且对其进行修改"></a>步骤二： 读入YAML文件并且对其进行修改</h2><p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
+读入YAML文件并且对其进行修改</h2>
+<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
 <ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p>
-</li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p>
-</li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p>
-</li>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
 </ul>
 <p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png"></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -112,21 +117,6 @@
 </div>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 
@@ -193,25 +183,6 @@
 </div>
 
 
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 

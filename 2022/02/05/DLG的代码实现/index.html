@@ -10,7 +10,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实,"> 
+    <meta name="description" content="上一章我们简单地说明了\(Deep \ Leakage \
+from \
+Gradients\)具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -53,43 +55,55 @@
 
         </div>
         <div class="content markdown">
-            <p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a target="_blank" rel="noopener" href="https://www.paperswithcode.com/">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
-<p>作者的源代码其实思路比较简单，首先利用$torchvision$库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络$LeNet$和$ResNet$两种方法，我使用第一种方法，卷积通道数为12。</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">LeNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        super<span class="token punctuation">(</span>LeNet<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        act <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sigmoid
-        self<span class="token punctuation">.</span>body <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>fc <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-            nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">768</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-
-    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>body<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-        out <span class="token operator">=</span> out<span class="token punctuation">.</span>view<span class="token punctuation">(</span>out<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># print(out.size())</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> out
-</code></pre>
-<p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了$’str’ \ object \ has \ no \ attribute \ ‘…’$，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> ssl
-
-<span class="token comment" spellcheck="true"># 取消安全证书的检验，方便下载数据</span>
-ssl<span class="token punctuation">.</span>_create_default_https_context <span class="token operator">=</span> ssl<span class="token punctuation">.</span>_create_unverified_context
-</code></pre>
-<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看$dummy \ input$如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将$torch.manualseed()$的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" />
-
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" />
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试$dummy \ imput$的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
+            <p>上一章我们简单地说明了<span class="math inline">\(Deep \ Leakage \
+from \
+Gradients\)</span>具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a
+target="_blank" rel="noopener" href="https://www.paperswithcode.com">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
+<p>作者的源代码其实思路比较简单，首先利用<span
+class="math inline">\(torchvision\)</span>库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络<span
+class="math inline">\(LeNet\)</span>和<span
+class="math inline">\(ResNet\)</span>两种方法，我使用第一种方法，卷积通道数为12。</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LeNet(nn.Module):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(LeNet, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        act <span class="op">=</span> nn.Sigmoid</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.body <span class="op">=</span> nn.Sequential(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">3</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            act(),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">12</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            act(),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">12</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            act(),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.fc <span class="op">=</span> nn.Sequential(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">768</span>, <span class="dv">100</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> <span class="va">self</span>.body(x)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> out.view(out.size(<span class="dv">0</span>), <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(out.size())</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> <span class="va">self</span>.fc(out)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> out</span></code></pre></div>
+<p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了<span
+class="math inline">\(&#39;str&#39; \ object \ has \ no \ attribute \
+&#39;…&#39;\)</span>，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ssl</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 取消安全证书的检验，方便下载数据</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ssl._create_default_https_context <span class="op">=</span> ssl._create_unverified_context</span></code></pre></div>
+<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看<span
+class="math inline">\(dummy \
+input\)</span>如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将<span
+class="math inline">\(torch.manualseed()\)</span>的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" /></p>
+<h3 id="总结">总结</h3>
+<p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试<span
+class="math inline">\(dummy \
+imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -131,21 +145,6 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
 </div>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 
@@ -212,25 +211,6 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
 </div>
 
 
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 
