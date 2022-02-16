@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="/css/diaspora.css">
 
     <link rel="stylesheet" href="/js/prism/prism.css">
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-twilight.css" type="text/css"></head>
 
 <body class="loading">
     <span id="config-title" style="display:none">Drenched in my pain.</span>
@@ -55,7 +55,7 @@
         </div>
         <div class="content markdown">
             <p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
-<h2 id="什么是YML文件"><a href="#什么是YML文件" class="headerlink" title="什么是YML文件"></a>什么是YML文件</h2><p> <strong>YAML（Yet Another Markup Language）</strong>（发音 /ˈjæməl/ ）是 一种基于<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
+<h2 id="什么是YML文件"><a href="#什么是YML文件" class="headerlink" title="什么是YML文件"></a>什么是YML文件</h2><p> <strong>YAML（Yet Another Markup Language）</strong>（发音 &#x2F;ˈjæməl&#x2F; ）是 一种基于<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
 <p>yaml文件是一种通用的数据串行化格式。（我们在用于模块通信的时候，会将对象序列化为通信流，高效地传输到另一个模块，并且提供反序列化还原数据）</p>
 <h2 id="基本格式"><a href="#基本格式" class="headerlink" title="基本格式"></a>基本格式</h2><p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
 <ul>
@@ -66,42 +66,42 @@
 </ul>
 <p>在yml文件中，$#$符号表示的注释。yaml支持的数据类型有</p>
 <ul>
-<li>对象：键值对的集合，又称为映射（mapping）/ 哈希（hashes） / 字典（dictionary）</li>
-<li>数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</li>
+<li>对象：键值对的集合，又称为映射（mapping）&#x2F; 哈希（hashes） &#x2F; 字典（dictionary）</li>
+<li>数组：一组按次序排列的值，又称为序列（sequence） &#x2F; 列表（list）</li>
 <li>纯量（scalars）：单个的、不可再分的值</li>
 </ul>
-<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre><code class="lang-yaml"># conf.yml
-animal: pets
-hash: &#123; name: Steve, foo: bar &#125;
+<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
+<span class="token key atrule">animal</span><span class="token punctuation">:</span> pets
+<span class="token key atrule">hash</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123; name: Steve, foo: bar &amp;#125;</span>
 </code></pre>
 <p>转化为json为：</p>
-<pre><code class="lang-json">// conf.json
-&#123;
-    &#123; &quot;animal&quot;: &quot;pets&quot; &#125;,
-    &#123; &quot;hash&quot;: &#123; &quot;name&quot;: &quot;Steve&quot;, &quot;foo&quot;: &quot;bar&quot; &#125; &#125;
-&#125;
+<pre class=" language-json"><code class="language-json">// conf.json
+&amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"animal"</span><span class="token operator">:</span> <span class="token string">"pets"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"hash"</span><span class="token operator">:</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Steve"</span><span class="token punctuation">,</span> <span class="token property">"foo"</span><span class="token operator">:</span> <span class="token string">"bar"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+&amp;#<span class="token number">125</span><span class="token punctuation">;</span>
 </code></pre>
-<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre><code class="lang-yaml"># conf.yml
-Animal:
- - Cat
- - Dog
- - Goldfish
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
+<span class="token key atrule">Animal</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> Cat
+ <span class="token punctuation">-</span> Dog
+ <span class="token punctuation">-</span> Goldfish
 </code></pre>
 <p>转化为json为：</p>
-<pre><code class="lang-json">//conf.json
-&#123; &quot;Animal&quot;: [ &quot;Cat&quot;, &quot;Dog&quot;, &quot;Goldfish&quot; ] &#125;
+<pre class=" language-json"><code class="language-json">//conf.json
+&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"Animal"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"Cat"</span><span class="token punctuation">,</span> <span class="token string">"Dog"</span><span class="token punctuation">,</span> <span class="token string">"Goldfish"</span> <span class="token punctuation">]</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
 </code></pre>
-<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre><code class="lang-yaml"># conf.yml
-# 正常情况下字符串不用写引号
-str: 这是一行字符串
-# 字符串内有空格或者特殊字符时需要加引号
-str: &#39;内容： 字符串&#39;
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
+<span class="token comment" spellcheck="true"># 正常情况下字符串不用写引号</span>
+<span class="token key atrule">str</span><span class="token punctuation">:</span> 这是一行字符串
+<span class="token comment" spellcheck="true"># 字符串内有空格或者特殊字符时需要加引号</span>
+<span class="token key atrule">str</span><span class="token punctuation">:</span> <span class="token string">'内容： 字符串'</span>
 </code></pre>
-<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre><code class="lang-yaml"># conf.yml
-parent: ~
+<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
+<span class="token key atrule">parent</span><span class="token punctuation">:</span> <span class="token null important">~</span>
 </code></pre>
 <p>等价于json中的</p>
-<pre><code class="lang-json">&#123; &quot;parent&quot;: null &#125;
+<pre class=" language-json"><code class="language-json">&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"parent"</span><span class="token operator">:</span> <span class="token null">null</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
 </code></pre>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
