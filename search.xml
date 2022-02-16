@@ -13,54 +13,6 @@
       </tags>
   </entry>
   <entry>
-    <title>DLG的代码实现</title>
-    <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a href="https://www.paperswithcode.com/">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
-<p>作者的源代码其实思路比较简单，首先利用$torchvision$库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络$LeNet$和$ResNet$两种方法，我使用第一种方法，卷积通道数为12。</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">LeNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        super<span class="token punctuation">(</span>LeNet<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        act <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sigmoid
-        self<span class="token punctuation">.</span>body <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>fc <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-            nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">768</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
-
-    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>body<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-        out <span class="token operator">=</span> out<span class="token punctuation">.</span>view<span class="token punctuation">(</span>out<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true"># print(out.size())</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> out
-</code></pre>
-<p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了$’str’ \ object \ has \ no \ attribute \ ‘…’$，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> ssl
-
-<span class="token comment" spellcheck="true"># 取消安全证书的检验，方便下载数据</span>
-ssl<span class="token punctuation">.</span>_create_default_https_context <span class="token operator">=</span> ssl<span class="token punctuation">.</span>_create_unverified_context
-</code></pre>
-<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看$dummy \ input$如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将$torch.manualseed()$的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" />
-
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" />
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试$dummy \ imput$的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>梯度泄漏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2021/11/01/Delphi/</url>
     <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
@@ -128,6 +80,54 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
       </categories>
       <tags>
         <tag>MIPS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DLG的代码实现</title>
+    <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a href="https://www.paperswithcode.com/">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
+<p>作者的源代码其实思路比较简单，首先利用$torchvision$库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络$LeNet$和$ResNet$两种方法，我使用第一种方法，卷积通道数为12。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">LeNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        super<span class="token punctuation">(</span>LeNet<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        act <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sigmoid
+        self<span class="token punctuation">.</span>body <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">5</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            act<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>fc <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">768</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>body<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> out<span class="token punctuation">.</span>view<span class="token punctuation">(</span>out<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true"># print(out.size())</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> out
+</code></pre>
+<p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了$’str’ \ object \ has \ no \ attribute \ ‘…’$，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> ssl
+
+<span class="token comment" spellcheck="true"># 取消安全证书的检验，方便下载数据</span>
+ssl<span class="token punctuation">.</span>_create_default_https_context <span class="token operator">=</span> ssl<span class="token punctuation">.</span>_create_unverified_context
+</code></pre>
+<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看$dummy \ input$如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将$torch.manualseed()$的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" />
+
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" />
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试$dummy \ imput$的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>梯度泄漏</tag>
       </tags>
   </entry>
   <entry>
@@ -231,24 +231,37 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/09/01/hello-world/</url>
-    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
-<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <title>基于高效同态加密的Cross-silo联邦学习</title>
+    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><blockquote>
+<p>回顾<a href="https://www.zhihu.com/search?q=%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=%E5%AE%89%E5%85%A8%E8%81%9A%E5%90%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">安全聚合</a>（e.g., 求和&#x2F;平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。<br>本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。<br><em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
+</blockquote>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193"></p>
+<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>前人的量化方案：将一个 $y \in \left [ -1, 1 \right]$的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
+<p><img src="https://www.zhihu.com/equation?tex=Q(g)=%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]"> 是就近<a href="https://www.zhihu.com/search?q=%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">取整函数</a>（rounding function）;<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D+n%5Ccdot+min" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]"> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个量化梯度之和。</p>
+<p>但是上述量化方法存在一定的问题：</p>
+<blockquote>
+<ol>
+<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(%5Ccdot)" alt="[公式]"> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 的取值；</li>
+<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=%E6%AD%A3%E8%B4%9F%E6%A2%AF%E5%BA%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=%E7%B4%AF%E5%8A%A0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">累加值</a>容易导致溢出；</li>
+<li>不能区分正溢出和负溢出。</li>
+</ol>
+</blockquote>
+<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
+<blockquote>
+<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；<br>\2. 关于<a href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%82%B9%E5%AF%B9%E7%A7%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1,1%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128,127%5D" alt="[公式]"> ，那么 <img src="https://www.zhihu.com/equation?tex=(-1+1)%5CRightarrow(-128+127)=-1" alt="[公式]"> ，结果错误；<br>\3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=%E9%87%8F%E5%8C%96%E6%95%B0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
+</blockquote>
+<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha,0%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-(2%5Er-1),0%5D" alt="[公式]"> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0,%5Calpha%5D" alt="[公式]">量化到 <img src="https://www.zhihu.com/equation?tex=%5B0,(2%5Er-1)%5D" alt="[公式]"> 。；公式化表示如下：<br><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q(g)=+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil,+g%5Cin+%5B-%5Calpha,0%5D;%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor,+g+%5Cin+%5B0,%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]"> 分别是向上取整和向下取整函数；<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n/2%5Er" alt="[公式]"> ；<br>进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]"> 便有了两种编码方式。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261"></p>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>实验的最终表现也是体现出$BatchCrypt$和$stock$相比在通信和计算上都有着很大的提升，但是和$Plaintext Learning$相比还是有很大的进步空间。</p>
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" />
+
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" />
+
 ]]></content>
+      <tags>
+        <tag>联邦学习</tag>
+      </tags>
   </entry>
   <entry>
     <title>pycharm 环境变量问题</title>
@@ -371,6 +384,26 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/09/01/hello-world/</url>
+    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
+<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>年度总结</title>
     <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<table>
@@ -414,39 +447,6 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
       </categories>
       <tags>
         <tag>贵系生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于高效同态加密的Cross-silo联邦学习</title>
-    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><blockquote>
-<p>回顾<a href="https://www.zhihu.com/search?q=%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=%E5%AE%89%E5%85%A8%E8%81%9A%E5%90%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">安全聚合</a>（e.g., 求和&#x2F;平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。<br>本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。<br><em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
-</blockquote>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193"></p>
-<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>前人的量化方案：将一个 $y \in \left [ -1, 1 \right]$的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
-<p><img src="https://www.zhihu.com/equation?tex=Q(g)=%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]"> 是就近<a href="https://www.zhihu.com/search?q=%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">取整函数</a>（rounding function）;<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D+n%5Ccdot+min" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]"> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个量化梯度之和。</p>
-<p>但是上述量化方法存在一定的问题：</p>
-<blockquote>
-<ol>
-<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(%5Ccdot)" alt="[公式]"> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 的取值；</li>
-<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=%E6%AD%A3%E8%B4%9F%E6%A2%AF%E5%BA%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=%E7%B4%AF%E5%8A%A0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">累加值</a>容易导致溢出；</li>
-<li>不能区分正溢出和负溢出。</li>
-</ol>
-</blockquote>
-<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
-<blockquote>
-<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；<br>\2. 关于<a href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%82%B9%E5%AF%B9%E7%A7%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1,1%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128,127%5D" alt="[公式]"> ，那么 <img src="https://www.zhihu.com/equation?tex=(-1+1)%5CRightarrow(-128+127)=-1" alt="[公式]"> ，结果错误；<br>\3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=%E9%87%8F%E5%8C%96%E6%95%B0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
-</blockquote>
-<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha,0%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-(2%5Er-1),0%5D" alt="[公式]"> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0,%5Calpha%5D" alt="[公式]">量化到 <img src="https://www.zhihu.com/equation?tex=%5B0,(2%5Er-1)%5D" alt="[公式]"> 。；公式化表示如下：<br><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q(g)=+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil,+g%5Cin+%5B-%5Calpha,0%5D;%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor,+g+%5Cin+%5B0,%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]"> 分别是向上取整和向下取整函数；<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n/2%5Er" alt="[公式]"> ；<br>进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]"> 便有了两种编码方式。</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261"></p>
-<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>实验的最终表现也是体现出$BatchCrypt$和$stock$相比在通信和计算上都有着很大的提升，但是和$Plaintext Learning$相比还是有很大的进步空间。</p>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" />
-
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" />
-
-]]></content>
-      <tags>
-        <tag>联邦学习</tag>
       </tags>
   </entry>
   <entry>
@@ -498,7 +498,9 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
 <img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203224347.png" style="zoom: 50%;" />
 
 <h3 id="Method-amp-Experiment"><a href="#Method-amp-Experiment" class="headerlink" title="Method &amp; Experiment"></a>Method &amp; Experiment</h3><p>接下来我们来看看具体的方法。</p>
-<p>首先我们关注传统的分布式学习方法，在第$t$轮训练过程中，第$i$方节点从训练集中选取$minibatch(x_{t,i},y_{t,i})$的数据来计算梯度，迭代的过程如下：<br>$$<br>\nabla{W_{t,i}}&#x3D;\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})}}{\partial{W_t}} \<br>\nabla{W_t}&#x3D;\frac{1}{N}\sum_{j}^{N}{\nabla{W_{t,j}}} \ ; \ \ \ W_{t+1}&#x3D;W_t-\eta \nabla{W_t}<br>$$<br>以中心服务器式分布训练为例，中心服务器会获得$k$方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入。<br>$$<br>\nabla{W’}&#x3D;\frac{\partial{l(F(x’,W),y’)}}{\partial{W}} \<br>x^{‘<em>},y^{‘</em>} &#x3D; \underset{x’,y’}{argmin}\left | \nabla{W’-\nabla{W}}\right|^{2}<br>$$<br>在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。<br>$$<br>x^{‘i \ mod \ N}<em>{t+1} \gets x^{‘i \ mod \ N}</em>{t} - \nabla_{x^{‘i \ mod \ N}<em>{t+1}}\mathbb{D} \<br>y^{‘i \ mod \ N}</em>{t+1} \gets y^{‘i \ mod \ N}<em>{t} - \nabla</em>{y^{‘i \ mod \ N}_{t+1}}\mathbb{D}<br>$$</p>
+<p>首先我们关注传统的分布式学习方法，在第$t$轮训练过程中，第$i$方节点从训练集中选取$minibatch(x_{t,i},y_{t,i})$的数据来计算梯度，迭代的过程如下：<br>$$<br>\nabla{W_{t,i}}&#x3D;\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})}}{\partial{W_t}} \<br>\nabla{W_t}&#x3D;\frac{1}{N}\sum_{j}^{N}{\nabla{W_{t,j}}} \ ; \ \ \ W_{t+1}&#x3D;W_t-\eta \nabla{W_t}<br>$$</p>
+<p>以中心服务器式分布训练为例，中心服务器会获得$k$方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入。<br>$$<br>\nabla{W’}&#x3D;\frac{\partial{l(F(x’,W),y’)}}{\partial{W}} \<br>x^{‘<em>},y^{‘</em>} &#x3D; \underset{x’,y’}{argmin}\left | \nabla{W’-\nabla{W}}\right|^{2}<br>$$</p>
+<p>在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。<br>$$<br>x^{‘i \ mod \ N}<em>{t+1} \gets x^{‘i \ mod \ N}</em>{t} - \nabla_{x^{‘i \ mod \ N}<em>{t+1}}\mathbb{D} \<br>y^{‘i \ mod \ N}</em>{t+1} \gets y^{‘i \ mod \ N}<em>{t} - \nabla</em>{y^{‘i \ mod \ N}_{t+1}}\mathbb{D}<br>$$</p>
 <img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" />
 
 <p>这听起来是一个天方夜谭，但是从实际的实验来看，效果出奇的好，除了个别像素伪影和顺序不同以外，几乎可以完全还原所有的源数据，比前人研究的方法也要明显占优。</p>
