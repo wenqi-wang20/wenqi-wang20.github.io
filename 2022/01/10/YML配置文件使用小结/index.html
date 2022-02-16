@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="/css/diaspora.css">
 
     <link rel="stylesheet" href="/js/prism/prism.css">
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-twilight.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css"></head>
 
 <body class="loading">
     <span id="config-title" style="display:none">Drenched in my pain.</span>
@@ -70,39 +70,23 @@
 <li>数组：一组按次序排列的值，又称为序列（sequence） &#x2F; 列表（list）</li>
 <li>纯量（scalars）：单个的、不可再分的值</li>
 </ul>
-<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">animal</span><span class="token punctuation">:</span> pets
-<span class="token key atrule">hash</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123; name: Steve, foo: bar &amp;#125;</span>
-</code></pre>
+<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">animal:</span> <span class="string">pets</span></span><br><span class="line"><span class="attr">hash:</span> &#123; <span class="attr">name:</span> <span class="string">Steve</span>, <span class="attr">foo:</span> <span class="string">bar</span> &#125;</span><br></pre></td></tr></table></figure>
+
 <p>转化为json为：</p>
-<pre class=" language-json"><code class="language-json">// conf.json
-&amp;#<span class="token number">123</span><span class="token punctuation">;</span>
-    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"animal"</span><span class="token operator">:</span> <span class="token string">"pets"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"hash"</span><span class="token operator">:</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Steve"</span><span class="token punctuation">,</span> <span class="token property">"foo"</span><span class="token operator">:</span> <span class="token string">"bar"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-&amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">Animal</span><span class="token punctuation">:</span>
- <span class="token punctuation">-</span> Cat
- <span class="token punctuation">-</span> Dog
- <span class="token punctuation">-</span> Goldfish
-</code></pre>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// conf.json</span></span><br><span class="line">&#123;</span><br><span class="line">    &#123; <span class="attr">&quot;animal&quot;</span>: <span class="string">&quot;pets&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;hash&quot;</span>: &#123; <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Steve&quot;</span>, <span class="attr">&quot;foo&quot;</span>: <span class="string">&quot;bar&quot;</span> &#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">Animal:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Cat</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Dog</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Goldfish</span></span><br></pre></td></tr></table></figure>
+
 <p>转化为json为：</p>
-<pre class=" language-json"><code class="language-json">//conf.json
-&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"Animal"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"Cat"</span><span class="token punctuation">,</span> <span class="token string">"Dog"</span><span class="token punctuation">,</span> <span class="token string">"Goldfish"</span> <span class="token punctuation">]</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token comment" spellcheck="true"># 正常情况下字符串不用写引号</span>
-<span class="token key atrule">str</span><span class="token punctuation">:</span> 这是一行字符串
-<span class="token comment" spellcheck="true"># 字符串内有空格或者特殊字符时需要加引号</span>
-<span class="token key atrule">str</span><span class="token punctuation">:</span> <span class="token string">'内容： 字符串'</span>
-</code></pre>
-<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">parent</span><span class="token punctuation">:</span> <span class="token null important">~</span>
-</code></pre>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">//conf.json</span></span><br><span class="line">&#123; <span class="attr">&quot;Animal&quot;</span>: [ <span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Goldfish&quot;</span> ] &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="comment"># 正常情况下字符串不用写引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">这是一行字符串</span></span><br><span class="line"><span class="comment"># 字符串内有空格或者特殊字符时需要加引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">&#x27;内容： 字符串&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">parent:</span> <span class="string">~</span></span><br></pre></td></tr></table></figure>
+
 <p>等价于json中的</p>
-<pre class=" language-json"><code class="language-json">&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"parent"</span><span class="token operator">:</span> <span class="token null">null</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">&quot;parent&quot;</span>: <span class="literal">null</span> &#125;</span><br></pre></td></tr></table></figure>
+
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -225,25 +209,6 @@
 </div>
 
 
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 
