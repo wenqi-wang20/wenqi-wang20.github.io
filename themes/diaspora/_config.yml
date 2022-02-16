@@ -109,8 +109,10 @@ links:
   wechat: /img/mylogo.png
 local_search:
   enable: false
-math:
-  mathjax: true
+mathjax:
+  enable: true
+  per_page: true
+  cdn: https://cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML
 menu:
   "\u5173\u4E8E": /about
   "\u5206\u7C7B": /categories
