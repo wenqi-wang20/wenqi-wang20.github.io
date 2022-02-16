@@ -34,67 +34,15 @@
       </tags>
   </entry>
   <entry>
-    <title>MIPS汇编语言（一）</title>
-    <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
-<p>MIPS(Millions of Instructions Per Second)</p>
-<p><strong>Classic flow</strong>:</p>
-<ul>
-<li>Fetch instruction</li>
-<li>Read registers</li>
-<li>Arithmetic operation</li>
-<li>Memory access</li>
-<li>Write back</li>
-</ul>
-<p>Five steps and four cycles(Read and write registers cost only half a cycle).</p>
-<p>Delay slot:</p>
-<p>After the jump and branch condition, there is a delay slot to fill a non-related operation(usually a n operation before the branch).</p>
-<h3 id="how-a-program-excutes">How a program excutes</h3>
-<ul>
-<li><p>genera 3-operand format</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">op	dest, src1, src2</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="mips-instructions-memory-organization">MIPS instructions &amp; memory organization</h3>
-<ul>
-<li><p>type of instructions</p>
-<figure>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png" alt="image-20211117001847724" /><figcaption aria-hidden="true">image-20211117001847724</figcaption>
-</figure>
-<ul>
-<li>Data operations
-<ul>
-<li>Arithmetic(add, substrct……)</li>
-<li>Logical(and, or, not, xor……)</li>
-</ul></li>
-<li>Data transfer
-<ul>
-<li>Load(Memory -&gt; Register)</li>
-<li>Store(Register -&gt; Memory)</li>
-</ul></li>
-<li>Sequencing
-<ul>
-<li>Branch(conditional, &gt;, &lt;, ==……)</li>
-<li>Jump(unconditional, goto……)</li>
-</ul></li>
-</ul></li>
-<li><p>Registers</p>
-<ul>
-<li>32 General Purpose Registers</li>
-<li><strong>Very important!! </strong>
-<ul>
-<li><strong>ALL the values for instructions must come from registers!</strong></li>
-<li><strong>R0 is always zero!!</strong></li>
-</ul></li>
-</ul></li>
-</ul>
-<h3 id="data-operations-transfers">Data operations &amp; transfers</h3>
-<h3 id="sequencing">Sequencing</h3>
+    <title>Machine Learning</title>
+    <url>/2021/11/16/Machine-Learning/</url>
+    <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
 ]]></content>
       <categories>
-        <category>Assembly Language</category>
+        <category>深度学习</category>
       </categories>
       <tags>
-        <tag>MIPS</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -107,18 +55,6 @@
 <h2 id="tech">Tech</h2>
 <p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。 本篇论文的优化： 线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。 非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。 然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。 把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。 <img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述" /></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Machine Learning</title>
-    <url>/2021/11/16/Machine-Learning/</url>
-    <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-      </tags>
   </entry>
   <entry>
     <title>YML配置文件使用小结</title>
@@ -192,6 +128,70 @@
       </tags>
   </entry>
   <entry>
+    <title>MIPS汇编语言（一）</title>
+    <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
+<p>MIPS(Millions of Instructions Per Second)</p>
+<p><strong>Classic flow</strong>:</p>
+<ul>
+<li>Fetch instruction</li>
+<li>Read registers</li>
+<li>Arithmetic operation</li>
+<li>Memory access</li>
+<li>Write back</li>
+</ul>
+<p>Five steps and four cycles(Read and write registers cost only half a cycle).</p>
+<p>Delay slot:</p>
+<p>After the jump and branch condition, there is a delay slot to fill a non-related operation(usually a n operation before the branch).</p>
+<h3 id="how-a-program-excutes">How a program excutes</h3>
+<ul>
+<li><p>genera 3-operand format</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">op	dest, src1, src2</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="mips-instructions-memory-organization">MIPS instructions &amp; memory organization</h3>
+<ul>
+<li><p>type of instructions</p>
+<figure>
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png" alt="image-20211117001847724" /><figcaption aria-hidden="true">image-20211117001847724</figcaption>
+</figure>
+<ul>
+<li>Data operations
+<ul>
+<li>Arithmetic(add, substrct……)</li>
+<li>Logical(and, or, not, xor……)</li>
+</ul></li>
+<li>Data transfer
+<ul>
+<li>Load(Memory -&gt; Register)</li>
+<li>Store(Register -&gt; Memory)</li>
+</ul></li>
+<li>Sequencing
+<ul>
+<li>Branch(conditional, &gt;, &lt;, ==……)</li>
+<li>Jump(unconditional, goto……)</li>
+</ul></li>
+</ul></li>
+<li><p>Registers</p>
+<ul>
+<li>32 General Purpose Registers</li>
+<li><strong>Very important!! </strong>
+<ul>
+<li><strong>ALL the values for instructions must come from registers!</strong></li>
+<li><strong>R0 is always zero!!</strong></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="data-operations-transfers">Data operations &amp; transfers</h3>
+<h3 id="sequencing">Sequencing</h3>
+]]></content>
+      <categories>
+        <category>Assembly Language</category>
+      </categories>
+      <tags>
+        <tag>MIPS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2021/09/01/hello-world/</url>
     <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
@@ -236,6 +236,44 @@
       </categories>
       <tags>
         <tag>Pycharm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于高效同态加密的Cross-silo联邦学习</title>
+    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="background">Background</h2>
+<blockquote>
+<p>回顾<a href="https://www.zhihu.com/search?q=联邦学习&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=梯度更新&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=安全聚合&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">安全聚合</a>（e.g., 求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=同态加密&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。 本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。 <em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
+</blockquote>
+<figure>
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193" /><figcaption aria-hidden="true">image-20211203123128193</figcaption>
+</figure>
+<h2 id="process">Process</h2>
+<p>前人的量化方案：将一个 <span class="math inline">\(y \in \left [ -1, 1 \right]\)</span>的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
+<p><img src="https://www.zhihu.com/equation?tex=Q%28g%29%3D%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]" /> 是就近<a href="https://www.zhihu.com/search?q=取整函数&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">取整函数</a>（rounding function）; <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D%2Bn%5Ccdot+min" alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]" /> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 个量化梯度之和。</p>
+<p>但是上述量化方法存在一定的问题：</p>
+<blockquote>
+<ol type="1">
+<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28%5Ccdot%29" alt="[公式]" /> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 的取值；</li>
+<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=正负梯度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=累加值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">累加值</a>容易导致溢出；</li>
+<li>不能区分正溢出和负溢出。</li>
+</ol>
+</blockquote>
+<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
+<blockquote>
+<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题； \2. 关于<a href="https://www.zhihu.com/search?q=原点对称&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1%2C1%5D" alt="[公式]" /> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128%2C127%5D" alt="[公式]" /> ，那么 <img src="https://www.zhihu.com/equation?tex=%28-1%2B1%29%5CRightarrow%28-128%2B127%29%3D-1" alt="[公式]" /> ，结果错误； \3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=量化数值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
+</blockquote>
+<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha%2C0%5D" alt="[公式]" /> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-%282%5Er-1%29%2C0%5D" alt="[公式]" /> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0%2C%5Calpha%5D" alt="[公式]" />量化到 <img src="https://www.zhihu.com/equation?tex=%5B0%2C%282%5Er-1%29%5D" alt="[公式]" /> 。；公式化表示如下： <img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q%28g%29%3D+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil%2C+g%5Cin+%5B-%5Calpha%2C0%5D%3B%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor%2C+g+%5Cin+%5B0%2C%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]" /> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]" /> 分别是向上取整和向下取整函数； <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%2F2%5Er" alt="[公式]" /> ； 进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]" /> 便有了两种编码方式。</p>
+<figure>
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261" /><figcaption aria-hidden="true">image-20211203132307261</figcaption>
+</figure>
+<h2 id="performance">Performance</h2>
+<p>实验的最终表现也是体现出<span class="math inline">\(BatchCrypt\)</span>和<span class="math inline">\(stock\)</span>相比在通信和计算上都有着很大的提升，但是和<span class="math inline">\(Plaintext Learning\)</span>相比还是有很大的进步空间。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" /></p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" /></p>
+]]></content>
+      <tags>
+        <tag>联邦学习</tag>
       </tags>
   </entry>
   <entry>
@@ -341,44 +379,6 @@ then, \quad w_{t+1} \gets \sum_{k=1}^K \frac {n_{k}}{n} w_{t+1}^{k}
       </categories>
       <tags>
         <tag>Federated Learning, Machine learning</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于高效同态加密的Cross-silo联邦学习</title>
-    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="background">Background</h2>
-<blockquote>
-<p>回顾<a href="https://www.zhihu.com/search?q=联邦学习&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=梯度更新&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=安全聚合&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">安全聚合</a>（e.g., 求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=同态加密&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。 本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。 <em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
-</blockquote>
-<figure>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193" /><figcaption aria-hidden="true">image-20211203123128193</figcaption>
-</figure>
-<h2 id="process">Process</h2>
-<p>前人的量化方案：将一个 <span class="math inline">\(y \in \left [ -1, 1 \right]\)</span>的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
-<p><img src="https://www.zhihu.com/equation?tex=Q%28g%29%3D%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]" /> 是就近<a href="https://www.zhihu.com/search?q=取整函数&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">取整函数</a>（rounding function）; <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D%2Bn%5Ccdot+min" alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]" /> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 个量化梯度之和。</p>
-<p>但是上述量化方法存在一定的问题：</p>
-<blockquote>
-<ol type="1">
-<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28%5Ccdot%29" alt="[公式]" /> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 的取值；</li>
-<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=正负梯度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=累加值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">累加值</a>容易导致溢出；</li>
-<li>不能区分正溢出和负溢出。</li>
-</ol>
-</blockquote>
-<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
-<blockquote>
-<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题； \2. 关于<a href="https://www.zhihu.com/search?q=原点对称&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1%2C1%5D" alt="[公式]" /> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128%2C127%5D" alt="[公式]" /> ，那么 <img src="https://www.zhihu.com/equation?tex=%28-1%2B1%29%5CRightarrow%28-128%2B127%29%3D-1" alt="[公式]" /> ，结果错误； \3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=量化数值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
-</blockquote>
-<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha%2C0%5D" alt="[公式]" /> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-%282%5Er-1%29%2C0%5D" alt="[公式]" /> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0%2C%5Calpha%5D" alt="[公式]" />量化到 <img src="https://www.zhihu.com/equation?tex=%5B0%2C%282%5Er-1%29%5D" alt="[公式]" /> 。；公式化表示如下： <img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q%28g%29%3D+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil%2C+g%5Cin+%5B-%5Calpha%2C0%5D%3B%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor%2C+g+%5Cin+%5B0%2C%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]" /> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]" /> 分别是向上取整和向下取整函数； <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%2F2%5Er" alt="[公式]" /> ； 进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]" /> 便有了两种编码方式。</p>
-<figure>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261" /><figcaption aria-hidden="true">image-20211203132307261</figcaption>
-</figure>
-<h2 id="performance">Performance</h2>
-<p>实验的最终表现也是体现出<span class="math inline">\(BatchCrypt\)</span>和<span class="math inline">\(stock\)</span>相比在通信和计算上都有着很大的提升，但是和<span class="math inline">\(Plaintext Learning\)</span>相比还是有很大的进步空间。</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" /></p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" /></p>
-]]></content>
-      <tags>
-        <tag>联邦学习</tag>
       </tags>
   </entry>
   <entry>
@@ -534,6 +534,52 @@ y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} - \nabla_{y^{&#39;i \ 
       </tags>
   </entry>
   <entry>
+    <title>颜色基础、图像模型、Phong光照模型</title>
+    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
+<h2 id="颜色模型">颜色模型</h2>
+<p>RGB模型</p>
+<p>CMY模型（是RGB的补色，或者说减色模型）</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
+<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
+<h2 id="像素">像素</h2>
+<h2 id="三角网格模型">三角网格模型</h2>
+<p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型">光照模型</h2>
+<ul>
+<li>局部光照明</li>
+<li>全局光照明</li>
+</ul>
+<h2 id="phong模型">Phong模型</h2>
+<p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
+<ul>
+<li><p>漫反射效果 <span class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
+<li><p>镜面反射效果 <span class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
+<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
+</ul>
+<h4 id="明暗处理">明暗处理</h4>
+<p>#### 视点变换和视点对象</p>
+<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<ul>
+<li>刚体变换</li>
+<li>相似变换</li>
+<li>线性变换</li>
+<li>仿射变换</li>
+<li>投影变换</li>
+</ul>
+<h2 id="光栅图形学">光栅图形学</h2>
+]]></content>
+      <categories>
+        <category>Computer-Graphics</category>
+      </categories>
+      <tags>
+        <tag>Phong模型</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>联邦学习论文汇总</title>
     <url>/2021/11/18/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<h4 id="总结一下从网络上收集来的联邦学习的论文整体可能质量参差不齐">总结一下从网络上收集来的联邦学习的论文，整体可能质量参差不齐</h4>
@@ -590,52 +636,6 @@ y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} - \nabla_{y^{&#39;i \ 
       </categories>
       <tags>
         <tag>Federated Learning</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>颜色基础、图像模型、Phong光照模型</title>
-    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型">颜色模型</h2>
-<p>RGB模型</p>
-<p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
-<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素">像素</h2>
-<h2 id="三角网格模型">三角网格模型</h2>
-<p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型">光照模型</h2>
-<ul>
-<li>局部光照明</li>
-<li>全局光照明</li>
-</ul>
-<h2 id="phong模型">Phong模型</h2>
-<p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
-<ul>
-<li><p>漫反射效果 <span class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
-<li><p>镜面反射效果 <span class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
-<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
-</ul>
-<h4 id="明暗处理">明暗处理</h4>
-<p>#### 视点变换和视点对象</p>
-<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
-<ul>
-<li>刚体变换</li>
-<li>相似变换</li>
-<li>线性变换</li>
-<li>仿射变换</li>
-<li>投影变换</li>
-</ul>
-<h2 id="光栅图形学">光栅图形学</h2>
-]]></content>
-      <categories>
-        <category>Computer-Graphics</category>
-      </categories>
-      <tags>
-        <tag>Phong模型</tag>
       </tags>
   </entry>
 </search>
