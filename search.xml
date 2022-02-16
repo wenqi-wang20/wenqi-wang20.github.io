@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/11/01/Delphi/</url>
+    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。<br>提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。<br><img src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+</ul>
+<h2 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h2><p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。<br>本篇论文的优化：<br>线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。<br>非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。<br>然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。<br>把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。<br><img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>YML配置文件使用小结</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
+<h2 id="什么是YML文件"><a href="#什么是YML文件" class="headerlink" title="什么是YML文件"></a>什么是YML文件</h2><p> <strong>YAML（Yet Another Markup Language）</strong>（发音 &#x2F;ˈjæməl&#x2F; ）是 一种基于<a href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
+<p>yaml文件是一种通用的数据串行化格式。（我们在用于模块通信的时候，会将对象序列化为通信流，高效地传输到另一个模块，并且提供反序列化还原数据）</p>
+<h2 id="基本格式"><a href="#基本格式" class="headerlink" title="基本格式"></a>基本格式</h2><p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
+<ul>
+<li>大小写敏感</li>
+<li>使用缩进表示层级关系</li>
+<li>缩进时不允许使用Tab键，只允许使用空格。</li>
+<li>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</li>
+</ul>
+<p>在yml文件中，$#$符号表示的注释。yaml支持的数据类型有</p>
+<ul>
+<li>对象：键值对的集合，又称为映射（mapping）&#x2F; 哈希（hashes） &#x2F; 字典（dictionary）</li>
+<li>数组：一组按次序排列的值，又称为序列（sequence） &#x2F; 列表（list）</li>
+<li>纯量（scalars）：单个的、不可再分的值</li>
+</ul>
+<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
+<span class="token key atrule">animal</span><span class="token punctuation">:</span> pets
+<span class="token key atrule">hash</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123; name: Steve, foo: bar &amp;#125;</span>
+</code></pre>
+<p>转化为json为：</p>
+<pre class=" language-json"><code class="language-json">// conf.json
+&amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"animal"</span><span class="token operator">:</span> <span class="token string">"pets"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"hash"</span><span class="token operator">:</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Steve"</span><span class="token punctuation">,</span> <span class="token property">"foo"</span><span class="token operator">:</span> <span class="token string">"bar"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+&amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
+<span class="token key atrule">Animal</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> Cat
+ <span class="token punctuation">-</span> Dog
+ <span class="token punctuation">-</span> Goldfish
+</code></pre>
+<p>转化为json为：</p>
+<pre class=" language-json"><code class="language-json">//conf.json
+&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"Animal"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"Cat"</span><span class="token punctuation">,</span> <span class="token string">"Dog"</span><span class="token punctuation">,</span> <span class="token string">"Goldfish"</span> <span class="token punctuation">]</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
+<span class="token comment" spellcheck="true"># 正常情况下字符串不用写引号</span>
+<span class="token key atrule">str</span><span class="token punctuation">:</span> 这是一行字符串
+<span class="token comment" spellcheck="true"># 字符串内有空格或者特殊字符时需要加引号</span>
+<span class="token key atrule">str</span><span class="token punctuation">:</span> <span class="token string">'内容： 字符串'</span>
+</code></pre>
+<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
+<span class="token key atrule">parent</span><span class="token punctuation">:</span> <span class="token null important">~</span>
+</code></pre>
+<p>等价于json中的</p>
+<pre class=" language-json"><code class="language-json">&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"parent"</span><span class="token operator">:</span> <span class="token null">null</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>YML</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Cocos Creator使用心得（一）</title>
     <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
     <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
@@ -10,6 +79,66 @@
       </categories>
       <tags>
         <tag>Cocos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/09/01/hello-world/</url>
+    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
+<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Machine Learning</title>
+    <url>/2021/11/16/Machine-Learning/</url>
+    <content><![CDATA[<h3 id="初识深度学习"><a href="#初识深度学习" class="headerlink" title="初识深度学习"></a>初识深度学习</h3>]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>YML配置文件使用小结（二）</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
+<h2 id="步骤一：使用python脚本爬取网络图片并且进行压缩"><a href="#步骤一：使用python脚本爬取网络图片并且进行压缩" class="headerlink" title="步骤一：使用python脚本爬取网络图片并且进行压缩"></a>步骤一：使用python脚本爬取网络图片并且进行压缩</h2><p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png"></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png"></p>
+<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
+<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png"></p>
+<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
+<h2 id="步骤二：-读入YAML文件并且对其进行修改"><a href="#步骤二：-读入YAML文件并且对其进行修改" class="headerlink" title="步骤二： 读入YAML文件并且对其进行修改"></a>步骤二： 读入YAML文件并且对其进行修改</h2><p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<ul>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p>
+</li>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p>
+</li>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p>
+</li>
+</ul>
+<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png"></p>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>YML</tag>
       </tags>
   </entry>
   <entry>
@@ -59,15 +188,6 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
       <tags>
         <tag>梯度泄漏</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/11/01/Delphi/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
-<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。<br>提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。<br><img src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
-</ul>
-<h2 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h2><p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。<br>本篇论文的优化：<br>线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。<br>非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。<br>然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。<br>把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。<br><img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述"></p>
-]]></content>
   </entry>
   <entry>
     <title>MIPS汇编语言（一）</title>
@@ -131,152 +251,36 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
       </tags>
   </entry>
   <entry>
-    <title>Machine Learning</title>
-    <url>/2021/11/16/Machine-Learning/</url>
-    <content><![CDATA[<h3 id="初识深度学习"><a href="#初识深度学习" class="headerlink" title="初识深度学习"></a>初识深度学习</h3>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>YML配置文件使用小结</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</url>
-    <content><![CDATA[<p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
-<h2 id="什么是YML文件"><a href="#什么是YML文件" class="headerlink" title="什么是YML文件"></a>什么是YML文件</h2><p> <strong>YAML（Yet Another Markup Language）</strong>（发音 &#x2F;ˈjæməl&#x2F; ）是 一种基于<a href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
-<p>yaml文件是一种通用的数据串行化格式。（我们在用于模块通信的时候，会将对象序列化为通信流，高效地传输到另一个模块，并且提供反序列化还原数据）</p>
-<h2 id="基本格式"><a href="#基本格式" class="headerlink" title="基本格式"></a>基本格式</h2><p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
-<ul>
-<li>大小写敏感</li>
-<li>使用缩进表示层级关系</li>
-<li>缩进时不允许使用Tab键，只允许使用空格。</li>
-<li>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</li>
-</ul>
-<p>在yml文件中，$#$符号表示的注释。yaml支持的数据类型有</p>
-<ul>
-<li>对象：键值对的集合，又称为映射（mapping）&#x2F; 哈希（hashes） &#x2F; 字典（dictionary）</li>
-<li>数组：一组按次序排列的值，又称为序列（sequence） &#x2F; 列表（list）</li>
-<li>纯量（scalars）：单个的、不可再分的值</li>
-</ul>
-<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">animal</span><span class="token punctuation">:</span> pets
-<span class="token key atrule">hash</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123; name: Steve, foo: bar &amp;#125;</span>
-</code></pre>
-<p>转化为json为：</p>
-<pre class=" language-json"><code class="language-json">// conf.json
-&amp;#<span class="token number">123</span><span class="token punctuation">;</span>
-    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"animal"</span><span class="token operator">:</span> <span class="token string">"pets"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"hash"</span><span class="token operator">:</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Steve"</span><span class="token punctuation">,</span> <span class="token property">"foo"</span><span class="token operator">:</span> <span class="token string">"bar"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-&amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">Animal</span><span class="token punctuation">:</span>
- <span class="token punctuation">-</span> Cat
- <span class="token punctuation">-</span> Dog
- <span class="token punctuation">-</span> Goldfish
-</code></pre>
-<p>转化为json为：</p>
-<pre class=" language-json"><code class="language-json">//conf.json
-&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"Animal"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"Cat"</span><span class="token punctuation">,</span> <span class="token string">"Dog"</span><span class="token punctuation">,</span> <span class="token string">"Goldfish"</span> <span class="token punctuation">]</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token comment" spellcheck="true"># 正常情况下字符串不用写引号</span>
-<span class="token key atrule">str</span><span class="token punctuation">:</span> 这是一行字符串
-<span class="token comment" spellcheck="true"># 字符串内有空格或者特殊字符时需要加引号</span>
-<span class="token key atrule">str</span><span class="token punctuation">:</span> <span class="token string">'内容： 字符串'</span>
-</code></pre>
-<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">parent</span><span class="token punctuation">:</span> <span class="token null important">~</span>
-</code></pre>
-<p>等价于json中的</p>
-<pre class=" language-json"><code class="language-json">&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"parent"</span><span class="token operator">:</span> <span class="token null">null</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
-      <tags>
-        <tag>YML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>YML配置文件使用小结（二）</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2 id="步骤一：使用python脚本爬取网络图片并且进行压缩"><a href="#步骤一：使用python脚本爬取网络图片并且进行压缩" class="headerlink" title="步骤一：使用python脚本爬取网络图片并且进行压缩"></a>步骤一：使用python脚本爬取网络图片并且进行压缩</h2><p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png"></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png"></p>
-<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
-<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png"></p>
-<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二：-读入YAML文件并且对其进行修改"><a href="#步骤二：-读入YAML文件并且对其进行修改" class="headerlink" title="步骤二： 读入YAML文件并且对其进行修改"></a>步骤二： 读入YAML文件并且对其进行修改</h2><p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
-<ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p>
-</li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p>
-</li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p>
-</li>
-</ul>
-<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png"></p>
-]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
-      <tags>
-        <tag>YML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/09/01/hello-world/</url>
-    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
-<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>pycharm 环境变量问题</title>
-    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel desktop虚拟机。</p>
-<blockquote>
-<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+    <title>基于高效同态加密的Cross-silo联邦学习</title>
+    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><blockquote>
+<p>回顾<a href="https://www.zhihu.com/search?q=%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=%E5%AE%89%E5%85%A8%E8%81%9A%E5%90%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">安全聚合</a>（e.g., 求和&#x2F;平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。<br>本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。<br><em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
 </blockquote>
-<p>言归正传，我遇到的问题如下：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png"></p>
-<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
-<pre class=" language-bash"><code class="language-bash">ModuleNotFoundError: No Module named <span class="token string">'fedml_api'</span>
-</code></pre>
-<p>的错误。实在是让我很破防。</p>
-<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sys
-sys<span class="token punctuation">.</span>path<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
-<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token variable">$PYTHONPATH</span>
-</code></pre>
-<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193"></p>
+<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>前人的量化方案：将一个 $y \in \left [ -1, 1 \right]$的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
+<p><img src="https://www.zhihu.com/equation?tex=Q(g)=%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]"> 是就近<a href="https://www.zhihu.com/search?q=%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">取整函数</a>（rounding function）;<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D+n%5Ccdot+min" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]"> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个量化梯度之和。</p>
+<p>但是上述量化方法存在一定的问题：</p>
+<blockquote>
+<ol>
+<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(%5Ccdot)" alt="[公式]"> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 的取值；</li>
+<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=%E6%AD%A3%E8%B4%9F%E6%A2%AF%E5%BA%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=%E7%B4%AF%E5%8A%A0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">累加值</a>容易导致溢出；</li>
+<li>不能区分正溢出和负溢出。</li>
+</ol>
+</blockquote>
+<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
+<blockquote>
+<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；<br>\2. 关于<a href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%82%B9%E5%AF%B9%E7%A7%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1,1%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128,127%5D" alt="[公式]"> ，那么 <img src="https://www.zhihu.com/equation?tex=(-1+1)%5CRightarrow(-128+127)=-1" alt="[公式]"> ，结果错误；<br>\3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=%E9%87%8F%E5%8C%96%E6%95%B0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
+</blockquote>
+<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha,0%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-(2%5Er-1),0%5D" alt="[公式]"> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0,%5Calpha%5D" alt="[公式]">量化到 <img src="https://www.zhihu.com/equation?tex=%5B0,(2%5Er-1)%5D" alt="[公式]"> 。；公式化表示如下：<br><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q(g)=+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil,+g%5Cin+%5B-%5Calpha,0%5D;%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor,+g+%5Cin+%5B0,%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]"> 分别是向上取整和向下取整函数；<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n/2%5Er" alt="[公式]"> ；<br>进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]"> 便有了两种编码方式。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261"></p>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>实验的最终表现也是体现出$BatchCrypt$和$stock$相比在通信和计算上都有着很大的提升，但是和$Plaintext Learning$相比还是有很大的进步空间。</p>
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" />
+
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" />
+
 ]]></content>
-      <categories>
-        <category>Ubuntu</category>
-      </categories>
       <tags>
-        <tag>Pycharm</tag>
+        <tag>联邦学习</tag>
       </tags>
   </entry>
   <entry>
@@ -371,36 +375,32 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
-    <title>基于高效同态加密的Cross-silo联邦学习</title>
-    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><blockquote>
-<p>回顾<a href="https://www.zhihu.com/search?q=%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">联邦学习</a>（federated learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a href="https://www.zhihu.com/search?q=%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a href="https://www.zhihu.com/search?q=%E5%AE%89%E5%85%A8%E8%81%9A%E5%90%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">安全聚合</a>（e.g., 求和&#x2F;平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a href="https://www.zhihu.com/search?q=%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">同态加密</a>（Homomorphic Encryption，HE）的方案。各种方案各有利弊。<br>本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。<br><em>Main Contributions: 本文主要提出了一种梯度量化的方法，并对量化梯度进行batch encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
-</blockquote>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png" alt="image-20211203123128193"></p>
-<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>前人的量化方案：将一个 $y \in \left [ -1, 1 \right]$的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
-<p><img src="https://www.zhihu.com/equation?tex=Q(g)=%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]"> 是就近<a href="https://www.zhihu.com/search?q=%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">取整函数</a>（rounding function）;<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D+n%5Ccdot+min" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n" alt="[公式]"> 是 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个量化梯度之和。</p>
-<p>但是上述量化方法存在一定的问题：</p>
+    <title>pycharm 环境变量问题</title>
+    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel desktop虚拟机。</p>
 <blockquote>
-<ol>
-<li>要正确计算 <img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(%5Ccdot)" alt="[公式]"> ，必须事先预知 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 。因此，每次加入新的用户，需要手动检验调整 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 的取值；</li>
-<li>容易溢出。因为所有的<a href="https://www.zhihu.com/search?q=%E6%AD%A3%E8%B4%9F%E6%A2%AF%E5%BA%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a href="https://www.zhihu.com/search?q=%E7%B4%AF%E5%8A%A0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">累加值</a>容易导致溢出；</li>
-<li>不能区分正溢出和负溢出。</li>
-</ol>
+<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
 </blockquote>
-<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
-<blockquote>
-<p>\1. 有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；<br>\2. 关于<a href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%82%B9%E5%AF%B9%E7%A7%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将 <img src="https://www.zhihu.com/equation?tex=%5B-1,1%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-128,127%5D" alt="[公式]"> ，那么 <img src="https://www.zhihu.com/equation?tex=(-1+1)%5CRightarrow(-128+127)=-1" alt="[公式]"> ，结果错误；<br>\3. 均匀量化。这是为了保证<a href="https://www.zhihu.com/search?q=%E9%87%8F%E5%8C%96%E6%95%B0%E5%80%BC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
-</blockquote>
-<p>粗略来说便是将 <img src="https://www.zhihu.com/equation?tex=%5B-%5Calpha,0%5D" alt="[公式]"> 量化到 <img src="https://www.zhihu.com/equation?tex=%5B-(2%5Er-1),0%5D" alt="[公式]"> ，将 <img src="https://www.zhihu.com/equation?tex=%5B0,%5Calpha%5D" alt="[公式]">量化到 <img src="https://www.zhihu.com/equation?tex=%5B0,(2%5Er-1)%5D" alt="[公式]"> 。；公式化表示如下：<br><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q(g)=+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil,+g%5Cin+%5B-%5Calpha,0%5D;%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor,+g+%5Cin+%5B0,%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+" alt="[公式]"> ，其中 <img src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor" alt="[公式]"> 分别是向上取整和向下取整函数；<br><img src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D(q_n)=q_n/2%5Er" alt="[公式]"> ；<br>进一步，实用2-bits 表示符号位（<a href="https://www.zhihu.com/search?q=sign-bits&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:326712188%7D">sign-bits</a>）。如此， <img src="https://www.zhihu.com/equation?tex=0" alt="[公式]"> 便有了两种编码方式。</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png" alt="image-20211203132307261"></p>
-<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>实验的最终表现也是体现出$BatchCrypt$和$stock$相比在通信和计算上都有着很大的提升，但是和$Plaintext Learning$相比还是有很大的进步空间。</p>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" />
-
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" />
-
+<p>言归正传，我遇到的问题如下：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png"></p>
+<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
+<pre class=" language-bash"><code class="language-bash">ModuleNotFoundError: No Module named <span class="token string">'fedml_api'</span>
+</code></pre>
+<p>的错误。实在是让我很破防。</p>
+<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sys
+sys<span class="token punctuation">.</span>path<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token variable">$PYTHONPATH</span>
+</code></pre>
+<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
 ]]></content>
+      <categories>
+        <category>Ubuntu</category>
+      </categories>
       <tags>
-        <tag>联邦学习</tag>
+        <tag>Pycharm</tag>
       </tags>
   </entry>
   <entry>
@@ -432,6 +432,52 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
       </categories>
       <tags>
         <tag>Adversarial_Attacks</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>年度总结</title>
+    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th>姓名</th>
+<th align="left">王文琦</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>生活情况</td>
+<td align="left">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
+</tr>
+<tr>
+<td>社工情况</td>
+<td align="left">计算机系学生科协智能体部开发。</td>
+</tr>
+<tr>
+<td>文体情况</td>
+<td align="left">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
+</tr>
+<tr>
+<td>实践情况</td>
+<td align="left">参加班级实践，想要在暑假组织一次实践活动</td>
+</tr>
+<tr>
+<td>个人总结</td>
+<td align="left">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<em><strong>*以及有没有的书读这个方面*</strong></em>****，****都让我感到有一些迷茫。</td>
+</tr>
+<tr>
+<td>FLAG</td>
+<td align="left"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：                                                                                                                                         1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2. 好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3. 争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5. 争取暑假的时候可以去业界完成一次实习。<br>6. 争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7. 争取明年能和室友一起出去游玩一次…………</td>
+</tr>
+</tbody></table>
+<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
+<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
+<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
       </tags>
   </entry>
   <entry>

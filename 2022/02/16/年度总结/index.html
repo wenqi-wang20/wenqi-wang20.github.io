@@ -5,13 +5,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YML配置文件使用小结 - Drenched in my pain.</title>
+    <title>年度总结 - Drenched in my pain.</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。
-什么是YML文件 YAML（Yet An,"> 
+    <meta name="description" content="
+
+
+姓名
+王文琦
+
+
+
+生活情况
+生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。
+
+
+社工情况
+计算机系学生科协智能,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -30,7 +42,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">YML配置文件使用小结</h3>
+    <h3 class="subtitle">年度总结</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -45,64 +57,50 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">YML配置文件使用小结</h1>
+        <h1 class="title">年度总结</h1>
         <div class="stuff">
-            <span>一月 10, 2022</span>
+            <span>二月 16, 2022</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/YML/" rel="tag">YML</a></li></ul>
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%B4%B5%E7%B3%BB%E7%94%9F%E6%B4%BB/" rel="tag">贵系生活</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
-<h2 id="什么是YML文件"><a href="#什么是YML文件" class="headerlink" title="什么是YML文件"></a>什么是YML文件</h2><p> <strong>YAML（Yet Another Markup Language）</strong>（发音 &#x2F;ˈjæməl&#x2F; ）是 一种基于<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
-<p>yaml文件是一种通用的数据串行化格式。（我们在用于模块通信的时候，会将对象序列化为通信流，高效地传输到另一个模块，并且提供反序列化还原数据）</p>
-<h2 id="基本格式"><a href="#基本格式" class="headerlink" title="基本格式"></a>基本格式</h2><p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
-<ul>
-<li>大小写敏感</li>
-<li>使用缩进表示层级关系</li>
-<li>缩进时不允许使用Tab键，只允许使用空格。</li>
-<li>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</li>
-</ul>
-<p>在yml文件中，$#$符号表示的注释。yaml支持的数据类型有</p>
-<ul>
-<li>对象：键值对的集合，又称为映射（mapping）&#x2F; 哈希（hashes） &#x2F; 字典（dictionary）</li>
-<li>数组：一组按次序排列的值，又称为序列（sequence） &#x2F; 列表（list）</li>
-<li>纯量（scalars）：单个的、不可再分的值</li>
-</ul>
-<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">animal</span><span class="token punctuation">:</span> pets
-<span class="token key atrule">hash</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123; name: Steve, foo: bar &amp;#125;</span>
-</code></pre>
-<p>转化为json为：</p>
-<pre class=" language-json"><code class="language-json">// conf.json
-&amp;#<span class="token number">123</span><span class="token punctuation">;</span>
-    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"animal"</span><span class="token operator">:</span> <span class="token string">"pets"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"hash"</span><span class="token operator">:</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Steve"</span><span class="token punctuation">,</span> <span class="token property">"foo"</span><span class="token operator">:</span> <span class="token string">"bar"</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-&amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">Animal</span><span class="token punctuation">:</span>
- <span class="token punctuation">-</span> Cat
- <span class="token punctuation">-</span> Dog
- <span class="token punctuation">-</span> Goldfish
-</code></pre>
-<p>转化为json为：</p>
-<pre class=" language-json"><code class="language-json">//conf.json
-&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"Animal"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"Cat"</span><span class="token punctuation">,</span> <span class="token string">"Dog"</span><span class="token punctuation">,</span> <span class="token string">"Goldfish"</span> <span class="token punctuation">]</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token comment" spellcheck="true"># 正常情况下字符串不用写引号</span>
-<span class="token key atrule">str</span><span class="token punctuation">:</span> 这是一行字符串
-<span class="token comment" spellcheck="true"># 字符串内有空格或者特殊字符时需要加引号</span>
-<span class="token key atrule">str</span><span class="token punctuation">:</span> <span class="token string">'内容： 字符串'</span>
-</code></pre>
-<h4 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># conf.yml</span>
-<span class="token key atrule">parent</span><span class="token punctuation">:</span> <span class="token null important">~</span>
-</code></pre>
-<p>等价于json中的</p>
-<pre class=" language-json"><code class="language-json">&amp;#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token property">"parent"</span><span class="token operator">:</span> <span class="token null">null</span> &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
-</code></pre>
+            <table>
+<thead>
+<tr>
+<th>姓名</th>
+<th align="left">王文琦</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>生活情况</td>
+<td align="left">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
+</tr>
+<tr>
+<td>社工情况</td>
+<td align="left">计算机系学生科协智能体部开发。</td>
+</tr>
+<tr>
+<td>文体情况</td>
+<td align="left">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
+</tr>
+<tr>
+<td>实践情况</td>
+<td align="left">参加班级实践，想要在暑假组织一次实践活动</td>
+</tr>
+<tr>
+<td>个人总结</td>
+<td align="left">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<em><strong>*以及有没有的书读这个方面*</strong></em>****，****都让我感到有一些迷茫。</td>
+</tr>
+<tr>
+<td>FLAG</td>
+<td align="left"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：                                                                                                                                         1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2. 好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3. 争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5. 争取暑假的时候可以去业界完成一次实习。<br>6. 争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7. 争取明年能和室友一起出去游玩一次…………</td>
+</tr>
+</tbody></table>
+<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
+<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
+<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
