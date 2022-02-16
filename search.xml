@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Cocos Creator使用心得（一）</title>
-    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
-]]></content>
-      <categories>
-        <category>游戏引擎</category>
-      </categories>
-      <tags>
-        <tag>Cocos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DLG的代码实现</title>
     <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<p>上一章我们简单地说明了$Deep \ Leakage \ from \ Gradients$具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a href="https://www.paperswithcode.com/">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
@@ -61,12 +49,84 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
       </tags>
   </entry>
   <entry>
+    <title>Cocos Creator使用心得（一）</title>
+    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
+]]></content>
+      <categories>
+        <category>游戏引擎</category>
+      </categories>
+      <tags>
+        <tag>Cocos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2021/11/01/Delphi/</url>
     <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
 <li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。<br>提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。<br><img src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
 </ul>
 <h2 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h2><p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。<br>本篇论文的优化：<br>线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。<br>非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。<br>然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。<br>把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。<br><img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Machine Learning</title>
+    <url>/2021/11/16/Machine-Learning/</url>
+    <content><![CDATA[<h3 id="初识深度学习"><a href="#初识深度学习" class="headerlink" title="初识深度学习"></a>初识深度学习</h3>]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>YML配置文件使用小结（二）</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
+<h2 id="步骤一：使用python脚本爬取网络图片并且进行压缩"><a href="#步骤一：使用python脚本爬取网络图片并且进行压缩" class="headerlink" title="步骤一：使用python脚本爬取网络图片并且进行压缩"></a>步骤一：使用python脚本爬取网络图片并且进行压缩</h2><p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png"></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png"></p>
+<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
+<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png"></p>
+<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
+<h2 id="步骤二：-读入YAML文件并且对其进行修改"><a href="#步骤二：-读入YAML文件并且对其进行修改" class="headerlink" title="步骤二： 读入YAML文件并且对其进行修改"></a>步骤二： 读入YAML文件并且对其进行修改</h2><p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<ul>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p>
+</li>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p>
+</li>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p>
+</li>
+</ul>
+<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png"></p>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>YML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/09/01/hello-world/</url>
+    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
+<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
   <entry>
@@ -131,17 +191,6 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
       </tags>
   </entry>
   <entry>
-    <title>Machine Learning</title>
-    <url>/2021/11/16/Machine-Learning/</url>
-    <content><![CDATA[<h3 id="初识深度学习"><a href="#初识深度学习" class="headerlink" title="初识深度学习"></a>初识深度学习</h3>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>YML配置文件使用小结</title>
     <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
@@ -200,55 +249,6 @@ ssl<span class="token punctuation">.</span>_create_default_https_context <span c
       <tags>
         <tag>YML</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>pycharm 环境变量问题</title>
-    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel desktop虚拟机。</p>
-<blockquote>
-<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
-</blockquote>
-<p>言归正传，我遇到的问题如下：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png"></p>
-<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
-<pre class=" language-bash"><code class="language-bash">ModuleNotFoundError: No Module named <span class="token string">'fedml_api'</span>
-</code></pre>
-<p>的错误。实在是让我很破防。</p>
-<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sys
-sys<span class="token punctuation">.</span>path<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
-<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token variable">$PYTHONPATH</span>
-</code></pre>
-<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
-]]></content>
-      <categories>
-        <category>Ubuntu</category>
-      </categories>
-      <tags>
-        <tag>Pycharm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/09/01/hello-world/</url>
-    <content><![CDATA[<h2 id="新起点的标志。"><a href="#新起点的标志。" class="headerlink" title="新起点的标志。"></a>新起点的标志。</h2><p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
-<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>联邦学习（一）</title>
@@ -342,32 +342,32 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
-    <title>YML配置文件使用小结（二）</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2 id="步骤一：使用python脚本爬取网络图片并且进行压缩"><a href="#步骤一：使用python脚本爬取网络图片并且进行压缩" class="headerlink" title="步骤一：使用python脚本爬取网络图片并且进行压缩"></a>步骤一：使用python脚本爬取网络图片并且进行压缩</h2><p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png"></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png"></p>
-<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
-<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png"></p>
-<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二：-读入YAML文件并且对其进行修改"><a href="#步骤二：-读入YAML文件并且对其进行修改" class="headerlink" title="步骤二： 读入YAML文件并且对其进行修改"></a>步骤二： 读入YAML文件并且对其进行修改</h2><p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
-<ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p>
-</li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p>
-</li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p>
-</li>
-</ul>
-<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png"></p>
+    <title>pycharm 环境变量问题</title>
+    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel desktop虚拟机。</p>
+<blockquote>
+<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+</blockquote>
+<p>言归正传，我遇到的问题如下：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png"></p>
+<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
+<pre class=" language-bash"><code class="language-bash">ModuleNotFoundError: No Module named <span class="token string">'fedml_api'</span>
+</code></pre>
+<p>的错误。实在是让我很破防。</p>
+<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sys
+sys<span class="token punctuation">.</span>path<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token variable">$PYTHONPATH</span>
+</code></pre>
+<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
 ]]></content>
       <categories>
-        <category>配置文件语言</category>
+        <category>Ubuntu</category>
       </categories>
       <tags>
-        <tag>YML</tag>
+        <tag>Pycharm</tag>
       </tags>
   </entry>
   <entry>
@@ -447,6 +447,47 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
       </categories>
       <tags>
         <tag>贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>颜色基础、图像模型、Phong光照模型</title>
+    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
+<h2 id="颜色模型"><a href="#颜色模型" class="headerlink" title="颜色模型"></a>颜色模型</h2><p>RGB模型</p>
+<p>CMY模型（是RGB的补色，或者说减色模型）</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
+<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
+<h2 id="像素"><a href="#像素" class="headerlink" title="像素"></a>像素</h2><h2 id="三角网格模型"><a href="#三角网格模型" class="headerlink" title="三角网格模型"></a>三角网格模型</h2><p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型"><a href="#光照模型" class="headerlink" title="光照模型"></a>光照模型</h2><ul>
+<li>局部光照明</li>
+<li>全局光照明</li>
+</ul>
+<h2 id="Phong模型"><a href="#Phong模型" class="headerlink" title="Phong模型"></a>Phong模型</h2><p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果： </p>
+<ul>
+<li><p>漫反射效果 $I_d&#x3D;I_iK_d*(L·N)$</p>
+</li>
+<li><p>镜面反射效果 $I_s&#x3D;I_iK_s*(R·V)$</p>
+</li>
+<li><p>环境光效果 $I_a&#x3D;I_iK_a$</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png"></p>
+</li>
+</ul>
+<h4 id="明暗处理"><a href="#明暗处理" class="headerlink" title="明暗处理"></a>明暗处理</h4><h4 id="视点变换和视点对象"><a href="#视点变换和视点对象" class="headerlink" title="视点变换和视点对象"></a>视点变换和视点对象</h4><p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<ul>
+<li>刚体变换</li>
+<li>相似变换</li>
+<li>线性变换</li>
+<li>仿射变换</li>
+<li>投影变换</li>
+</ul>
+<h2 id="光栅图形学"><a href="#光栅图形学" class="headerlink" title="光栅图形学"></a>光栅图形学</h2>]]></content>
+      <categories>
+        <category>Computer-Graphics</category>
+      </categories>
+      <tags>
+        <tag>Phong模型</tag>
       </tags>
   </entry>
   <entry>
@@ -564,7 +605,7 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
 <img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203224347.png" style="zoom: 50%;" />
 
 <h3 id="Method-amp-Experiment"><a href="#Method-amp-Experiment" class="headerlink" title="Method &amp; Experiment"></a>Method &amp; Experiment</h3><p>接下来我们来看看具体的方法。</p>
-<p>首先我们关注传统的分布式学习方法，在第$t$轮训练过程中，第$i$方节点从训练集中选取$minibatch(x_{t,i},y_{t,i})$的数据来计算梯度，迭代的过程如下：<br>$$ { }<br>\nabla{W_{t,i}}&#x3D;\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})} }{\partial{W_t} } \<br>\nabla{W_t}&#x3D;\frac{1}{N}\sum_{j}^{N}{\nabla{W_{t,j}} } \ ; \ \ \ W_{t+1}&#x3D;W_t-\eta \nabla{W_t}<br>$$ { }<br>以中心服务器式分布训练为例，中心服务器会获得$k$方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入.<br>$$ { }<br>\nabla{W’}&#x3D;\frac{\partial{l(F(x’,W),y’)} } {\partial{W} } \<br>x^{‘<em>},y^{‘</em>} &#x3D; \underset{x’,y’} {argmin}\left | \nabla{W’-\nabla{W} }\right|^{2} \<br>$$ { }<br>在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。<br>$$ { }<br>x^{‘i \ mod \ N}<em>{t+1} \gets x^{‘i \ mod \ N}</em>{t} - \nabla_{x^{‘i \ mod \ N}<em>{t+1} }\mathbb{D} \<br>y^{‘i \ mod \ N}</em>{t+1} \gets y^{‘i \ mod \ N}<em>{t} - \nabla</em>{y^{‘i \ mod \ N}_{t+1} }\mathbb{D}<br>$$ { }<br><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" /></p>
+<p>首先我们关注传统的分布式学习方法，在第$t$轮训练过程中，第$i$方节点从训练集中选取$minibatch(x_{t,i},y_{t,i})$的数据来计算梯度，迭代的过程如下：<br>$$<br>\nabla{W_{t,i}}&#x3D;\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})} }{\partial{W_t} } \<br>\nabla{W_t}&#x3D;\frac{1}{N}\sum_{j}^{N}{\nabla{W_{t,j}} } \ ; \ \ \ W_{t+1}&#x3D;W_t-\eta \nabla{W_t}<br>$$<br>以中心服务器式分布训练为例，中心服务器会获得$k$方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入.<br>$$<br>\nabla{W’}&#x3D;\frac{\partial{l(F(x’,W),y’)} } {\partial{W} } \<br>x^{‘<em>},y^{‘</em>} &#x3D; \underset{x’,y’} {argmin}\left | \nabla{W’-\nabla{W} }\right|^{2} \<br>$$<br>在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。<br>$$<br>x^{‘i \ mod \ N}<em>{t+1} \gets x^{‘i \ mod \ N}</em>{t} - \nabla_{x^{‘i \ mod \ N}<em>{t+1} }\mathbb{D} \<br>y^{‘i \ mod \ N}</em>{t+1} \gets y^{‘i \ mod \ N}<em>{t} - \nabla</em>{y^{‘i \ mod \ N}_{t+1} }\mathbb{D}<br>$$<br><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" /></p>
 <p>这听起来是一个天方夜谭，但是从实际的实验来看，效果出奇的好，除了个别像素伪影和顺序不同以外，几乎可以完全还原所有的源数据，比前人研究的方法也要明显占优。</p>
 <img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205153618.png" style="zoom:50%;" />
 
@@ -580,47 +621,6 @@ sys<span class="token punctuation">.</span>path<span class="token punctuation">.
       </categories>
       <tags>
         <tag>梯度泄露</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>颜色基础、图像模型、Phong光照模型</title>
-    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型"><a href="#颜色模型" class="headerlink" title="颜色模型"></a>颜色模型</h2><p>RGB模型</p>
-<p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
-<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素"><a href="#像素" class="headerlink" title="像素"></a>像素</h2><h2 id="三角网格模型"><a href="#三角网格模型" class="headerlink" title="三角网格模型"></a>三角网格模型</h2><p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型"><a href="#光照模型" class="headerlink" title="光照模型"></a>光照模型</h2><ul>
-<li>局部光照明</li>
-<li>全局光照明</li>
-</ul>
-<h2 id="Phong模型"><a href="#Phong模型" class="headerlink" title="Phong模型"></a>Phong模型</h2><p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果： </p>
-<ul>
-<li><p>漫反射效果 $I_d&#x3D;I_iK_d*(L·N)$</p>
-</li>
-<li><p>镜面反射效果 $I_s&#x3D;I_iK_s*(R·V)$</p>
-</li>
-<li><p>环境光效果 $I_a&#x3D;I_iK_a$</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png"></p>
-</li>
-</ul>
-<h4 id="明暗处理"><a href="#明暗处理" class="headerlink" title="明暗处理"></a>明暗处理</h4><h4 id="视点变换和视点对象"><a href="#视点变换和视点对象" class="headerlink" title="视点变换和视点对象"></a>视点变换和视点对象</h4><p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
-<ul>
-<li>刚体变换</li>
-<li>相似变换</li>
-<li>线性变换</li>
-<li>仿射变换</li>
-<li>投影变换</li>
-</ul>
-<h2 id="光栅图形学"><a href="#光栅图形学" class="headerlink" title="光栅图形学"></a>光栅图形学</h2>]]></content>
-      <categories>
-        <category>Computer-Graphics</category>
-      </categories>
-      <tags>
-        <tag>Phong模型</tag>
       </tags>
   </entry>
 </search>
