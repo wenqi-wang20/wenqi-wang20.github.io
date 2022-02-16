@@ -6,98 +6,98 @@ beian:
   enableFooter: false
   link: http://www.beian.miit.gov.cn
 cover:
-- /img/compressed_images/image1.jpg
-- /img/compressed_images/image10.jpg
-- /img/compressed_images/image11.jpg
-- /img/compressed_images/image12.jpg
-- /img/compressed_images/image13.jpg
-- /img/compressed_images/image14.jpg
-- /img/compressed_images/image15.jpg
-- /img/compressed_images/image16.jpg
-- /img/compressed_images/image17.jpg
-- /img/compressed_images/image18.jpg
-- /img/compressed_images/image19.jpg
-- /img/compressed_images/image2.jpg
-- /img/compressed_images/image20.jpg
-- /img/compressed_images/image21.jpg
-- /img/compressed_images/image22.jpg
-- /img/compressed_images/image23.jpg
-- /img/compressed_images/image24.jpg
-- /img/compressed_images/image25.jpg
-- /img/compressed_images/image26.jpg
-- /img/compressed_images/image27.jpg
-- /img/compressed_images/image28.jpg
-- /img/compressed_images/image29.jpg
-- /img/compressed_images/image3.jpg
-- /img/compressed_images/image30.jpg
-- /img/compressed_images/image31.jpg
-- /img/compressed_images/image32.jpg
-- /img/compressed_images/image33.jpg
-- /img/compressed_images/image34.jpg
-- /img/compressed_images/image35.jpg
-- /img/compressed_images/image36.jpg
-- /img/compressed_images/image37.jpg
-- /img/compressed_images/image38.jpg
-- /img/compressed_images/image39.jpg
-- /img/compressed_images/image4.jpg
-- /img/compressed_images/image40.jpg
-- /img/compressed_images/image41.jpg
-- /img/compressed_images/image42.jpg
-- /img/compressed_images/image43.jpg
-- /img/compressed_images/image44.jpg
-- /img/compressed_images/image45.jpg
-- /img/compressed_images/image46.jpg
-- /img/compressed_images/image47.jpg
-- /img/compressed_images/image48.jpg
-- /img/compressed_images/image49.jpg
-- /img/compressed_images/image5.jpg
-- /img/compressed_images/image50.jpg
-- /img/compressed_images/image51.jpg
-- /img/compressed_images/image52.jpg
-- /img/compressed_images/image53.jpg
-- /img/compressed_images/image54.jpg
-- /img/compressed_images/image55.jpg
-- /img/compressed_images/image56.jpg
-- /img/compressed_images/image57.jpg
-- /img/compressed_images/image58.jpg
-- /img/compressed_images/image59.jpg
-- /img/compressed_images/image6.jpg
-- /img/compressed_images/image60.jpg
-- /img/compressed_images/image61.jpg
-- /img/compressed_images/image62.jpg
-- /img/compressed_images/image63.jpg
-- /img/compressed_images/image64.jpg
-- /img/compressed_images/image65.jpg
-- /img/compressed_images/image66.jpg
-- /img/compressed_images/image67.jpg
-- /img/compressed_images/image68.jpg
-- /img/compressed_images/image69.jpg
-- /img/compressed_images/image7.jpg
-- /img/compressed_images/image70.jpg
-- /img/compressed_images/image71.jpg
-- /img/compressed_images/image72.jpg
-- /img/compressed_images/image73.jpg
-- /img/compressed_images/image74.jpg
-- /img/compressed_images/image75.jpg
-- /img/compressed_images/image76.jpg
-- /img/compressed_images/image77.jpg
-- /img/compressed_images/image78.jpg
-- /img/compressed_images/image79.jpg
-- /img/compressed_images/image8.jpg
-- /img/compressed_images/image80.jpg
-- /img/compressed_images/image9.jpg
+  - /img/compressed_images/image1.jpg
+  - /img/compressed_images/image10.jpg
+  - /img/compressed_images/image11.jpg
+  - /img/compressed_images/image12.jpg
+  - /img/compressed_images/image13.jpg
+  - /img/compressed_images/image14.jpg
+  - /img/compressed_images/image15.jpg
+  - /img/compressed_images/image16.jpg
+  - /img/compressed_images/image17.jpg
+  - /img/compressed_images/image18.jpg
+  - /img/compressed_images/image19.jpg
+  - /img/compressed_images/image2.jpg
+  - /img/compressed_images/image20.jpg
+  - /img/compressed_images/image21.jpg
+  - /img/compressed_images/image22.jpg
+  - /img/compressed_images/image23.jpg
+  - /img/compressed_images/image24.jpg
+  - /img/compressed_images/image25.jpg
+  - /img/compressed_images/image26.jpg
+  - /img/compressed_images/image27.jpg
+  - /img/compressed_images/image28.jpg
+  - /img/compressed_images/image29.jpg
+  - /img/compressed_images/image3.jpg
+  - /img/compressed_images/image30.jpg
+  - /img/compressed_images/image31.jpg
+  - /img/compressed_images/image32.jpg
+  - /img/compressed_images/image33.jpg
+  - /img/compressed_images/image34.jpg
+  - /img/compressed_images/image35.jpg
+  - /img/compressed_images/image36.jpg
+  - /img/compressed_images/image37.jpg
+  - /img/compressed_images/image38.jpg
+  - /img/compressed_images/image39.jpg
+  - /img/compressed_images/image4.jpg
+  - /img/compressed_images/image40.jpg
+  - /img/compressed_images/image41.jpg
+  - /img/compressed_images/image42.jpg
+  - /img/compressed_images/image43.jpg
+  - /img/compressed_images/image44.jpg
+  - /img/compressed_images/image45.jpg
+  - /img/compressed_images/image46.jpg
+  - /img/compressed_images/image47.jpg
+  - /img/compressed_images/image48.jpg
+  - /img/compressed_images/image49.jpg
+  - /img/compressed_images/image5.jpg
+  - /img/compressed_images/image50.jpg
+  - /img/compressed_images/image51.jpg
+  - /img/compressed_images/image52.jpg
+  - /img/compressed_images/image53.jpg
+  - /img/compressed_images/image54.jpg
+  - /img/compressed_images/image55.jpg
+  - /img/compressed_images/image56.jpg
+  - /img/compressed_images/image57.jpg
+  - /img/compressed_images/image58.jpg
+  - /img/compressed_images/image59.jpg
+  - /img/compressed_images/image6.jpg
+  - /img/compressed_images/image60.jpg
+  - /img/compressed_images/image61.jpg
+  - /img/compressed_images/image62.jpg
+  - /img/compressed_images/image63.jpg
+  - /img/compressed_images/image64.jpg
+  - /img/compressed_images/image65.jpg
+  - /img/compressed_images/image66.jpg
+  - /img/compressed_images/image67.jpg
+  - /img/compressed_images/image68.jpg
+  - /img/compressed_images/image69.jpg
+  - /img/compressed_images/image7.jpg
+  - /img/compressed_images/image70.jpg
+  - /img/compressed_images/image71.jpg
+  - /img/compressed_images/image72.jpg
+  - /img/compressed_images/image73.jpg
+  - /img/compressed_images/image74.jpg
+  - /img/compressed_images/image75.jpg
+  - /img/compressed_images/image76.jpg
+  - /img/compressed_images/image77.jpg
+  - /img/compressed_images/image78.jpg
+  - /img/compressed_images/image79.jpg
+  - /img/compressed_images/image8.jpg
+  - /img/compressed_images/image80.jpg
+  - /img/compressed_images/image9.jpg
 favicon: /img/my_favicon.png
 gitalk:
   admin:
-  - ''
+    - ""
   autoExpand: false
-  clientID: ''
-  clientSecret: ''
+  clientID: ""
+  clientSecret: ""
   distractionFreeMode: false
   enable: false
   id: location.pathname
-  owner: ''
-  repo: ''
+  owner: ""
+  repo: ""
 google_analytics: null
 hitokoto: true
 keywords: Fechin
@@ -109,7 +109,8 @@ links:
   wechat: /img/mylogo.png
 local_search:
   enable: false
-mathjax: true
+math:
+  mathjax: true
 menu:
   "\u5173\u4E8E": /about
   "\u5206\u7C7B": /categories
@@ -117,8 +118,8 @@ menu:
   "\u6807\u7B7E": /tags
   "\u9996\u9875": /
 mp3:
-- http://link.hhtjim.com/163/425570952.mp3
-- http://link.hhtjim.com/163/425570952.mp3
+  - http://link.hhtjim.com/163/425570952.mp3
+  - http://link.hhtjim.com/163/425570952.mp3
 rss: atom.xml
 scrollbar: true
 twitterpic:
