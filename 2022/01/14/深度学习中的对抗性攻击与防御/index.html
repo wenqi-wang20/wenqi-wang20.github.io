@@ -60,27 +60,18 @@
 <ul>
 <li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS) algorithm</li>
 <li>快速梯度符号法the fast gradient sign method (FGSM)</li>
-<li>基本迭代法/投影梯度下降the basic iterative method (BIM)/projected gradient descent (PGD)</li>
+<li>基本迭代法&#x2F;投影梯度下降the basic iterative method (BIM)&#x2F;projected gradient descent (PGD)</li>
 <li>分布式对抗性攻击distributionally adversarial attack</li>
 <li>Carlini and Wagner (C&amp;W) attacks</li>
 <li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack (JSMA)</li>
 <li>（我也不知道是什么） DeepFool</li>
 </ul>
 <h4 id="防御方法"><a href="#防御方法" class="headerlink" title="防御方法"></a>防御方法</h4><p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
-<h2 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h2><p>首先我们来进行一些准备性质的工作。</p>
-<script type="math/tex; mode=display">
-D(x,x')<\eta,f(x')\ne f(x)=y \\
-这时，我们称\eta为一个小的扰动(perturbation)，x'为一个对抗性样本。</script><p>相对应的优化损失我们都采取交叉熵的方式来定义</p>
-<script type="math/tex; mode=display">
-J(\theta,x,y)表示在权重\theta下的优化损失。 \\
-特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)</script><p>关于<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
-<p>同时还进行了$L_p \ distance \ metric$的定义：</p>
-<script type="math/tex; mode=display">
-\left \| \mathbf{v} \right \|_p = (\sum\left | \mathbf{v_i}\right |^p)^{1/p}</script><h2 id="Adversarial-Attacks"><a href="#Adversarial-Attacks" class="headerlink" title="Adversarial Attacks"></a>Adversarial Attacks</h2><h4 id="L-BFGS-Algorithm"><a href="#L-BFGS-Algorithm" class="headerlink" title="L-BFGS Algorithm"></a>L-BFGS Algorithm</h4><p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰$L_p$范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong></p>
-<script type="math/tex; mode=display">
-min \left \| \mathbf{x-x'} \right \|_p \ subjects \ to \ f(x') \ne y'</script><h4 id="Fast-gradient-sign-method"><a href="#Fast-gradient-sign-method" class="headerlink" title="Fast gradient sign method"></a>Fast gradient sign method</h4><p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。</p>
-<script type="math/tex; mode=display">
-x'=x+\epsilon·sign[\nabla_xJ(\theta,x,y')]</script><h4 id="BIM-amp-PGD"><a href="#BIM-amp-PGD" class="headerlink" title="BIM &amp; PGD"></a>BIM &amp; PGD</h4><p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
+<h2 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h2><p>首先我们来进行一些准备性质的工作。<br>$$<br>D(x,x’)&lt;\eta,f(x’)\ne f(x)&#x3D;y \<br>这时，我们称\eta为一个小的扰动(perturbation)，x’为一个对抗性样本。<br>$$<br>相对应的优化损失我们都采取交叉熵的方式来定义<br>$$<br>J(\theta,x,y)表示在权重\theta下的优化损失。 \<br>特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)<br>$$<br>关于<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
+<p>同时还进行了$L_p \ distance \ metric$的定义：<br>$$<br>\left | \mathbf{v} \right |_p &#x3D; (\sum\left | \mathbf{v_i}\right |^p)^{1&#x2F;p}<br>$$</p>
+<h2 id="Adversarial-Attacks"><a href="#Adversarial-Attacks" class="headerlink" title="Adversarial Attacks"></a>Adversarial Attacks</h2><h4 id="L-BFGS-Algorithm"><a href="#L-BFGS-Algorithm" class="headerlink" title="L-BFGS Algorithm"></a>L-BFGS Algorithm</h4><p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰$L_p$范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong><br>$$<br>min \left | \mathbf{x-x’} \right |_p \ subjects \ to \ f(x’) \ne y’<br>$$</p>
+<h4 id="Fast-gradient-sign-method"><a href="#Fast-gradient-sign-method" class="headerlink" title="Fast gradient sign method"></a>Fast gradient sign method</h4><p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。<br>$$<br>x’&#x3D;x+\epsilon·sign[\nabla_xJ(\theta,x,y’)]<br>$$</p>
+<h4 id="BIM-amp-PGD"><a href="#BIM-amp-PGD" class="headerlink" title="BIM &amp; PGD"></a>BIM &amp; PGD</h4><p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
 <h4 id="Momentum-iterative-attack"><a href="#Momentum-iterative-attack" class="headerlink" title="Momentum iterative attack"></a>Momentum iterative attack</h4><p>基于动量优化器灵感的设计。待了解。</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
