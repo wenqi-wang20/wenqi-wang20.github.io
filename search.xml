@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/11/01/Delphi/</url>
-    <content><![CDATA[<h2 id="introduction">Introduction</h2>
-<ul>
-<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。 提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。 <img src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></li>
-</ul>
-<h2 id="tech">Tech</h2>
-<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。 本篇论文的优化： 线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。 非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。 然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。 把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。 <img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述" /></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Cocos Creator使用心得（一）</title>
     <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
     <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
@@ -45,15 +34,78 @@
       </tags>
   </entry>
   <entry>
-    <title>Machine Learning</title>
-    <url>/2021/11/16/Machine-Learning/</url>
-    <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
+    <title>Hello World</title>
+    <url>/2021/11/01/Delphi/</url>
+    <content><![CDATA[<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。 提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。 <img src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></li>
+</ul>
+<h2 id="tech">Tech</h2>
+<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。 本篇论文的优化： 线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。 非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。 然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。 把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。 <img src="https://img-blog.csdnimg.cn/20201230144547607.png" alt="在这里插入图片描述" /></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>MIPS汇编语言（一）</title>
+    <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
+<p>MIPS(Millions of Instructions Per Second)</p>
+<p><strong>Classic flow</strong>:</p>
+<ul>
+<li>Fetch instruction</li>
+<li>Read registers</li>
+<li>Arithmetic operation</li>
+<li>Memory access</li>
+<li>Write back</li>
+</ul>
+<p>Five steps and four cycles(Read and write registers cost only half a cycle).</p>
+<p>Delay slot:</p>
+<p>After the jump and branch condition, there is a delay slot to fill a non-related operation(usually a n operation before the branch).</p>
+<h3 id="how-a-program-excutes">How a program excutes</h3>
+<ul>
+<li><p>genera 3-operand format</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">op	dest, src1, src2</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="mips-instructions-memory-organization">MIPS instructions &amp; memory organization</h3>
+<ul>
+<li><p>type of instructions</p>
+<figure>
+<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png" alt="image-20211117001847724" /><figcaption aria-hidden="true">image-20211117001847724</figcaption>
+</figure>
+<ul>
+<li>Data operations
+<ul>
+<li>Arithmetic(add, substrct……)</li>
+<li>Logical(and, or, not, xor……)</li>
+</ul></li>
+<li>Data transfer
+<ul>
+<li>Load(Memory -&gt; Register)</li>
+<li>Store(Register -&gt; Memory)</li>
+</ul></li>
+<li>Sequencing
+<ul>
+<li>Branch(conditional, &gt;, &lt;, ==……)</li>
+<li>Jump(unconditional, goto……)</li>
+</ul></li>
+</ul></li>
+<li><p>Registers</p>
+<ul>
+<li>32 General Purpose Registers</li>
+<li><strong>Very important!! </strong>
+<ul>
+<li><strong>ALL the values for instructions must come from registers!</strong></li>
+<li><strong>R0 is always zero!!</strong></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="data-operations-transfers">Data operations &amp; transfers</h3>
+<h3 id="sequencing">Sequencing</h3>
 ]]></content>
       <categories>
-        <category>深度学习</category>
+        <category>Assembly Language</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
+        <tag>MIPS</tag>
       </tags>
   </entry>
   <entry>
@@ -97,6 +149,31 @@
       </categories>
       <tags>
         <tag>YML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Machine Learning</title>
+    <url>/2021/11/16/Machine-Learning/</url>
+    <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gitignore不生效问题</title>
+    <url>/2022/02/17/gitignore%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>因为年前换了两台电脑，需要在不同的地方管理我的hexo博客，所以我采取了git存储一份source资源，两边每次都需要先拉取云端资源，再做本地更新，然后再deploy到hexo分支。因为有些步骤是重复的，所以我就写了一个脚本，短短的几句话：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git status</span><br><span class="line">git add --all</span><br><span class="line">git commit -m &quot;mac部署&quot;</span><br><span class="line">git push origin master:source</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p>但是因为我的mac和win语句不一样，所以显然这个不能被push到source分支里，所以我把它添加到<code>.gitignore</code>文件里了。可是最近经过我观察发现，它依然出现在了我的git远程仓库里！不仅如此，<code>.gitignore</code>里的文件都没有被忽略，甚至连ignore文件自己都被上传了上去。所以我才研究了一下，发现是我当时添加<code>.gitignore</code>文件比较迟，并没有在init的同时添加，导致文件时无效的。解决办法也很简单，只需要用下面的命令删除缓存即可：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意后面有一个点</span></span><br><span class="line">git rm -rf --cache .</span><br></pre></td></tr></table></figure>
+<p>然后在重新添加所有的更改并且commit提交即可。</p>
+]]></content>
+      <tags>
+        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -172,70 +249,6 @@
       </categories>
       <tags>
         <tag>Pycharm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MIPS汇编语言（一）</title>
-    <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
-<p>MIPS(Millions of Instructions Per Second)</p>
-<p><strong>Classic flow</strong>:</p>
-<ul>
-<li>Fetch instruction</li>
-<li>Read registers</li>
-<li>Arithmetic operation</li>
-<li>Memory access</li>
-<li>Write back</li>
-</ul>
-<p>Five steps and four cycles(Read and write registers cost only half a cycle).</p>
-<p>Delay slot:</p>
-<p>After the jump and branch condition, there is a delay slot to fill a non-related operation(usually a n operation before the branch).</p>
-<h3 id="how-a-program-excutes">How a program excutes</h3>
-<ul>
-<li><p>genera 3-operand format</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">op	dest, src1, src2</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="mips-instructions-memory-organization">MIPS instructions &amp; memory organization</h3>
-<ul>
-<li><p>type of instructions</p>
-<figure>
-<img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211117001847724.png" alt="image-20211117001847724" /><figcaption aria-hidden="true">image-20211117001847724</figcaption>
-</figure>
-<ul>
-<li>Data operations
-<ul>
-<li>Arithmetic(add, substrct……)</li>
-<li>Logical(and, or, not, xor……)</li>
-</ul></li>
-<li>Data transfer
-<ul>
-<li>Load(Memory -&gt; Register)</li>
-<li>Store(Register -&gt; Memory)</li>
-</ul></li>
-<li>Sequencing
-<ul>
-<li>Branch(conditional, &gt;, &lt;, ==……)</li>
-<li>Jump(unconditional, goto……)</li>
-</ul></li>
-</ul></li>
-<li><p>Registers</p>
-<ul>
-<li>32 General Purpose Registers</li>
-<li><strong>Very important!! </strong>
-<ul>
-<li><strong>ALL the values for instructions must come from registers!</strong></li>
-<li><strong>R0 is always zero!!</strong></li>
-</ul></li>
-</ul></li>
-</ul>
-<h3 id="data-operations-transfers">Data operations &amp; transfers</h3>
-<h3 id="sequencing">Sequencing</h3>
-]]></content>
-      <categories>
-        <category>Assembly Language</category>
-      </categories>
-      <tags>
-        <tag>MIPS</tag>
       </tags>
   </entry>
   <entry>
@@ -344,59 +357,6 @@ then, \quad w_{t+1} \gets \sum_{k=1}^K \frac {n_{k}}{n} w_{t+1}^{k}
       </tags>
   </entry>
   <entry>
-    <title>深度学习中的对抗性攻击与防御</title>
-    <url>/2022/01/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%AF%B9%E6%8A%97%E6%80%A7%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/</url>
-    <content><![CDATA[<p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial Intelligence—Feature Article. Adversarial Attacks and Defenses in Deep Learning, Kui Ren , Tianhang Zheng , Zhan Qin ,Xue Liu。这篇文章首先介绍深度学习的算法基础，然后指出了某些防御技术的能力，看起来更像是一篇综述性文章。</p>
-<h2 id="introduction">Introduction</h2>
-<h4 id="对抗性样本">对抗性样本</h4>
-<p>首先我们先了解一下对抗性样本是什么，在大规模部署DL模型的时候，会有一些加入干扰的样本，这些样本会使得人类无法察觉，但是模型会在不知不觉中做出错误的预测，从而使得训练的成果产生一些严重的偏差和影响。</p>
-<p>通过威胁模型，可以将对抗性攻击分为白盒攻击<span class="math inline">\(white-box\)</span>，灰盒攻击<span class="math inline">\(grey-box\)</span>和黑盒攻击。顾名思义，白盒就是指对于对方的模型有了充分充足的了解，包括体系结构参数等等。在灰盒模型中，仅限于了解模型的结构；在黑盒模型中，则仅能通过调用查询来生成对抗性样本。</p>
-<h4 id="攻击方法">攻击方法</h4>
-<p>在这些威胁模型的框架之内，有很多对抗性样本攻击算法提出，比如以下的几种：</p>
-<ul>
-<li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS) algorithm</li>
-<li>快速梯度符号法the fast gradient sign method (FGSM)</li>
-<li>基本迭代法/投影梯度下降the basic iterative method (BIM)/projected gradient descent (PGD)</li>
-<li>分布式对抗性攻击distributionally adversarial attack</li>
-<li>Carlini and Wagner (C&amp;W) attacks</li>
-<li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack (JSMA)</li>
-<li>（我也不知道是什么） DeepFool</li>
-</ul>
-<h4 id="防御方法">防御方法</h4>
-<p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
-<h2 id="preliminaries">Preliminaries</h2>
-<p>首先我们来进行一些准备性质的工作。 <span class="math display">\[
-D(x,x&#39;)&lt;\eta,f(x&#39;)\ne f(x)=y \\
-这时，我们称\eta为一个小的扰动(perturbation)，x&#39;为一个对抗性样本。
-\]</span> 相对应的优化损失我们都采取交叉熵的方式来定义 <span class="math display">\[
-J(\theta,x,y)表示在权重\theta下的优化损失。 \\
-特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)
-\]</span> 关于<a href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
-<p>同时还进行了<span class="math inline">\(L_p \ distance \ metric\)</span>的定义： <span class="math display">\[
-\left \| \mathbf{v} \right \|_p = (\sum\left | \mathbf{v_i}\right |^p)^{1/p}
-\]</span></p>
-<h2 id="adversarial-attacks">Adversarial Attacks</h2>
-<h4 id="l-bfgs-algorithm">L-BFGS Algorithm</h4>
-<p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰<span class="math inline">\(L_p\)</span>范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong> <span class="math display">\[
-min \left \| \mathbf{x-x&#39;} \right \|_p \ subjects \ to \ f(x&#39;) \ne y&#39;
-\]</span></p>
-<h4 id="fast-gradient-sign-method">Fast gradient sign method</h4>
-<p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。 <span class="math display">\[
-x&#39;=x+\epsilon·sign[\nabla_xJ(\theta,x,y&#39;)]
-\]</span></p>
-<h4 id="bim-pgd">BIM &amp; PGD</h4>
-<p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
-<p>#### Momentum iterative attack</p>
-<p>基于动量优化器灵感的设计。待了解。</p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>Adversarial_Attacks</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>基于高效同态加密的Cross-silo联邦学习</title>
     <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="background">Background</h2>
@@ -487,6 +447,59 @@ x&#39;=x+\epsilon·sign[\nabla_xJ(\theta,x,y&#39;)]
       </tags>
   </entry>
   <entry>
+    <title>深度学习中的对抗性攻击与防御</title>
+    <url>/2022/01/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%AF%B9%E6%8A%97%E6%80%A7%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/</url>
+    <content><![CDATA[<p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial Intelligence—Feature Article. Adversarial Attacks and Defenses in Deep Learning, Kui Ren , Tianhang Zheng , Zhan Qin ,Xue Liu。这篇文章首先介绍深度学习的算法基础，然后指出了某些防御技术的能力，看起来更像是一篇综述性文章。</p>
+<h2 id="introduction">Introduction</h2>
+<h4 id="对抗性样本">对抗性样本</h4>
+<p>首先我们先了解一下对抗性样本是什么，在大规模部署DL模型的时候，会有一些加入干扰的样本，这些样本会使得人类无法察觉，但是模型会在不知不觉中做出错误的预测，从而使得训练的成果产生一些严重的偏差和影响。</p>
+<p>通过威胁模型，可以将对抗性攻击分为白盒攻击<span class="math inline">\(white-box\)</span>，灰盒攻击<span class="math inline">\(grey-box\)</span>和黑盒攻击。顾名思义，白盒就是指对于对方的模型有了充分充足的了解，包括体系结构参数等等。在灰盒模型中，仅限于了解模型的结构；在黑盒模型中，则仅能通过调用查询来生成对抗性样本。</p>
+<h4 id="攻击方法">攻击方法</h4>
+<p>在这些威胁模型的框架之内，有很多对抗性样本攻击算法提出，比如以下的几种：</p>
+<ul>
+<li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS) algorithm</li>
+<li>快速梯度符号法the fast gradient sign method (FGSM)</li>
+<li>基本迭代法/投影梯度下降the basic iterative method (BIM)/projected gradient descent (PGD)</li>
+<li>分布式对抗性攻击distributionally adversarial attack</li>
+<li>Carlini and Wagner (C&amp;W) attacks</li>
+<li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack (JSMA)</li>
+<li>（我也不知道是什么） DeepFool</li>
+</ul>
+<h4 id="防御方法">防御方法</h4>
+<p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
+<h2 id="preliminaries">Preliminaries</h2>
+<p>首先我们来进行一些准备性质的工作。 <span class="math display">\[
+D(x,x&#39;)&lt;\eta,f(x&#39;)\ne f(x)=y \\
+这时，我们称\eta为一个小的扰动(perturbation)，x&#39;为一个对抗性样本。
+\]</span> 相对应的优化损失我们都采取交叉熵的方式来定义 <span class="math display">\[
+J(\theta,x,y)表示在权重\theta下的优化损失。 \\
+特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)
+\]</span> 关于<a href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
+<p>同时还进行了<span class="math inline">\(L_p \ distance \ metric\)</span>的定义： <span class="math display">\[
+\left \| \mathbf{v} \right \|_p = (\sum\left | \mathbf{v_i}\right |^p)^{1/p}
+\]</span></p>
+<h2 id="adversarial-attacks">Adversarial Attacks</h2>
+<h4 id="l-bfgs-algorithm">L-BFGS Algorithm</h4>
+<p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰<span class="math inline">\(L_p\)</span>范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong> <span class="math display">\[
+min \left \| \mathbf{x-x&#39;} \right \|_p \ subjects \ to \ f(x&#39;) \ne y&#39;
+\]</span></p>
+<h4 id="fast-gradient-sign-method">Fast gradient sign method</h4>
+<p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。 <span class="math display">\[
+x&#39;=x+\epsilon·sign[\nabla_xJ(\theta,x,y&#39;)]
+\]</span></p>
+<h4 id="bim-pgd">BIM &amp; PGD</h4>
+<p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
+<p>#### Momentum iterative attack</p>
+<p>基于动量优化器灵感的设计。待了解。</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>Adversarial_Attacks</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>深度神经网络中的梯度泄露问题</title>
     <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
@@ -530,53 +543,8 @@ y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} - \nabla_{y^{&#39;i \ 
         <category>深度学习</category>
       </categories>
       <tags>
+        <tag>机器学习</tag>
         <tag>梯度泄露</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>颜色基础、图像模型、Phong光照模型</title>
-    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型">颜色模型</h2>
-<p>RGB模型</p>
-<p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
-<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素">像素</h2>
-<h2 id="三角网格模型">三角网格模型</h2>
-<p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型">光照模型</h2>
-<ul>
-<li>局部光照明</li>
-<li>全局光照明</li>
-</ul>
-<h2 id="phong模型">Phong模型</h2>
-<p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
-<ul>
-<li><p>漫反射效果 <span class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
-<li><p>镜面反射效果 <span class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
-<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
-</ul>
-<h4 id="明暗处理">明暗处理</h4>
-<p>#### 视点变换和视点对象</p>
-<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
-<ul>
-<li>刚体变换</li>
-<li>相似变换</li>
-<li>线性变换</li>
-<li>仿射变换</li>
-<li>投影变换</li>
-</ul>
-<h2 id="光栅图形学">光栅图形学</h2>
-]]></content>
-      <categories>
-        <category>Computer-Graphics</category>
-      </categories>
-      <tags>
-        <tag>Phong模型</tag>
       </tags>
   </entry>
   <entry>
@@ -636,6 +604,52 @@ y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} - \nabla_{y^{&#39;i \ 
       </categories>
       <tags>
         <tag>Federated Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>颜色基础、图像模型、Phong光照模型</title>
+    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
+<h2 id="颜色模型">颜色模型</h2>
+<p>RGB模型</p>
+<p>CMY模型（是RGB的补色，或者说减色模型）</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of brightness亮度），使用圆锥来表示颜色。</p>
+<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
+<h2 id="像素">像素</h2>
+<h2 id="三角网格模型">三角网格模型</h2>
+<p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量 ：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型">光照模型</h2>
+<ul>
+<li>局部光照明</li>
+<li>全局光照明</li>
+</ul>
+<h2 id="phong模型">Phong模型</h2>
+<p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
+<ul>
+<li><p>漫反射效果 <span class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
+<li><p>镜面反射效果 <span class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
+<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
+</ul>
+<h4 id="明暗处理">明暗处理</h4>
+<p>#### 视点变换和视点对象</p>
+<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<ul>
+<li>刚体变换</li>
+<li>相似变换</li>
+<li>线性变换</li>
+<li>仿射变换</li>
+<li>投影变换</li>
+</ul>
+<h2 id="光栅图形学">光栅图形学</h2>
+]]></content>
+      <categories>
+        <category>Computer-Graphics</category>
+      </categories>
+      <tags>
+        <tag>Phong模型</tag>
       </tags>
   </entry>
 </search>
