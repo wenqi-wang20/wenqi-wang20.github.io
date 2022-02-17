@@ -88,16 +88,16 @@ cover:
   - /img/compressed_images/image9.jpg
 favicon: /img/my_favicon.png
 gitalk:
-  admin:
-    - ""
-  autoExpand: false
-  clientID: ""
-  clientSecret: ""
-  distractionFreeMode: false
-  enable: false
+  admin: wenqi-wang20
+  autoExpand: true
+  clientID: ff344aadf12b27b1b89e
+  clientSecret: f52347d027bfae073c0c4dcf016d54363b8f1957
+  distractionFreeMode: true
+  enable: true
   id: location.pathname
-  owner: ""
-  repo: ""
+  owner: wenqi-wang20
+  repo: wenqi-wang20.github.io
+  labels: "['Gitalk']"
 google_analytics: null
 hitokoto: true
 keywords: Fechin
