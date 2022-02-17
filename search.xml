@@ -13,6 +13,28 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/11/01/Delphi/</url>
+    <content><![CDATA[<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。
+提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。
+<img
+src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70"
+alt="在这里插入图片描述" /></li>
+</ul>
+<h2 id="tech">Tech</h2>
+<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。
+本篇论文的优化：
+线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。
+非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。
+然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。
+把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。
+<img src="https://img-blog.csdnimg.cn/20201230144547607.png"
+alt="在这里插入图片描述" /></p>
+]]></content>
+  </entry>
+  <entry>
     <title>MIPS汇编语言（一）</title>
     <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
@@ -33,7 +55,7 @@ non-related operation(usually a n operation before the branch).</p>
 <h3 id="how-a-program-excutes">How a program excutes</h3>
 <ul>
 <li><p>genera 3-operand format</p>
-<pre class="assembly"><code>op    dest, src1, src2</code></pre></li>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">op	dest, src1, src2</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="mips-instructions-memory-organization">MIPS instructions &amp;
 memory organization</h3>
@@ -84,18 +106,6 @@ registers!</strong></li>
       </tags>
   </entry>
   <entry>
-    <title>Machine Learning</title>
-    <url>/2021/11/16/Machine-Learning/</url>
-    <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DLG的代码实现</title>
     <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<p>上一章我们简单地说明了<span class="math inline">\(Deep \ Leakage \
@@ -106,37 +116,11 @@ href="https://www.paperswithcode.com">paperswithcode</a>，在这个网站上几
 class="math inline">\(torchvision\)</span>库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络<span
 class="math inline">\(LeNet\)</span>和<span
 class="math inline">\(ResNet\)</span>两种方法，我使用第一种方法，卷积通道数为12。</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LeNet(nn.Module):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(LeNet, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        act <span class="op">=</span> nn.Sigmoid</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.body <span class="op">=</span> nn.Sequential(</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">3</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            act(),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">12</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            act(),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">12</span>, <span class="dv">12</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, padding<span class="op">=</span><span class="dv">5</span> <span class="op">//</span> <span class="dv">2</span>, stride<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            act(),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.fc <span class="op">=</span> nn.Sequential(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">768</span>, <span class="dv">100</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> <span class="va">self</span>.body(x)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> out.view(out.size(<span class="dv">0</span>), <span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(out.size())</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> <span class="va">self</span>.fc(out)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> out</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LeNet</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(LeNet, self).__init__()</span><br><span class="line">        act = nn.Sigmoid</span><br><span class="line">        self.body = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">3</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            act(),</span><br><span class="line">            nn.Conv2d(<span class="number">12</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            act(),</span><br><span class="line">            nn.Conv2d(<span class="number">12</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">1</span>),</span><br><span class="line">            act(),</span><br><span class="line">        )</span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">768</span>, <span class="number">100</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        out = self.body(x)</span><br><span class="line">        out = out.view(out.size(<span class="number">0</span>), -<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># print(out.size())</span></span><br><span class="line">        out = self.fc(out)</span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
 <p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了<span
 class="math inline">\(&#39;str&#39; \ object \ has \ no \ attribute \
 &#39;…&#39;\)</span>，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ssl</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 取消安全证书的检验，方便下载数据</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ssl._create_default_https_context <span class="op">=</span> ssl._create_unverified_context</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ssl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取消安全证书的检验，方便下载数据</span></span><br><span class="line">ssl._create_default_https_context = ssl._create_unverified_context</span><br></pre></td></tr></table></figure>
 <p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看<span
 class="math inline">\(dummy \
 input\)</span>如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将<span
@@ -156,26 +140,16 @@ imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话�
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/11/01/Delphi/</url>
-    <content><![CDATA[<h2 id="introduction">Introduction</h2>
-<ul>
-<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。
-提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。
-<img
-src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70"
-alt="在这里插入图片描述" /></li>
-</ul>
-<h2 id="tech">Tech</h2>
-<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。
-本篇论文的优化：
-线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。
-非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。
-然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。
-把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。
-<img src="https://img-blog.csdnimg.cn/20201230144547607.png"
-alt="在这里插入图片描述" /></p>
+    <title>Machine Learning</title>
+    <url>/2021/11/16/Machine-Learning/</url>
+    <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
 ]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
   </entry>
   <entry>
     <title>YML配置文件使用小结</title>
@@ -203,42 +177,53 @@ class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类�
 <li>纯量（scalars）：单个的、不可再分的值</li>
 </ul>
 <h4 id="对象">对象</h4>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">animal</span><span class="kw">:</span><span class="at"> pets</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hash</span><span class="kw">:</span><span class="at"> </span><span class="kw">&#123;</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Steve</span><span class="kw">,</span><span class="at"> </span><span class="fu">foo</span><span class="kw">:</span><span class="at"> bar </span><span class="kw">&#125;</span></span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">animal:</span> <span class="string">pets</span></span><br><span class="line"><span class="attr">hash:</span> &#123; <span class="attr">name:</span> <span class="string">Steve</span>, <span class="attr">foo:</span> <span class="string">bar</span> &#125;</span><br></pre></td></tr></table></figure>
 <p>转化为json为：</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="er">//</span> <span class="er">conf.json</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="er">&#123;</span> <span class="dt">&quot;animal&quot;</span><span class="fu">:</span> <span class="st">&quot;pets&quot;</span> <span class="fu">&#125;</span><span class="er">,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">&#123;</span> <span class="dt">&quot;hash&quot;</span><span class="fu">:</span> <span class="fu">&#123;</span> <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Steve&quot;</span><span class="fu">,</span> <span class="dt">&quot;foo&quot;</span><span class="fu">:</span> <span class="st">&quot;bar&quot;</span> <span class="fu">&#125;</span> <span class="fu">&#125;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="er">&#125;</span></span></code></pre></div>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// conf.json</span></span><br><span class="line">&#123;</span><br><span class="line">    &#123; <span class="attr">&quot;animal&quot;</span>: <span class="string">&quot;pets&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;hash&quot;</span>: &#123; <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Steve&quot;</span>, <span class="attr">&quot;foo&quot;</span>: <span class="string">&quot;bar&quot;</span> &#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="数组">数组</h4>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Animal</span><span class="kw">:</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Cat</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Dog</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Goldfish</span></span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">Animal:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Cat</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Dog</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Goldfish</span></span><br></pre></td></tr></table></figure>
 <p>转化为json为：</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="er">//conf.json</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span> <span class="dt">&quot;Animal&quot;</span><span class="fu">:</span> <span class="ot">[</span> <span class="st">&quot;Cat&quot;</span><span class="ot">,</span> <span class="st">&quot;Dog&quot;</span><span class="ot">,</span> <span class="st">&quot;Goldfish&quot;</span> <span class="ot">]</span> <span class="fu">&#125;</span></span></code></pre></div>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">//conf.json</span></span><br><span class="line">&#123; <span class="attr">&quot;Animal&quot;</span>: [ <span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Goldfish&quot;</span> ] &#125;</span><br></pre></td></tr></table></figure>
 <h4 id="字符串">字符串</h4>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 正常情况下字符串不用写引号</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span><span class="kw">:</span><span class="at"> 这是一行字符串</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 字符串内有空格或者特殊字符时需要加引号</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;内容： 字符串&#39;</span></span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="comment"># 正常情况下字符串不用写引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">这是一行字符串</span></span><br><span class="line"><span class="comment"># 字符串内有空格或者特殊字符时需要加引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">&#x27;内容： 字符串&#x27;</span></span><br></pre></td></tr></table></figure>
 <h4 id="空值">空值</h4>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">parent</span><span class="kw">:</span><span class="at"> </span><span class="ch">~</span></span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">parent:</span> <span class="string">~</span></span><br></pre></td></tr></table></figure>
 <p>等价于json中的</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span> <span class="dt">&quot;parent&quot;</span><span class="fu">:</span> <span class="kw">null</span> <span class="fu">&#125;</span></span></code></pre></div>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">&quot;parent&quot;</span>: <span class="literal">null</span> &#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>YML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>YML配置文件使用小结（二）</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
+<h2
+id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
+<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
+<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
+<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
+<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
+读入YAML文件并且对其进行修改</h2>
+<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<ul>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
+</ul>
+<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
 ]]></content>
       <categories>
         <category>配置文件语言</category>
@@ -262,22 +247,18 @@ you can ask me on <a
 href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="quick-start">Quick Start</h2>
 <h3 id="create-a-new-post">Create a new post</h3>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hexo new <span class="st">&quot;My New Post&quot;</span></span></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a
 href="https://hexo.io/docs/writing.html">Writing</a></p>
 <h3 id="run-server">Run server</h3>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hexo server</span></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
 <h3 id="generate-static-files">Generate static files</h3>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hexo generate</span></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a
 href="https://hexo.io/docs/generating.html">Generating</a></p>
 <h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hexo deploy</span></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a
 href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
@@ -593,40 +574,6 @@ Learning\)</span>相比还是有很大的进步空间。</p>
       </tags>
   </entry>
   <entry>
-    <title>YML配置文件使用小结（二）</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2
-id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
-<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
-<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
-<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
-读入YAML文件并且对其进行修改</h2>
-<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
-<ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
-</ul>
-<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
-]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
-      <tags>
-        <tag>YML</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>pycharm 环境变量问题</title>
     <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
@@ -638,16 +585,12 @@ desktop虚拟机。</p>
 <p><img
 src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
 <p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ModuleNotFoundError:</span> No Module named <span class="st">&#39;fedml_api&#39;</span></span></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>的错误。实在是让我很破防。</p>
 <p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sys.path.append()</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
 <p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PYTHONPATH</span></span></code></pre></div>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
 <p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
 ]]></content>
       <categories>
@@ -721,89 +664,6 @@ style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友
       </tags>
   </entry>
   <entry>
-    <title>深度神经网络中的梯度泄露问题</title>
-    <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
-<p>过年这几天虽然没少玩，但是也没少反思自己。觉得自己现在的成绩并不是完全没有原因的。尽管对外会说来到了顶级学府，身边多了更多了优秀的伙伴和竞争对手。但是我自己的内心知道，所谓鲶鱼效应，只有竞争才能激发自己的潜能。鄙人不才，但却自认为潜能远远没有开发完全。更多的时候，我因为个人性格的原因，会经常想得很多，喜欢漫无目的地乱走。但大家都知道，<strong>如果以路灯为起点，漫无目的地乱走，最终的期望就是回到终点。</strong>2021一整年对于我来说过得并不是很好。在这个同龄人在不断进步的时代，仿佛逆水行舟，不进则退。</p>
-<p><strong>但是每个人都会经历这样一段经历吧，人生的极小值点</strong>。所以对我来说，接下来的2022年，有一些确定的目标和计划就成为了迫在眉睫的事情。我相信自己的能力，从来都是如此。从科研方向来说，我还是得要在寒假期间，最起码需要了解梯度泄露是怎么回事，并且复现出代码。剩下的我想要看完吴恩达的机器学习课程，并且对于深度学习的花园书有所了解。争取在春季学期进行1-2个论文项目的参与。必须要在大三之前有所收获。</p>
-<p>那么我们就进入正题。</p>
-<h3 id="abstract">Abstract</h3>
-<p>首先作者告诉我们，在分布式训练或者协作训练中，梯度的共享是一件很正常的事。人们通常也很放心地认为梯度并不会泄露分布的训练数据。但是这篇文章用极其大胆的猜想和实验的佐证（包括<span
-class="math inline">\(NLP\)</span>和图像处理的两个实验都得到了非常好的效果）告诉我们梯度共享也有可能会泄露用户数据，并且称之为<span
-class="math inline">\(Deep \ Leakage \ from \
-Gradients\)</span>。并且指出了以梯度剪枝<span
-class="math inline">\((gradients \
-pruning)\)</span>为首的一些防御方法。</p>
-<h3 id="introduction">Introduction</h3>
-<p>首先作者指出，已经有研究表明，梯度的共享会泄露一些<span
-class="math inline">\(properties \ of \ training \ data\)</span>，
-结合<span
-class="math inline">\(GAN\)</span>就可以生成和原图像相似的图片。但是作者给出的<strong><em>DLG</em></strong>方法则声称可以还原完整的数据和标签，甚至不用借助任何其他的生成网络模型。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203225947.png" style="zoom:50%;" /></p>
-<p>作者提出了一种优化算法来完成这一攻击：首先随机生成一种<span
-class="math inline">\(dummy \
-inputs\)</span>，然后通过正常的梯度推导过程生成一个<span
-class="math inline">\(dummy \
-gradients\)</span>，然后<strong>这个算法并不会像一般的优化算法一样去优化模型的权重，而是会优化dummy
-gradients和正常的梯度之间的“距离”，然后修改dummy
-inputs和输入标签，使得我们的伪数据越来越接近真实的数据，最终优化算法结束的时候，就是伪数据和真实数据完全匹配的时候。</strong></p>
-<p>同时，作者还指出<strong>梯度扰动，低精度和梯度压缩三种方法中，尺度大于1e-2的高斯噪声和拉普拉斯噪声有明显的作用，20％的梯度剪枝同样也能起到保护的作用，但是半精度的方法却不起作用。</strong></p>
-<h3 id="related-work">Related Work</h3>
-<p>首先注意到的是，与“深度梯度泄露”相对应的是，浅层的梯度泄露。前人的研究表示从梯度中推断训练数据的信息特征是可能的。例如在语言任务中对训练单词的梯度就可以揭露哪些单词参与了训练集，我们明显可以察觉到，这类泄露是<strong>肤浅的</strong>，并且也没有过多的作用。</p>
-<p>然后作者指出了分布式机器学习中一定会出现的梯度交换问题。并且指出了无论是哪种分布方式，去中心化或者中心化的分布式训练，都有可能存在“深度梯度泄露”的问题。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203224347.png" style="zoom: 50%;" /></p>
-<h3 id="method-experiment">Method &amp; Experiment</h3>
-<p>接下来我们来看看具体的方法。</p>
-<p>首先我们关注传统的分布式学习方法，在第<span
-class="math inline">\(t\)</span>轮训练过程中，第<span
-class="math inline">\(i\)</span>方节点从训练集中选取<span
-class="math inline">\(minibatch(x_{t,i},y_{t,i})\)</span>的数据来计算梯度，迭代的过程如下：
-<span class="math display">\[
-\nabla{ W_{t,i} }=\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})} }
-{\partial{W_t} } \\
-\nabla{W_t}=\frac{1} {N}\sum_{j}^{N} {\nabla{W_{t,j} } } \ ; \ \ \
-W_{t+1}=W_t-\eta \nabla{W_t}
-\]</span> 以中心服务器式分布训练为例，中心服务器会获得<span
-class="math inline">\(k\)</span>方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入。
-<span class="math display">\[
-\nabla{W&#39;} = \frac{\partial{l(F(x&#39;,W),y&#39;)} } {\partial{W} }
-\\
-x^{&#39;*},y^{&#39;*} = \underset{x&#39;,y&#39;} {argmin}\left \|
-\nabla{W&#39;-\nabla{W} }\right\|^2
-\]</span>
-在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。
-<span class="math display">\[
-x^{&#39;i \ mod \ N}_{t+1} \gets x^{&#39;i \ mod \ N}_{t} -
-\nabla_{x^{&#39;i \ mod \ N}_{t+1} }\mathbb{D} \\
-y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} -
-\nabla_{y^{&#39;i \ mod \ N}_{t+1} }\mathbb{D}
-\]</span>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" /></p>
-<p>这听起来是一个天方夜谭，但是从实际的实验来看，效果出奇的好，除了个别像素伪影和顺序不同以外，几乎可以完全还原所有的源数据，比前人研究的方法也要明显占优。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205153618.png" style="zoom:50%;" /></p>
-<h3 id="defense-strategy">Defense Strategy</h3>
-<p>如之前的介绍所示，作者给出了三种防御的方法，其中比较有效的就是使用差分隐私<span
-class="math inline">\((Differential \
-Privacy)\)</span>的方法来进行防御。言简意赅的说，就是给梯度加上一定的“扰动”，使得攻击者无法获得准确的梯度信息，也就没办法从梯度中还原准确的源输入。噪声的种类有高斯噪声和拉普拉斯噪声，防御的效果与噪声的种类之间没有特别明显的关系，但是和噪声的扰动尺度有明显的正相关关系。同时，作者也顺便验证了减少梯度精度的方法无法起到有效的防御效果。下面是实验结果的截图：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205163716.png" style="zoom:50%;" /></p>
-<p>值得注意的是，尽管成功达到一定的干扰程度之后能够起到防御作用，但是<span
-class="math inline">\(acc\)</span>率明显下降，已经开始影响收敛效率了。</p>
-<p>最后，作者还指出了“梯度剪枝”<span class="math inline">\((gradients \
-pruning)\)</span>的方法是有效的。经过实验发现，能够让<span
-class="math inline">\(DLG\)</span>还原的原始输入有明显偏差的情况下，修剪率应该在20%以上。但是最新的误差补偿技术和梯度压缩技术可以将梯度压缩300倍的情况下不影响<span
-class="math inline">\(acc\)</span>，远远高于阈值20%。所以可以得知梯度修剪的方法是有效的。</p>
-<h3 id="conclusion">Conclusion</h3>
-<p>针对分布式训练的情况来说，在这篇文章的指出下，我们已经发现，“共享梯度，使得训练数据集留在本地”的做法已经不再安全了。仅仅通过简单的修改输入和标签，来靠近标准梯度的做法，就可以完全地还原源数据，这无异给分布式和协作式学习的模式带来了新的挑战。下一节我会用代码模拟一遍作者的实验，来还原<span
-class="math inline">\(DLG\)</span>攻击。</p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>梯度泄露</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>深度学习中的对抗性攻击与防御</title>
     <url>/2022/01/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%AF%B9%E6%8A%97%E6%80%A7%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/</url>
     <content><![CDATA[<p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial
@@ -873,54 +733,86 @@ x&#39;=x+\epsilon·sign[\nabla_xJ(\theta,x,y&#39;)]
       </tags>
   </entry>
   <entry>
-    <title>颜色基础、图像模型、Phong光照模型</title>
-    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型">颜色模型</h2>
-<p>RGB模型</p>
-<p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of
-brightness亮度），使用圆锥来表示颜色。</p>
-<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素">像素</h2>
-<h2 id="三角网格模型">三角网格模型</h2>
-<p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量
-：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型">光照模型</h2>
-<ul>
-<li>局部光照明</li>
-<li>全局光照明</li>
-</ul>
-<h2 id="phong模型">Phong模型</h2>
-<p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
-<ul>
-<li><p>漫反射效果 <span
-class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
-<li><p>镜面反射效果 <span
-class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
-<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
-</ul>
-<h4 id="明暗处理">明暗处理</h4>
-<p>#### 视点变换和视点对象</p>
-<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
-<ul>
-<li>刚体变换</li>
-<li>相似变换</li>
-<li>线性变换</li>
-<li>仿射变换</li>
-<li>投影变换</li>
-</ul>
-<h2 id="光栅图形学">光栅图形学</h2>
+    <title>深度神经网络中的梯度泄露问题</title>
+    <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
+<p>过年这几天虽然没少玩，但是也没少反思自己。觉得自己现在的成绩并不是完全没有原因的。尽管对外会说来到了顶级学府，身边多了更多了优秀的伙伴和竞争对手。但是我自己的内心知道，所谓鲶鱼效应，只有竞争才能激发自己的潜能。鄙人不才，但却自认为潜能远远没有开发完全。更多的时候，我因为个人性格的原因，会经常想得很多，喜欢漫无目的地乱走。但大家都知道，<strong>如果以路灯为起点，漫无目的地乱走，最终的期望就是回到终点。</strong>2021一整年对于我来说过得并不是很好。在这个同龄人在不断进步的时代，仿佛逆水行舟，不进则退。</p>
+<p><strong>但是每个人都会经历这样一段经历吧，人生的极小值点</strong>。所以对我来说，接下来的2022年，有一些确定的目标和计划就成为了迫在眉睫的事情。我相信自己的能力，从来都是如此。从科研方向来说，我还是得要在寒假期间，最起码需要了解梯度泄露是怎么回事，并且复现出代码。剩下的我想要看完吴恩达的机器学习课程，并且对于深度学习的花园书有所了解。争取在春季学期进行1-2个论文项目的参与。必须要在大三之前有所收获。</p>
+<p>那么我们就进入正题。</p>
+<h3 id="abstract">Abstract</h3>
+<p>首先作者告诉我们，在分布式训练或者协作训练中，梯度的共享是一件很正常的事。人们通常也很放心地认为梯度并不会泄露分布的训练数据。但是这篇文章用极其大胆的猜想和实验的佐证（包括<span
+class="math inline">\(NLP\)</span>和图像处理的两个实验都得到了非常好的效果）告诉我们梯度共享也有可能会泄露用户数据，并且称之为<span
+class="math inline">\(Deep \ Leakage \ from \
+Gradients\)</span>。并且指出了以梯度剪枝<span
+class="math inline">\((gradients \
+pruning)\)</span>为首的一些防御方法。</p>
+<h3 id="introduction">Introduction</h3>
+<p>首先作者指出，已经有研究表明，梯度的共享会泄露一些<span
+class="math inline">\(properties \ of \ training \ data\)</span>，
+结合<span
+class="math inline">\(GAN\)</span>就可以生成和原图像相似的图片。但是作者给出的<strong><em>DLG</em></strong>方法则声称可以还原完整的数据和标签，甚至不用借助任何其他的生成网络模型。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203225947.png" style="zoom:50%;" /></p>
+<p>作者提出了一种优化算法来完成这一攻击：首先随机生成一种<span
+class="math inline">\(dummy \
+inputs\)</span>，然后通过正常的梯度推导过程生成一个<span
+class="math inline">\(dummy \
+gradients\)</span>，然后<strong>这个算法并不会像一般的优化算法一样去优化模型的权重，而是会优化dummy
+gradients和正常的梯度之间的“距离”，然后修改dummy
+inputs和输入标签，使得我们的伪数据越来越接近真实的数据，最终优化算法结束的时候，就是伪数据和真实数据完全匹配的时候。</strong></p>
+<p>同时，作者还指出<strong>梯度扰动，低精度和梯度压缩三种方法中，尺度大于1e-2的高斯噪声和拉普拉斯噪声有明显的作用，20％的梯度剪枝同样也能起到保护的作用，但是半精度的方法却不起作用。</strong></p>
+<h3 id="related-work">Related Work</h3>
+<p>首先注意到的是，与“深度梯度泄露”相对应的是，浅层的梯度泄露。前人的研究表示从梯度中推断训练数据的信息特征是可能的。例如在语言任务中对训练单词的梯度就可以揭露哪些单词参与了训练集，我们明显可以察觉到，这类泄露是<strong>肤浅的</strong>，并且也没有过多的作用。</p>
+<p>然后作者指出了分布式机器学习中一定会出现的梯度交换问题。并且指出了无论是哪种分布方式，去中心化或者中心化的分布式训练，都有可能存在“深度梯度泄露”的问题。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203224347.png" style="zoom: 50%;" /></p>
+<h3 id="method-experiment">Method &amp; Experiment</h3>
+<p>接下来我们来看看具体的方法。</p>
+<p>首先我们关注传统的分布式学习方法，在第<span
+class="math inline">\(t\)</span>轮训练过程中，第<span
+class="math inline">\(i\)</span>方节点从训练集中选取<span
+class="math inline">\(minibatch(x_{t,i},y_{t,i})\)</span>的数据来计算梯度，迭代的过程如下：
+<span class="math display">\[
+\nabla{ W_{t,i} }=\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})} }
+{\partial{W_t} } \\
+\nabla{W_t}=\frac{1} {N}\sum_{j}^{N} {\nabla{W_{t,j} } } \ ; \ \ \
+W_{t+1}=W_t-\eta \nabla{W_t}
+\]</span> 以中心服务器式分布训练为例，中心服务器会获得<span
+class="math inline">\(k\)</span>方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入。
+<span class="math display">\[
+\nabla{W&#39;} = \frac{\partial{l(F(x&#39;,W),y&#39;)} } {\partial{W} }
+\\\
+x^{&#39;*},y^{&#39;*} = \underset{x&#39;,y&#39;} {argmin}\left \|
+\nabla{W&#39;-\nabla{W} }\right\|^2
+\]</span>
+在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。
+<span class="math display">\[
+x^{&#39;i \ mod \ N}_{t+1} \gets x^{&#39;i \ mod \ N}_{t} -
+\nabla_{x^{&#39;i \ mod \ N}_{t+1} }\mathbb{D} \\\
+y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} -
+\nabla_{y^{&#39;i \ mod \ N}_{t+1} }\mathbb{D}
+\]</span>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" /></p>
+<p>这听起来是一个天方夜谭，但是从实际的实验来看，效果出奇的好，除了个别像素伪影和顺序不同以外，几乎可以完全还原所有的源数据，比前人研究的方法也要明显占优。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205153618.png" style="zoom:50%;" /></p>
+<h3 id="defense-strategy">Defense Strategy</h3>
+<p>如之前的介绍所示，作者给出了三种防御的方法，其中比较有效的就是使用差分隐私<span
+class="math inline">\((Differential \
+Privacy)\)</span>的方法来进行防御。言简意赅的说，就是给梯度加上一定的“扰动”，使得攻击者无法获得准确的梯度信息，也就没办法从梯度中还原准确的源输入。噪声的种类有高斯噪声和拉普拉斯噪声，防御的效果与噪声的种类之间没有特别明显的关系，但是和噪声的扰动尺度有明显的正相关关系。同时，作者也顺便验证了减少梯度精度的方法无法起到有效的防御效果。下面是实验结果的截图：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205163716.png" style="zoom:50%;" /></p>
+<p>值得注意的是，尽管成功达到一定的干扰程度之后能够起到防御作用，但是<span
+class="math inline">\(acc\)</span>率明显下降，已经开始影响收敛效率了。</p>
+<p>最后，作者还指出了“梯度剪枝”<span class="math inline">\((gradients \
+pruning)\)</span>的方法是有效的。经过实验发现，能够让<span
+class="math inline">\(DLG\)</span>还原的原始输入有明显偏差的情况下，修剪率应该在20%以上。但是最新的误差补偿技术和梯度压缩技术可以将梯度压缩300倍的情况下不影响<span
+class="math inline">\(acc\)</span>，远远高于阈值20%。所以可以得知梯度修剪的方法是有效的。</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>针对分布式训练的情况来说，在这篇文章的指出下，我们已经发现，“共享梯度，使得训练数据集留在本地”的做法已经不再安全了。仅仅通过简单的修改输入和标签，来靠近标准梯度的做法，就可以完全地还原源数据，这无异给分布式和协作式学习的模式带来了新的挑战。下一节我会用代码模拟一遍作者的实验，来还原<span
+class="math inline">\(DLG\)</span>攻击。</p>
 ]]></content>
       <categories>
-        <category>Computer-Graphics</category>
+        <category>深度学习</category>
       </categories>
       <tags>
-        <tag>Phong模型</tag>
+        <tag>梯度泄露</tag>
       </tags>
   </entry>
   <entry>
@@ -1066,6 +958,57 @@ Learning</a>是需要优先阅读的。进度先记录到这里。</p>
       </categories>
       <tags>
         <tag>Federated Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>颜色基础、图像模型、Phong光照模型</title>
+    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
+<h2 id="颜色模型">颜色模型</h2>
+<p>RGB模型</p>
+<p>CMY模型（是RGB的补色，或者说减色模型）</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of
+brightness亮度），使用圆锥来表示颜色。</p>
+<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
+<h2 id="像素">像素</h2>
+<h2 id="三角网格模型">三角网格模型</h2>
+<p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量
+：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型">光照模型</h2>
+<ul>
+<li>局部光照明</li>
+<li>全局光照明</li>
+</ul>
+<h2 id="phong模型">Phong模型</h2>
+<p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
+<ul>
+<li><p>漫反射效果 <span
+class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
+<li><p>镜面反射效果 <span
+class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
+<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
+</ul>
+<h4 id="明暗处理">明暗处理</h4>
+<p>#### 视点变换和视点对象</p>
+<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<ul>
+<li>刚体变换</li>
+<li>相似变换</li>
+<li>线性变换</li>
+<li>仿射变换</li>
+<li>投影变换</li>
+</ul>
+<h2 id="光栅图形学">光栅图形学</h2>
+]]></content>
+      <categories>
+        <category>Computer-Graphics</category>
+      </categories>
+      <tags>
+        <tag>Phong模型</tag>
       </tags>
   </entry>
 </search>

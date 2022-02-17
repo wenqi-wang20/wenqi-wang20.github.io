@@ -17,6 +17,8 @@ YAML（Yet An,">
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
     
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -78,42 +80,19 @@ class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类�
 <li>纯量（scalars）：单个的、不可再分的值</li>
 </ul>
 <h4 id="对象">对象</h4>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">animal</span><span class="kw">:</span><span class="at"> pets</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hash</span><span class="kw">:</span><span class="at"> </span><span class="kw">&#123;</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Steve</span><span class="kw">,</span><span class="at"> </span><span class="fu">foo</span><span class="kw">:</span><span class="at"> bar </span><span class="kw">&#125;</span></span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">animal:</span> <span class="string">pets</span></span><br><span class="line"><span class="attr">hash:</span> &#123; <span class="attr">name:</span> <span class="string">Steve</span>, <span class="attr">foo:</span> <span class="string">bar</span> &#125;</span><br></pre></td></tr></table></figure>
 <p>转化为json为：</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="er">//</span> <span class="er">conf.json</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="er">&#123;</span> <span class="dt">&quot;animal&quot;</span><span class="fu">:</span> <span class="st">&quot;pets&quot;</span> <span class="fu">&#125;</span><span class="er">,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">&#123;</span> <span class="dt">&quot;hash&quot;</span><span class="fu">:</span> <span class="fu">&#123;</span> <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Steve&quot;</span><span class="fu">,</span> <span class="dt">&quot;foo&quot;</span><span class="fu">:</span> <span class="st">&quot;bar&quot;</span> <span class="fu">&#125;</span> <span class="fu">&#125;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="er">&#125;</span></span></code></pre></div>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// conf.json</span></span><br><span class="line">&#123;</span><br><span class="line">    &#123; <span class="attr">&quot;animal&quot;</span>: <span class="string">&quot;pets&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;hash&quot;</span>: &#123; <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Steve&quot;</span>, <span class="attr">&quot;foo&quot;</span>: <span class="string">&quot;bar&quot;</span> &#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="数组">数组</h4>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Animal</span><span class="kw">:</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Cat</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Dog</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> Goldfish</span></span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">Animal:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Cat</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Dog</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Goldfish</span></span><br></pre></td></tr></table></figure>
 <p>转化为json为：</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="er">//conf.json</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span> <span class="dt">&quot;Animal&quot;</span><span class="fu">:</span> <span class="ot">[</span> <span class="st">&quot;Cat&quot;</span><span class="ot">,</span> <span class="st">&quot;Dog&quot;</span><span class="ot">,</span> <span class="st">&quot;Goldfish&quot;</span> <span class="ot">]</span> <span class="fu">&#125;</span></span></code></pre></div>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">//conf.json</span></span><br><span class="line">&#123; <span class="attr">&quot;Animal&quot;</span>: [ <span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Goldfish&quot;</span> ] &#125;</span><br></pre></td></tr></table></figure>
 <h4 id="字符串">字符串</h4>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 正常情况下字符串不用写引号</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span><span class="kw">:</span><span class="at"> 这是一行字符串</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 字符串内有空格或者特殊字符时需要加引号</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;内容： 字符串&#39;</span></span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="comment"># 正常情况下字符串不用写引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">这是一行字符串</span></span><br><span class="line"><span class="comment"># 字符串内有空格或者特殊字符时需要加引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">&#x27;内容： 字符串&#x27;</span></span><br></pre></td></tr></table></figure>
 <h4 id="空值">空值</h4>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conf.yml</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">parent</span><span class="kw">:</span><span class="at"> </span><span class="ch">~</span></span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">parent:</span> <span class="string">~</span></span><br></pre></td></tr></table></figure>
 <p>等价于json中的</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&#123;</span> <span class="dt">&quot;parent&quot;</span><span class="fu">:</span> <span class="kw">null</span> <span class="fu">&#125;</span></span></code></pre></div>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">&quot;parent&quot;</span>: <span class="literal">null</span> &#125;</span><br></pre></td></tr></table></figure>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -135,14 +114,14 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="
         </div>
         
     <div id='gitalk-container' class="comment link"
-		data-enable='false'
+		data-enable='true'
         data-ae='false'
-        data-ci=''
-        data-cs=''
-        data-r=''
-        data-o=''
-        data-a=''
-        data-d='false'
+        data-ci='Iv1.996ede25870d819a'
+        data-cs='708ce1fa989d63d7c9d33fa3f64282813b04d285'
+        data-r='wenqi-wang20.github.io'
+        data-o='wenqi-wang20'
+        data-a='wenqi-wang20'
+        data-d='true'
     >查看评论</div>
 
 
@@ -155,7 +134,24 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="
 </div>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
 
 
 <script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
@@ -221,6 +217,25 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="
 </div>
 
 
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 
