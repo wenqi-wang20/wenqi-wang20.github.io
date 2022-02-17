@@ -199,6 +199,37 @@ class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/09/01/hello-world/</url>
+    <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
+<p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
+<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>YML配置文件使用小结（二）</title>
     <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
@@ -233,37 +264,6 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/09/01/hello-world/</url>
-    <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
-<p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
-<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>pycharm 环境变量问题</title>
     <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
@@ -288,175 +288,6 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333
       </categories>
       <tags>
         <tag>Pycharm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>年度总结</title>
-    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 88%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>姓名</th>
-<th style="text-align: left;">王文琦</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生活情况</td>
-<td
-style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
-</tr>
-<tr class="even">
-<td>社工情况</td>
-<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
-</tr>
-<tr class="odd">
-<td>文体情况</td>
-<td
-style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
-</tr>
-<tr class="even">
-<td>实践情况</td>
-<td
-style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
-</tr>
-<tr class="odd">
-<td>个人总结</td>
-<td
-style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
-</tr>
-<tr class="even">
-<td>FLAG</td>
-<td
-style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
-1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
-好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
-争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
-争取暑假的时候可以去业界完成一次实习。<br>6.
-争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
-争取明年能和室友一起出去游玩一次…………</td>
-</tr>
-</tbody>
-</table>
-<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
-<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
-<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
-]]></content>
-      <categories>
-        <category>日记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于高效同态加密的Cross-silo联邦学习</title>
-    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="background">Background</h2>
-<blockquote>
-<p>回顾<a
-href="https://www.zhihu.com/search?q=联邦学习&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">联邦学习</a>（federated
-learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a
-href="https://www.zhihu.com/search?q=梯度更新&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a
-href="https://www.zhihu.com/search?q=安全聚合&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">安全聚合</a>（e.g.,
-求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a
-href="https://www.zhihu.com/search?q=同态加密&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">同态加密</a>（Homomorphic
-Encryption，HE）的方案。各种方案各有利弊。
-本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。
-<em>Main Contributions:
-本文主要提出了一种梯度量化的方法，并对量化梯度进行batch
-encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
-</blockquote>
-<figure>
-<img
-src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png"
-alt="image-20211203123128193" />
-<figcaption aria-hidden="true">image-20211203123128193</figcaption>
-</figure>
-<h2 id="process">Process</h2>
-<p>前人的量化方案：将一个 <span class="math inline">\(y \in \left [ -1,
-1
-\right]\)</span>的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
-<p><img
-src="https://www.zhihu.com/equation?tex=Q%28g%29%3D%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D"
-alt="[公式]" /> ，其中 <img
-src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]" /> 是就近<a
-href="https://www.zhihu.com/search?q=取整函数&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">取整函数</a>（rounding
-function）; <img
-src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D%2Bn%5Ccdot+min"
-alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n"
-alt="[公式]" /> 是 <img src="https://www.zhihu.com/equation?tex=n"
-alt="[公式]" /> 个量化梯度之和。</p>
-<p>但是上述量化方法存在一定的问题：</p>
-<blockquote>
-<ol type="1">
-<li>要正确计算 <img
-src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28%5Ccdot%29"
-alt="[公式]" /> ，必须事先预知 <img
-src="https://www.zhihu.com/equation?tex=n" alt="[公式]" />
-。因此，每次加入新的用户，需要手动检验调整 <img
-src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 的取值；</li>
-<li>容易溢出。因为所有的<a
-href="https://www.zhihu.com/search?q=正负梯度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a
-href="https://www.zhihu.com/search?q=累加值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">累加值</a>容易导致溢出；</li>
-<li>不能区分正溢出和负溢出。</li>
-</ol>
-</blockquote>
-<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
-<blockquote>
-<p>\1.
-有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；
-\2. 关于<a
-href="https://www.zhihu.com/search?q=原点对称&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将
-<img src="https://www.zhihu.com/equation?tex=%5B-1%2C1%5D"
-alt="[公式]" /> 量化到 <img
-src="https://www.zhihu.com/equation?tex=%5B-128%2C127%5D"
-alt="[公式]" /> ，那么 <img
-src="https://www.zhihu.com/equation?tex=%28-1%2B1%29%5CRightarrow%28-128%2B127%29%3D-1"
-alt="[公式]" /> ，结果错误； \3. 均匀量化。这是为了保证<a
-href="https://www.zhihu.com/search?q=量化数值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
-</blockquote>
-<p>粗略来说便是将 <img
-src="https://www.zhihu.com/equation?tex=%5B-%5Calpha%2C0%5D"
-alt="[公式]" /> 量化到 <img
-src="https://www.zhihu.com/equation?tex=%5B-%282%5Er-1%29%2C0%5D"
-alt="[公式]" /> ，将 <img
-src="https://www.zhihu.com/equation?tex=%5B0%2C%5Calpha%5D"
-alt="[公式]" />量化到 <img
-src="https://www.zhihu.com/equation?tex=%5B0%2C%282%5Er-1%29%5D"
-alt="[公式]" /> 。；公式化表示如下： <img
-src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q%28g%29%3D+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil%2C+g%5Cin+%5B-%5Calpha%2C0%5D%3B%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor%2C+g+%5Cin+%5B0%2C%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+"
-alt="[公式]" /> ，其中 <img
-src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil"
-alt="[公式]" /> 和 <img
-src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor"
-alt="[公式]" /> 分别是向上取整和向下取整函数； <img
-src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%2F2%5Er"
-alt="[公式]" /> ； 进一步，实用2-bits 表示符号位（<a
-href="https://www.zhihu.com/search?q=sign-bits&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">sign-bits</a>）。如此，
-<img src="https://www.zhihu.com/equation?tex=0" alt="[公式]" />
-便有了两种编码方式。</p>
-<figure>
-<img
-src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png"
-alt="image-20211203132307261" />
-<figcaption aria-hidden="true">image-20211203132307261</figcaption>
-</figure>
-<h2 id="performance">Performance</h2>
-<p>实验的最终表现也是体现出<span
-class="math inline">\(BatchCrypt\)</span>和<span
-class="math inline">\(stock\)</span>相比在通信和计算上都有着很大的提升，但是和<span
-class="math inline">\(Plaintext
-Learning\)</span>相比还是有很大的进步空间。</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" /></p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" /></p>
-]]></content>
-      <tags>
-        <tag>联邦学习</tag>
       </tags>
   </entry>
   <entry>
@@ -661,6 +492,175 @@ class="math inline">\(n_{k}\)</span>个样例，</p>
       </categories>
       <tags>
         <tag>Federated Learning, Machine learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于高效同态加密的Cross-silo联邦学习</title>
+    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="background">Background</h2>
+<blockquote>
+<p>回顾<a
+href="https://www.zhihu.com/search?q=联邦学习&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">联邦学习</a>（federated
+learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a
+href="https://www.zhihu.com/search?q=梯度更新&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a
+href="https://www.zhihu.com/search?q=安全聚合&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">安全聚合</a>（e.g.,
+求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a
+href="https://www.zhihu.com/search?q=同态加密&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">同态加密</a>（Homomorphic
+Encryption，HE）的方案。各种方案各有利弊。
+本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。
+<em>Main Contributions:
+本文主要提出了一种梯度量化的方法，并对量化梯度进行batch
+encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
+</blockquote>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png"
+alt="image-20211203123128193" />
+<figcaption aria-hidden="true">image-20211203123128193</figcaption>
+</figure>
+<h2 id="process">Process</h2>
+<p>前人的量化方案：将一个 <span class="math inline">\(y \in \left [ -1,
+1
+\right]\)</span>的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
+<p><img
+src="https://www.zhihu.com/equation?tex=Q%28g%29%3D%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D"
+alt="[公式]" /> ，其中 <img
+src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]" /> 是就近<a
+href="https://www.zhihu.com/search?q=取整函数&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">取整函数</a>（rounding
+function）; <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D%2Bn%5Ccdot+min"
+alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n"
+alt="[公式]" /> 是 <img src="https://www.zhihu.com/equation?tex=n"
+alt="[公式]" /> 个量化梯度之和。</p>
+<p>但是上述量化方法存在一定的问题：</p>
+<blockquote>
+<ol type="1">
+<li>要正确计算 <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28%5Ccdot%29"
+alt="[公式]" /> ，必须事先预知 <img
+src="https://www.zhihu.com/equation?tex=n" alt="[公式]" />
+。因此，每次加入新的用户，需要手动检验调整 <img
+src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 的取值；</li>
+<li>容易溢出。因为所有的<a
+href="https://www.zhihu.com/search?q=正负梯度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a
+href="https://www.zhihu.com/search?q=累加值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">累加值</a>容易导致溢出；</li>
+<li>不能区分正溢出和负溢出。</li>
+</ol>
+</blockquote>
+<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
+<blockquote>
+<p>\1.
+有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；
+\2. 关于<a
+href="https://www.zhihu.com/search?q=原点对称&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将
+<img src="https://www.zhihu.com/equation?tex=%5B-1%2C1%5D"
+alt="[公式]" /> 量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B-128%2C127%5D"
+alt="[公式]" /> ，那么 <img
+src="https://www.zhihu.com/equation?tex=%28-1%2B1%29%5CRightarrow%28-128%2B127%29%3D-1"
+alt="[公式]" /> ，结果错误； \3. 均匀量化。这是为了保证<a
+href="https://www.zhihu.com/search?q=量化数值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
+</blockquote>
+<p>粗略来说便是将 <img
+src="https://www.zhihu.com/equation?tex=%5B-%5Calpha%2C0%5D"
+alt="[公式]" /> 量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B-%282%5Er-1%29%2C0%5D"
+alt="[公式]" /> ，将 <img
+src="https://www.zhihu.com/equation?tex=%5B0%2C%5Calpha%5D"
+alt="[公式]" />量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B0%2C%282%5Er-1%29%5D"
+alt="[公式]" /> 。；公式化表示如下： <img
+src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q%28g%29%3D+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil%2C+g%5Cin+%5B-%5Calpha%2C0%5D%3B%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor%2C+g+%5Cin+%5B0%2C%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+"
+alt="[公式]" /> ，其中 <img
+src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil"
+alt="[公式]" /> 和 <img
+src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor"
+alt="[公式]" /> 分别是向上取整和向下取整函数； <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%2F2%5Er"
+alt="[公式]" /> ； 进一步，实用2-bits 表示符号位（<a
+href="https://www.zhihu.com/search?q=sign-bits&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">sign-bits</a>）。如此，
+<img src="https://www.zhihu.com/equation?tex=0" alt="[公式]" />
+便有了两种编码方式。</p>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png"
+alt="image-20211203132307261" />
+<figcaption aria-hidden="true">image-20211203132307261</figcaption>
+</figure>
+<h2 id="performance">Performance</h2>
+<p>实验的最终表现也是体现出<span
+class="math inline">\(BatchCrypt\)</span>和<span
+class="math inline">\(stock\)</span>相比在通信和计算上都有着很大的提升，但是和<span
+class="math inline">\(Plaintext
+Learning\)</span>相比还是有很大的进步空间。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" /></p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" /></p>
+]]></content>
+      <tags>
+        <tag>联邦学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>年度总结</title>
+    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>姓名</th>
+<th style="text-align: left;">王文琦</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>生活情况</td>
+<td
+style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
+</tr>
+<tr class="even">
+<td>社工情况</td>
+<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
+</tr>
+<tr class="odd">
+<td>文体情况</td>
+<td
+style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
+</tr>
+<tr class="even">
+<td>实践情况</td>
+<td
+style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
+</tr>
+<tr class="odd">
+<td>个人总结</td>
+<td
+style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
+</tr>
+<tr class="even">
+<td>FLAG</td>
+<td
+style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
+1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
+好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
+争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
+争取暑假的时候可以去业界完成一次实习。<br>6.
+争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
+争取明年能和室友一起出去游玩一次…………</td>
+</tr>
+</tbody>
+</table>
+<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
+<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
+<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
       </tags>
   </entry>
   <entry>
