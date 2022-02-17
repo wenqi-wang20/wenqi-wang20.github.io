@@ -35,6 +35,40 @@ alt="在这里插入图片描述" /></p>
 ]]></content>
   </entry>
   <entry>
+    <title>DLG的代码实现</title>
+    <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>上一章我们简单地说明了<span class="math inline">\(Deep \ Leakage \
+from \
+Gradients\)</span>具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a
+href="https://www.paperswithcode.com">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
+<p>作者的源代码其实思路比较简单，首先利用<span
+class="math inline">\(torchvision\)</span>库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络<span
+class="math inline">\(LeNet\)</span>和<span
+class="math inline">\(ResNet\)</span>两种方法，我使用第一种方法，卷积通道数为12。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LeNet</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(LeNet, self).__init__()</span><br><span class="line">        act = nn.Sigmoid</span><br><span class="line">        self.body = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">3</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            act(),</span><br><span class="line">            nn.Conv2d(<span class="number">12</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            act(),</span><br><span class="line">            nn.Conv2d(<span class="number">12</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">1</span>),</span><br><span class="line">            act(),</span><br><span class="line">        )</span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">768</span>, <span class="number">100</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        out = self.body(x)</span><br><span class="line">        out = out.view(out.size(<span class="number">0</span>), -<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># print(out.size())</span></span><br><span class="line">        out = self.fc(out)</span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
+<p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了<span
+class="math inline">\(&#39;str&#39; \ object \ has \ no \ attribute \
+&#39;…&#39;\)</span>，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ssl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取消安全证书的检验，方便下载数据</span></span><br><span class="line">ssl._create_default_https_context = ssl._create_unverified_context</span><br></pre></td></tr></table></figure>
+<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看<span
+class="math inline">\(dummy \
+input\)</span>如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将<span
+class="math inline">\(torch.manualseed()\)</span>的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" /></p>
+<h3 id="总结">总结</h3>
+<p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试<span
+class="math inline">\(dummy \
+imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>梯度泄漏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MIPS汇编语言（一）</title>
     <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
@@ -106,40 +140,6 @@ registers!</strong></li>
       </tags>
   </entry>
   <entry>
-    <title>DLG的代码实现</title>
-    <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>上一章我们简单地说明了<span class="math inline">\(Deep \ Leakage \
-from \
-Gradients\)</span>具体是利用什么方法实现的攻击，是一个非常简单清晰的思路，那就是通过“模拟梯度”来模拟输入和输出数据。最终实验的效果也非常地好。加上最近发现了一个非常好的论文代码实现网站：<a
-href="https://www.paperswithcode.com">paperswithcode</a>，在这个网站上几乎所有的学术论文都能找到相对应的代码，所以我也打算复现一下这个攻击实验，以加深印象，同时也为联邦学习的发展打下基础。</p>
-<p>作者的源代码其实思路比较简单，首先利用<span
-class="math inline">\(torchvision\)</span>库给予的CIFAR100图片下载，然后取出第一章图片进行还原。作者提供了卷积神经网络<span
-class="math inline">\(LeNet\)</span>和<span
-class="math inline">\(ResNet\)</span>两种方法，我使用第一种方法，卷积通道数为12。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LeNet</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(LeNet, self).__init__()</span><br><span class="line">        act = nn.Sigmoid</span><br><span class="line">        self.body = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">3</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            act(),</span><br><span class="line">            nn.Conv2d(<span class="number">12</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            act(),</span><br><span class="line">            nn.Conv2d(<span class="number">12</span>, <span class="number">12</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">5</span> // <span class="number">2</span>, stride=<span class="number">1</span>),</span><br><span class="line">            act(),</span><br><span class="line">        )</span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">768</span>, <span class="number">100</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        out = self.body(x)</span><br><span class="line">        out = out.view(out.size(<span class="number">0</span>), -<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># print(out.size())</span></span><br><span class="line">        out = self.fc(out)</span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
-<p>因为我用的是macbook，所以没有N卡来训练，用的设备就是CPU。中间还出了一个小插曲，那就是下载数据的时候出现了<span
-class="math inline">\(&#39;str&#39; \ object \ has \ no \ attribute \
-&#39;…&#39;\)</span>，找了很长时间都没有找到问题，后来看到一篇博客说，这是ssl安全证书验证的问题，需要加上这一段话即可：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ssl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取消安全证书的检验，方便下载数据</span></span><br><span class="line">ssl._create_default_https_context = ssl._create_unverified_context</span><br></pre></td></tr></table></figure>
-<p>理解了pytorch的语法和工作原理之后，整体的思路还是比较清晰的。作者采用的是交叉熵损失函数来判定损失程度。训练300轮之后，再看<span
-class="math inline">\(dummy \
-input\)</span>如何。在这里，我刚开始无论怎么训练都没办法还原图像，300轮之后始终全是噪声，loss也没有丝毫的下降。延长了轮数也没有导致收敛速度的加快。到最后我发现，我仅仅将<span
-class="math inline">\(torch.manualseed()\)</span>的值从作者所给的1234改成了随便一个数字78483847，图片就完美地收敛了，而且在第一轮的loss就从原先的1000多下降到了70左右，40轮之后loss就下降到了0.1以内。最终的效果也是非常地好，在这里贴上效果图（前一张是随机生成的伪输入，后一张是经过训练之后的效果图）：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/dummy.png" style="zoom:72%;" /></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/result.png" style="zoom:72%;" /></p>
-<h3 id="总结">总结</h3>
-<p>从这个实验我们可以看出尽管这个方法非常地巧妙，但是有一个问题就是，必须要在第一次尝试<span
-class="math inline">\(dummy \
-imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话很可能无法起到攻击的效果。但是实话说，看到这个结果的时候我还是非常震撼的，确实能够在不接触数据，仅仅从梯度就几乎还原原图像，这样的结果是很令人不安的。</p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>梯度泄漏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Machine Learning</title>
     <url>/2021/11/16/Machine-Learning/</url>
     <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
@@ -149,6 +149,40 @@ imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话�
       </categories>
       <tags>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>YML配置文件使用小结（二）</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
+<h2
+id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
+<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
+<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
+<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
+<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
+读入YAML文件并且对其进行修改</h2>
+<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<ul>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
+</ul>
+<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>YML</tag>
       </tags>
   </entry>
   <entry>
@@ -199,40 +233,6 @@ class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类�
       </tags>
   </entry>
   <entry>
-    <title>YML配置文件使用小结（二）</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2
-id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
-<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
-<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
-<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
-读入YAML文件并且对其进行修改</h2>
-<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
-<ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
-</ul>
-<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
-]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
-      <tags>
-        <tag>YML</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2021/09/01/hello-world/</url>
     <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
@@ -262,6 +262,96 @@ href="https://hexo.io/docs/generating.html">Generating</a></p>
 <p>More info: <a
 href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>年度总结</title>
+    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>姓名</th>
+<th style="text-align: left;">王文琦</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>生活情况</td>
+<td
+style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
+</tr>
+<tr class="even">
+<td>社工情况</td>
+<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
+</tr>
+<tr class="odd">
+<td>文体情况</td>
+<td
+style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
+</tr>
+<tr class="even">
+<td>实践情况</td>
+<td
+style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
+</tr>
+<tr class="odd">
+<td>个人总结</td>
+<td
+style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
+</tr>
+<tr class="even">
+<td>FLAG</td>
+<td
+style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
+1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
+好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
+争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
+争取暑假的时候可以去业界完成一次实习。<br>6.
+争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
+争取明年能和室友一起出去游玩一次…………</td>
+</tr>
+</tbody>
+</table>
+<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
+<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
+<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pycharm 环境变量问题</title>
+    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
+desktop虚拟机。</p>
+<blockquote>
+<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+</blockquote>
+<p>言归正传，我遇到的问题如下：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
+<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>的错误。实在是让我很破防。</p>
+<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
+<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
+<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
+]]></content>
+      <categories>
+        <category>Ubuntu</category>
+      </categories>
+      <tags>
+        <tag>Pycharm</tag>
+      </tags>
   </entry>
   <entry>
     <title>联邦学习（一）</title>
@@ -574,165 +664,6 @@ Learning\)</span>相比还是有很大的进步空间。</p>
       </tags>
   </entry>
   <entry>
-    <title>pycharm 环境变量问题</title>
-    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
-desktop虚拟机。</p>
-<blockquote>
-<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
-</blockquote>
-<p>言归正传，我遇到的问题如下：</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
-<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>的错误。实在是让我很破防。</p>
-<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
-<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
-<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
-]]></content>
-      <categories>
-        <category>Ubuntu</category>
-      </categories>
-      <tags>
-        <tag>Pycharm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>年度总结</title>
-    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 88%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>姓名</th>
-<th style="text-align: left;">王文琦</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生活情况</td>
-<td
-style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
-</tr>
-<tr class="even">
-<td>社工情况</td>
-<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
-</tr>
-<tr class="odd">
-<td>文体情况</td>
-<td
-style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
-</tr>
-<tr class="even">
-<td>实践情况</td>
-<td
-style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
-</tr>
-<tr class="odd">
-<td>个人总结</td>
-<td
-style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
-</tr>
-<tr class="even">
-<td>FLAG</td>
-<td
-style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
-1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
-好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
-争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
-争取暑假的时候可以去业界完成一次实习。<br>6.
-争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
-争取明年能和室友一起出去游玩一次…………</td>
-</tr>
-</tbody>
-</table>
-<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
-<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
-<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
-]]></content>
-      <categories>
-        <category>日记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深度学习中的对抗性攻击与防御</title>
-    <url>/2022/01/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%AF%B9%E6%8A%97%E6%80%A7%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/</url>
-    <content><![CDATA[<p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial
-Intelligence—Feature Article. Adversarial Attacks and Defenses in Deep
-Learning, Kui Ren , Tianhang Zheng , Zhan Qin ,Xue
-Liu。这篇文章首先介绍深度学习的算法基础，然后指出了某些防御技术的能力，看起来更像是一篇综述性文章。</p>
-<h2 id="introduction">Introduction</h2>
-<h4 id="对抗性样本">对抗性样本</h4>
-<p>首先我们先了解一下对抗性样本是什么，在大规模部署DL模型的时候，会有一些加入干扰的样本，这些样本会使得人类无法察觉，但是模型会在不知不觉中做出错误的预测，从而使得训练的成果产生一些严重的偏差和影响。</p>
-<p>通过威胁模型，可以将对抗性攻击分为白盒攻击<span
-class="math inline">\(white-box\)</span>，灰盒攻击<span
-class="math inline">\(grey-box\)</span>和黑盒攻击。顾名思义，白盒就是指对于对方的模型有了充分充足的了解，包括体系结构参数等等。在灰盒模型中，仅限于了解模型的结构；在黑盒模型中，则仅能通过调用查询来生成对抗性样本。</p>
-<h4 id="攻击方法">攻击方法</h4>
-<p>在这些威胁模型的框架之内，有很多对抗性样本攻击算法提出，比如以下的几种：</p>
-<ul>
-<li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS)
-algorithm</li>
-<li>快速梯度符号法the fast gradient sign method (FGSM)</li>
-<li>基本迭代法/投影梯度下降the basic iterative method (BIM)/projected
-gradient descent (PGD)</li>
-<li>分布式对抗性攻击distributionally adversarial attack</li>
-<li>Carlini and Wagner (C&amp;W) attacks</li>
-<li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack
-(JSMA)</li>
-<li>（我也不知道是什么） DeepFool</li>
-</ul>
-<h4 id="防御方法">防御方法</h4>
-<p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
-<h2 id="preliminaries">Preliminaries</h2>
-<p>首先我们来进行一些准备性质的工作。 <span class="math display">\[
-D(x,x&#39;)&lt;\eta,f(x&#39;)\ne f(x)=y \\
-这时，我们称\eta为一个小的扰动(perturbation)，x&#39;为一个对抗性样本。
-\]</span> 相对应的优化损失我们都采取交叉熵的方式来定义 <span
-class="math display">\[
-J(\theta,x,y)表示在权重\theta下的优化损失。 \\
-特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)
-\]</span> 关于<a
-href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
-<p>同时还进行了<span class="math inline">\(L_p \ distance \
-metric\)</span>的定义： <span class="math display">\[
-\left \| \mathbf{v} \right \|_p = (\sum\left | \mathbf{v_i}\right
-|^p)^{1/p}
-\]</span></p>
-<h2 id="adversarial-attacks">Adversarial Attacks</h2>
-<h4 id="l-bfgs-algorithm">L-BFGS Algorithm</h4>
-<p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰<span
-class="math inline">\(L_p\)</span>范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong>
-<span class="math display">\[
-min \left \| \mathbf{x-x&#39;} \right \|_p \ subjects \ to \ f(x&#39;)
-\ne y&#39;
-\]</span></p>
-<h4 id="fast-gradient-sign-method">Fast gradient sign method</h4>
-<p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。
-<span class="math display">\[
-x&#39;=x+\epsilon·sign[\nabla_xJ(\theta,x,y&#39;)]
-\]</span></p>
-<h4 id="bim-pgd">BIM &amp; PGD</h4>
-<p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
-<p>#### Momentum iterative attack</p>
-<p>基于动量优化器灵感的设计。待了解。</p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>Adversarial_Attacks</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>深度神经网络中的梯度泄露问题</title>
     <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
@@ -813,6 +744,75 @@ class="math inline">\(DLG\)</span>攻击。</p>
       </categories>
       <tags>
         <tag>梯度泄露</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度学习中的对抗性攻击与防御</title>
+    <url>/2022/01/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%AF%B9%E6%8A%97%E6%80%A7%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/</url>
+    <content><![CDATA[<p>今天我们来看一篇关于深度学习过程中的对抗性攻击与防御的文章。Research：Artifificial
+Intelligence—Feature Article. Adversarial Attacks and Defenses in Deep
+Learning, Kui Ren , Tianhang Zheng , Zhan Qin ,Xue
+Liu。这篇文章首先介绍深度学习的算法基础，然后指出了某些防御技术的能力，看起来更像是一篇综述性文章。</p>
+<h2 id="introduction">Introduction</h2>
+<h4 id="对抗性样本">对抗性样本</h4>
+<p>首先我们先了解一下对抗性样本是什么，在大规模部署DL模型的时候，会有一些加入干扰的样本，这些样本会使得人类无法察觉，但是模型会在不知不觉中做出错误的预测，从而使得训练的成果产生一些严重的偏差和影响。</p>
+<p>通过威胁模型，可以将对抗性攻击分为白盒攻击<span
+class="math inline">\(white-box\)</span>，灰盒攻击<span
+class="math inline">\(grey-box\)</span>和黑盒攻击。顾名思义，白盒就是指对于对方的模型有了充分充足的了解，包括体系结构参数等等。在灰盒模型中，仅限于了解模型的结构；在黑盒模型中，则仅能通过调用查询来生成对抗性样本。</p>
+<h4 id="攻击方法">攻击方法</h4>
+<p>在这些威胁模型的框架之内，有很多对抗性样本攻击算法提出，比如以下的几种：</p>
+<ul>
+<li>有限内存的limited-memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS)
+algorithm</li>
+<li>快速梯度符号法the fast gradient sign method (FGSM)</li>
+<li>基本迭代法/投影梯度下降the basic iterative method (BIM)/projected
+gradient descent (PGD)</li>
+<li>分布式对抗性攻击distributionally adversarial attack</li>
+<li>Carlini and Wagner (C&amp;W) attacks</li>
+<li>基于雅克比矩阵的显著性映射攻击Jacobian-based saliency map attack
+(JSMA)</li>
+<li>（我也不知道是什么） DeepFool</li>
+</ul>
+<h4 id="防御方法">防御方法</h4>
+<p>目前人们提出了很多对抗性样本检测和分类的技术，包括了启发式防御和认证防御。启发式防御中效果最好的莫过于<strong>对抗性训练</strong>，就是在训练的过程中，将对抗性样本纳入训练过程来提高模型的鲁棒性；而认证防御中的certification的意思就是在特定的防御对抗性攻击模型之下提供最低精确度的认证，保证其攻击成功率在这个上限之内。整体来说，目前还是对抗性训练的效果更优。</p>
+<h2 id="preliminaries">Preliminaries</h2>
+<p>首先我们来进行一些准备性质的工作。 <span class="math display">\[
+D(x,x&#39;)&lt;\eta,f(x&#39;)\ne f(x)=y \\
+这时，我们称\eta为一个小的扰动(perturbation)，x&#39;为一个对抗性样本。
+\]</span> 相对应的优化损失我们都采取交叉熵的方式来定义 <span
+class="math display">\[
+J(\theta,x,y)表示在权重\theta下的优化损失。 \\
+特别的，在分类任务中，我们会使用f(x)和标签y之间的交叉熵来定义优化损失：J(f(x),y)
+\]</span> 关于<a
+href="https://zhuanlan.zhihu.com/p/35709485">交叉熵</a>。</p>
+<p>同时还进行了<span class="math inline">\(L_p \ distance \
+metric\)</span>的定义： <span class="math display">\[
+\left \| \mathbf{v} \right \|_p = (\sum\left | \mathbf{v_i}\right
+|^p)^{1/p}
+\]</span></p>
+<h2 id="adversarial-attacks">Adversarial Attacks</h2>
+<h4 id="l-bfgs-algorithm">L-BFGS Algorithm</h4>
+<p>简单来说，就是通过寻找能够使得最终分类结果不同的最小微扰<span
+class="math inline">\(L_p\)</span>范数。这个问题在数学上不好解，所以作者建议通过最小化一个混合损失函数来实现，<strong>待了解。</strong>
+<span class="math display">\[
+min \left \| \mathbf{x-x&#39;} \right \|_p \ subjects \ to \ f(x&#39;)
+\ne y&#39;
+\]</span></p>
+<h4 id="fast-gradient-sign-method">Fast gradient sign method</h4>
+<p>最速梯度符号法，顾名思义就是让良性的数据点沿着最快的方向改变，而这个<strong>“方向”</strong>指的就是前文所定义的对抗性损失。沿着这个方向变化，意味着可以增加对抗性样本的干扰性。
+<span class="math display">\[
+x&#39;=x+\epsilon·sign[\nabla_xJ(\theta,x,y&#39;)]
+\]</span></p>
+<h4 id="bim-pgd">BIM &amp; PGD</h4>
+<p>简单来说，这两种方法都是基于多步迭代，就是将上述过程中的梯度下降拆分为多个小的单步迭代过程。</p>
+<p>#### Momentum iterative attack</p>
+<p>基于动量优化器灵感的设计。待了解。</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>Adversarial_Attacks</tag>
       </tags>
   </entry>
   <entry>
