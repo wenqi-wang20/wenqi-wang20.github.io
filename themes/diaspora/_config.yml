@@ -97,7 +97,6 @@ gitalk:
   id: location.pathname
   owner: wenqi-wang20
   repo: wenqi-wang20.github.io
-  labels: "['Gitalk']"
 google_analytics: null
 hitokoto: true
 keywords: Fechin
