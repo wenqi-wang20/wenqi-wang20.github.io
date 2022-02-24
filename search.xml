@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Cocos Creator使用心得（一）</title>
+    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
+]]></content>
+      <categories>
+        <category>游戏引擎</category>
+      </categories>
+      <tags>
+        <tag>Cocos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DLG的代码实现</title>
     <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<p>上一章我们简单地说明了<span class="math inline">\(Deep \ Leakage \
@@ -33,6 +45,28 @@ imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话�
       <tags>
         <tag>梯度泄漏</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/11/01/Delphi/</url>
+    <content><![CDATA[<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。
+提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。
+<img
+src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70"
+alt="在这里插入图片描述" /></li>
+</ul>
+<h2 id="tech">Tech</h2>
+<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。
+本篇论文的优化：
+线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。
+非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。
+然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。
+把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。
+<img src="https://img-blog.csdnimg.cn/20201230144547607.png"
+alt="在这里插入图片描述" /></p>
+]]></content>
   </entry>
   <entry>
     <title>MIPS汇编语言（一）</title>
@@ -104,40 +138,6 @@ registers!</strong></li>
       <tags>
         <tag>MIPS</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Cocos Creator使用心得（一）</title>
-    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
-]]></content>
-      <categories>
-        <category>游戏引擎</category>
-      </categories>
-      <tags>
-        <tag>Cocos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/11/01/Delphi/</url>
-    <content><![CDATA[<h2 id="introduction">Introduction</h2>
-<ul>
-<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。
-提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。
-<img
-src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70"
-alt="在这里插入图片描述" /></li>
-</ul>
-<h2 id="tech">Tech</h2>
-<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。
-本篇论文的优化：
-线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。
-非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。
-然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。
-把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。
-<img src="https://img-blog.csdnimg.cn/20201230144547607.png"
-alt="在这里插入图片描述" /></p>
-]]></content>
   </entry>
   <entry>
     <title>YML配置文件使用小结</title>
@@ -246,33 +246,6 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220
       </tags>
   </entry>
   <entry>
-    <title>pycharm 环境变量问题</title>
-    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
-desktop虚拟机。</p>
-<blockquote>
-<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
-</blockquote>
-<p>言归正传，我遇到的问题如下：</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
-<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>的错误。实在是让我很破防。</p>
-<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
-<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
-<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
-]]></content>
-      <categories>
-        <category>Ubuntu</category>
-      </categories>
-      <tags>
-        <tag>Pycharm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2021/09/01/hello-world/</url>
     <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
@@ -302,6 +275,33 @@ href="https://hexo.io/docs/generating.html">Generating</a></p>
 <p>More info: <a
 href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>pycharm 环境变量问题</title>
+    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
+desktop虚拟机。</p>
+<blockquote>
+<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+</blockquote>
+<p>言归正传，我遇到的问题如下：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
+<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>的错误。实在是让我很破防。</p>
+<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
+<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
+<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
+]]></content>
+      <categories>
+        <category>Ubuntu</category>
+      </categories>
+      <tags>
+        <tag>Pycharm</tag>
+      </tags>
   </entry>
   <entry>
     <title>联邦学习（一）</title>
@@ -508,98 +508,6 @@ class="math inline">\(n_{k}\)</span>个样例，</p>
       </tags>
   </entry>
   <entry>
-    <title>年度总结</title>
-    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 88%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>姓名</th>
-<th style="text-align: left;">王文琦</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生活情况</td>
-<td
-style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
-</tr>
-<tr class="even">
-<td>社工情况</td>
-<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
-</tr>
-<tr class="odd">
-<td>文体情况</td>
-<td
-style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
-</tr>
-<tr class="even">
-<td>实践情况</td>
-<td
-style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
-</tr>
-<tr class="odd">
-<td>个人总结</td>
-<td
-style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
-</tr>
-<tr class="even">
-<td>FLAG</td>
-<td
-style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
-1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
-好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
-争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
-争取暑假的时候可以去业界完成一次实习。<br>6.
-争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
-争取明年能和室友一起出去游玩一次…………</td>
-</tr>
-</tbody>
-</table>
-<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
-<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
-<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
-]]></content>
-      <categories>
-        <category>日记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>庄子笔记（一）</title>
-    <url>/2022/02/22/%E5%BA%84%E5%AD%90%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>“取法其上，得乎其中；取法其中，得乎其下。”所以读书一定要读最好的书，最好的书就是经典。<strong>因为他们关心的通常是永恒的问题。</strong></p>
-<p>顾随说，读经典，不了解古人是辜负古人，只了解古人是辜负自己。必要在了解之后还要一番生发。</p>
-<p>我也持有相同的观点，我认为近代以来有一种薄古厚今的趋势。中国人的文化自信还没有完全被激发出来。大多数中国人缺乏一种理性的理解。</p>
-<p>《文子·道德》篇说：“上学以神听，中学以心听，下学以耳听。以耳听者学在皮肤,以心听者学在肌肉,以神听者学在骨髓。故听之不深,即知之不明。”</p>
-<p>人--人学</p>
-<p>道--哲学</p>
-<p>游--代表了自由的思想</p>
-<p>偶然听说了安徽合肥人刘文典的故事，觉得此人很有意思，而且对于庄子似乎颇有研究。</p>
-<p>海德堡大学，盛产哲学家</p>
-<p>三个盛产寓言的国家，古希腊，中国，古印度。</p>
-<p>如行云流水，初无定质，但常行于所当行，止于所不可不止。</p>
-<p>汪洋辟阖，仪态万方。</p>
-<p>庄子寓言，《秋水篇》——观名利。</p>
-<p>决定一个人美或者不美的根本元素是道德，德有所长而形有所忘。</p>
-<p>所谓无用之用其实是一个已经被人所能理解的观点了，胡适曾经对他们的学生说过这么一句话：功不唐捐。</p>
-<p>物物而不物于物，也可以简单地理解为，不要成为物质的奴隶。我现在倒是觉得我失去了曾经的那种感觉，也就是从心所欲不为成绩所羁绊。遁天倍情，忘其所受。</p>
-<p>今天听完了第一节庄子课之后，学到了很多新的故事，整体的观点和我之前所感受到的几乎相同。以人生哲学和生死哲学为主要精华。听了一个庄子与骷髅头聊天的故事。庄子问骷髅，如果我让你重返人间，回到你的家人朋友身边，你愿意吗？骷髅头表示很不解，死亡不用考虑那么多的羁绊，那么为什么还要去人间操劳呢？</p>
-<p>虽然老师的解读为善生善死，并且引向了珍惜生命、知道了生命的意义所在。我觉得超越人事是不太可能的存在，结合今天我想到的一些事情。我才觉得如果做事的话，需要分清什么是必须要做的事情，什么是自己喜欢做的事情。只有这两件事都做好了，我们的生活才能变得很有意思而不劳累。至于其他的因素，都不应该成为我们主要考虑的目标。</p>
-]]></content>
-      <categories>
-        <category>读书笔记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活，庄子</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>基于高效同态加密的Cross-silo联邦学习</title>
     <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="background">Background</h2>
@@ -706,11 +614,111 @@ Learning\)</span>相比还是有很大的进步空间。</p>
       </tags>
   </entry>
   <entry>
+    <title>年度总结</title>
+    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>姓名</th>
+<th style="text-align: left;">王文琦</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>生活情况</td>
+<td
+style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
+</tr>
+<tr class="even">
+<td>社工情况</td>
+<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
+</tr>
+<tr class="odd">
+<td>文体情况</td>
+<td
+style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
+</tr>
+<tr class="even">
+<td>实践情况</td>
+<td
+style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
+</tr>
+<tr class="odd">
+<td>个人总结</td>
+<td
+style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
+</tr>
+<tr class="even">
+<td>FLAG</td>
+<td
+style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
+1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
+好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
+争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
+争取暑假的时候可以去业界完成一次实习。<br>6.
+争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
+争取明年能和室友一起出去游玩一次…………</td>
+</tr>
+</tbody>
+</table>
+<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
+<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
+<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>庄子笔记（一）</title>
+    <url>/2022/02/22/%E5%BA%84%E5%AD%90%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>“取法其上，得乎其中；取法其中，得乎其下。”所以读书一定要读最好的书，最好的书就是经典。<strong>因为他们关心的通常是永恒的问题。</strong></p>
+<p>顾随说，读经典，不了解古人是辜负古人，只了解古人是辜负自己。必要在了解之后还要一番生发。</p>
+<p>我也持有相同的观点，我认为近代以来有一种薄古厚今的趋势。中国人的文化自信还没有完全被激发出来。大多数中国人缺乏一种理性的理解。</p>
+<p>《文子·道德》篇说：“上学以神听，中学以心听，下学以耳听。以耳听者学在皮肤,以心听者学在肌肉,以神听者学在骨髓。故听之不深,即知之不明。”</p>
+<p>人--人学</p>
+<p>道--哲学</p>
+<p>游--代表了自由的思想</p>
+<p>偶然听说了安徽合肥人刘文典的故事，觉得此人很有意思，而且对于庄子似乎颇有研究。</p>
+<p>海德堡大学，盛产哲学家</p>
+<p>三个盛产寓言的国家，古希腊，中国，古印度。</p>
+<p>如行云流水，初无定质，但常行于所当行，止于所不可不止。</p>
+<p>汪洋辟阖，仪态万方。</p>
+<p>庄子寓言，《秋水篇》——观名利。</p>
+<p>决定一个人美或者不美的根本元素是道德，德有所长而形有所忘。</p>
+<p>所谓无用之用其实是一个已经被人所能理解的观点了，胡适曾经对他们的学生说过这么一句话：功不唐捐。</p>
+<p>物物而不物于物，也可以简单地理解为，不要成为物质的奴隶。我现在倒是觉得我失去了曾经的那种感觉，也就是从心所欲不为成绩所羁绊。遁天倍情，忘其所受。</p>
+<p>今天听完了第一节庄子课之后，学到了很多新的故事，整体的观点和我之前所感受到的几乎相同。以人生哲学和生死哲学为主要精华。听了一个庄子与骷髅头聊天的故事。庄子问骷髅，如果我让你重返人间，回到你的家人朋友身边，你愿意吗？骷髅头表示很不解，死亡不用考虑那么多的羁绊，那么为什么还要去人间操劳呢？</p>
+<p>虽然老师的解读为善生善死，并且引向了珍惜生命、知道了生命的意义所在。我觉得超越人事是不太可能的存在，结合今天我想到的一些事情。我才觉得如果做事的话，需要分清什么是必须要做的事情，什么是自己喜欢做的事情。只有这两件事都做好了，我们的生活才能变得很有意思而不劳累。至于其他的因素，都不应该成为我们主要考虑的目标。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活，庄子</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>庄子（二） 逍遥游</title>
     <url>/2022/02/23/%E5%BA%84%E5%AD%90%EF%BC%88%E4%BA%8C%EF%BC%89-%E9%80%8D%E9%81%A5%E6%B8%B8/</url>
     <content><![CDATA[<p>我有一个问题。</p>
 <p>关于逍遥游的前半部分是我我们高中曾经学过的知识，描绘了“乘天地之正，御六气之辩”的人生的理想境界，要求人与万物为一的状态。这是可以理解的。但是逍遥游的后半段关于惠子和庄子对于“材用”的辩论引起了我的思考。</p>
 <p>“子有大树，患其无用，何不树之于无何有之乡，广莫之野，彷徨乎无为其侧，逍遥乎寝卧其下。不夭斤斧，物无害者，无所可用，安所困苦哉！”这段话无论从什么角度来看，都有一种避世而不入的思想在里面。所谓“物无害者，无所可用，安所困苦哉！”的意思貌似就是告诉惠子，如果一个人在世人的眼中本身就没有什么本领，那么就可以免除世事的困苦，不必奔波劳碌。这是否就是在劝诫人们多为“无用之人”呢？如果天下人人如此，是否会导致进取的思想逐渐消失？</p>
+<p>当然，今天发生了俄罗斯入侵乌克兰的军事活动。当然这其中有非常复杂的历史原因，我今天一整天也都在了解北约以及俄罗斯西部地区历史以来的遗留问题。我看到了一篇评价说的很中肯：国小而不处卑，力少而不畏强，无礼而侮大邻，贪愎而拙交者，可亡也。这句话是韩非子中说的，理解起来也非常地容易。</p>
+<p>三个通用方法来理解经典文献：</p>
+<ol type="1">
+<li>文字训诂和义理辨析相结合</li>
+<li>学思结合</li>
+<li>阅读经典和人生境界相结合</li>
+</ol>
+<p>《庄子》文章的两种模式，先讲寓言，再讲卮言；另外一种是反过来</p>
 ]]></content>
       <categories>
         <category>读书笔记</category>
@@ -873,57 +881,6 @@ class="math inline">\(DLG\)</span>攻击。</p>
       </tags>
   </entry>
   <entry>
-    <title>颜色基础、图像模型、Phong光照模型</title>
-    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型">颜色模型</h2>
-<p>RGB模型</p>
-<p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of
-brightness亮度），使用圆锥来表示颜色。</p>
-<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素">像素</h2>
-<h2 id="三角网格模型">三角网格模型</h2>
-<p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量
-：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型">光照模型</h2>
-<ul>
-<li>局部光照明</li>
-<li>全局光照明</li>
-</ul>
-<h2 id="phong模型">Phong模型</h2>
-<p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
-<ul>
-<li><p>漫反射效果 <span
-class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
-<li><p>镜面反射效果 <span
-class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
-<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
-</ul>
-<h4 id="明暗处理">明暗处理</h4>
-<p>#### 视点变换和视点对象</p>
-<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
-<ul>
-<li>刚体变换</li>
-<li>相似变换</li>
-<li>线性变换</li>
-<li>仿射变换</li>
-<li>投影变换</li>
-</ul>
-<h2 id="光栅图形学">光栅图形学</h2>
-]]></content>
-      <categories>
-        <category>Computer-Graphics</category>
-      </categories>
-      <tags>
-        <tag>Phong模型</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>联邦学习论文汇总</title>
     <url>/2021/11/18/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<h4
@@ -1066,6 +1023,57 @@ Learning</a>是需要优先阅读的。进度先记录到这里。</p>
       </categories>
       <tags>
         <tag>Federated Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>颜色基础、图像模型、Phong光照模型</title>
+    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
+<h2 id="颜色模型">颜色模型</h2>
+<p>RGB模型</p>
+<p>CMY模型（是RGB的补色，或者说减色模型）</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of
+brightness亮度），使用圆锥来表示颜色。</p>
+<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
+<h2 id="像素">像素</h2>
+<h2 id="三角网格模型">三角网格模型</h2>
+<p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量
+：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型">光照模型</h2>
+<ul>
+<li>局部光照明</li>
+<li>全局光照明</li>
+</ul>
+<h2 id="phong模型">Phong模型</h2>
+<p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
+<ul>
+<li><p>漫反射效果 <span
+class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
+<li><p>镜面反射效果 <span
+class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
+<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
+</ul>
+<h4 id="明暗处理">明暗处理</h4>
+<p>#### 视点变换和视点对象</p>
+<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<ul>
+<li>刚体变换</li>
+<li>相似变换</li>
+<li>线性变换</li>
+<li>仿射变换</li>
+<li>投影变换</li>
+</ul>
+<h2 id="光栅图形学">光栅图形学</h2>
+]]></content>
+      <categories>
+        <category>Computer-Graphics</category>
+      </categories>
+      <tags>
+        <tag>Phong模型</tag>
       </tags>
   </entry>
 </search>
