@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>知识蒸馏调研 - Drenched in my pain.</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="
+Knowledge Distillation: A Survey
+：这篇文章系统性的总结了关于知识蒸馏技术目前的所有发展技术，以及未来的展望。
+我们按照这个框架的顺序来逐步调研知识蒸馏的技术。
+S,"> 
+    <meta name="author" content="vinci"> 
+    <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
+    <link rel="icon" href="/img/my_favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <link rel="stylesheet" href="/js/prism/prism.css">
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Drenched in my pain.</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">知识蒸馏调研</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">知识蒸馏调研</h1>
+        <div class="stuff">
+            <span>二月 28, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%EF%BC%8C%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/" rel="tag">联邦学习，知识蒸馏</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220228191815.png" /></p>
+<p>Knowledge Distillation: A Survey
+：这篇文章系统性的总结了关于知识蒸馏技术目前的所有发展技术，以及未来的展望。</p>
+<p>我们按照这个框架的顺序来逐步调研知识蒸馏的技术。</p>
+<h2 id="section2-knowledge">Section2 Knowledge</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220228210726.png" /></p>
+<p>首先这张图给出了架构，知识蒸馏所蒸馏的知识层面，包括<span
+class="math inline">\(response-based, \ feature-based, \
+relation-based\)</span>三种层面。</p>
+<h3 id="response-based-knowledge">Response-Based Knowledge</h3>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220228212413.png" /></p>
+<p>这个可以简单地通过这一张图来说明，student模型通过简单地模仿teacher模型全连接层的logits来学习知识。这里也隐含了所谓的<span
+class="math inline">\(dark \
+knowledge\)</span>。因为提取知识的过程必须要依赖最后一层全连接层的结果，所以只能用于
+监督学习。</p>
+<h4 id="weaks">weaks</h4>
+<blockquote>
+<ul>
+<li><p>只能用于监督学习</p></li>
+<li><p>无法获取教师模型中期的信息</p></li>
+</ul>
+</blockquote>
+<h3 id="feature-based-knowledge">Feature-Based Knowledge</h3>
+<p>主要思想：match the intermediate feature maps</p>
+<p>some methods:</p>
+<ul>
+<li>using neuron selectivity transfer to generate "attention map"</li>
+<li>matching the probability distribution in feature space</li>
+<li>using "factors"</li>
+<li>route constraint hint learning , using outputs of hint teacher's
+hint layer</li>
+</ul>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220228215603.png" /></p>
+<p>这是基于特征的知识蒸馏的bench流程，以及损失函数 <span
+class="math display">\[
+L_{F e a D}\left(f_{t}(x),
+f_{s}(x)\right)=\mathcal{L}_{F}\left(\Phi_{t}\left(f_{t}(x)\right),
+\Phi_{s}\left(f_{s}(x)\right)\right)
+\]</span>
+其中，当教师和学生模型的中间层参数、大小不一致时，需要使用<span
+class="math inline">\(\phi_t \ \phi_s\)</span>转化函数。</p>
+<h4 id="weaks-1">weaks</h4>
+<blockquote>
+<ul>
+<li>如何选择合适的用于指导的隐藏层和被指导的隐藏层？</li>
+<li>如何匹配不同大小、参数不同的隐藏层？</li>
+</ul>
+</blockquote>
+<h3 id="relation-based-knowledeg">Relation-Based Knowledeg</h3>
+<p>无论是基于特征的还是基于输出的知识，都需要依赖于某个特定层的output。那么基于relation的知识就是在对不同层之间或者是数据样本之间的关联进行学习。</p>
+<ol type="1">
+<li><p>先是关于不同层之间的联系：</p>
+<ul>
+<li><p>有人提出了FSP矩阵来研究两个特征映射对之间的关联</p></li>
+<li><p>使用奇异值分解来学习知识</p></li>
+<li><p>学生模拟教师模型中成对的隐藏特征层之间的信息流</p>
+<p>loss function可以定义如下：</p>
+<p>其中一对戴帽子的f分别表示一对来自教师或者是学生模型中的一对特征图。L依然是用来衡量教师模型和学生模型之间的差距。</p></li>
+</ul></li>
+</ol>
+<p><span class="math display">\[
+L_{R e l D}\left(f_{t},
+f_{s}\right)=\mathcal{L}_{R^{1}}\left(\Psi_{t}\left(\hat{f}_{t},
+\check{f}_{t}\right), \Psi_{s}\left(\hat{f}_{s},
+\check{f}_{s}\right)\right)
+\]</span></p>
+<ol start="2" type="1">
+<li><p>另一种relation是基于数据样本之间的关系</p>
+<ul>
+<li>通过instance relationship graph实例关系图</li>
+<li>基于<strong>manfold learning</strong>（多形学习）</li>
+<li>将数据样本之间的关系建模为概率分布</li>
+<li>基于相关一致性correlation
+congruence的知识蒸馏，可以学到实例级别的信息和实例之间的关系。</li>
+</ul>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220228230753.png" /></p></li>
+</ol>
+<p>这是基于数据实例关系的知识蒸馏benchmark <span class="math display">\[
+L_{R e l D}\left(F_{t},
+F_{s}\right)=\mathcal{L}_{R^{2}}\left(\psi_{t}\left(t_{i}, t_{j}\right),
+\psi_{s}\left(s_{i}, s_{j}\right)\right)
+\]</span> 如上式所示，其中<span class="math inline">\(t\)</span>和<span
+class="math inline">\(s\)</span>分别来自老师和学生模型的<span
+class="math inline">\(feature \ representation\)</span>, <span
+class="math inline">\(\phi\)</span>同样衡量两个特征表示之间的相似性，<span
+class="math inline">\(L\)</span>衡量距离。</p>
+<h4 id="weaks-2">weaks</h4>
+<blockquote>
+<ul>
+<li>虽然现在提供了一些基于特征或者数据关系的知识类别，但是如何就关系合理建模依然值得研究。</li>
+</ul>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='true'
+        data-ci='ff344aadf12b27b1b89e'
+        data-cs='f52347d027bfae073c0c4dcf016d54363b8f1957'
+        data-r='wenqi-wang20.github.io'
+        data-o='wenqi-wang20'
+        data-a='wenqi-wang20'
+        data-d='true'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
