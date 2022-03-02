@@ -10,11 +10,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="
+    <meta name="description" content="生活本来沉闷，但跑起来就会有风。
+
 Knowledge Distillation: A Survey
 ：这篇文章系统性的总结了关于知识蒸馏技术目前的所有发展技术，以及未来的展望。
-我们按照这个框架的顺序来逐步调研知识蒸馏的技术。
-S,"> 
+我们按照这个框架的,"> 
     <meta name="author" content="vinci"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -59,7 +59,8 @@ S,">
 
         </div>
         <div class="content markdown">
-            <p><img
+            <p>生活本来沉闷，但跑起来就会有风。</p>
+<p><img
 src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220228191815.png" /></p>
 <p>Knowledge Distillation: A Survey
 ：这篇文章系统性的总结了关于知识蒸馏技术目前的所有发展技术，以及未来的展望。</p>
@@ -156,6 +157,80 @@ class="math inline">\(L\)</span>衡量距离。</p>
 <li>虽然现在提供了一些基于特征或者数据关系的知识类别，但是如何就关系合理建模依然值得研究。</li>
 </ul>
 </blockquote>
+<h2 id="section3-distillation-schemes">Section3 Distillation
+Schemes</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302205323.png" /></p>
+<p>第三部分讲了现有的一些知识蒸馏的方式，根据教师和学生模型能否同步更新，区分为离线蒸馏，在线蒸馏，自蒸馏。</p>
+<p>离线蒸馏：</p>
+<ul>
+<li><p>单向知识蒸馏和双过程训练</p></li>
+<li><p>无法避免大型的教师模型</p></li>
+</ul>
+<p>在线蒸馏：</p>
+<ul>
+<li>老师模型和学生模型的角色是相对的</li>
+<li>多分枝结构，不同的分支代表同一个模型</li>
+<li>共蒸馏</li>
+<li>是一个单过程的端到端的并行训练</li>
+</ul>
+<p>自蒸馏：</p>
+<ul>
+<li>老师和学生使用相同的网络</li>
+<li>将知识从深层次蒸馏到浅层次</li>
+<li>一种无教师的蒸馏方案</li>
+<li>采用数据增强的方法</li>
+<li>对于老师和学生模型都单独使用自蒸馏方法进行优化</li>
+<li><strong>自蒸馏和在线蒸馏可以通过多知识转移框架进行一定程度上的融合</strong></li>
+</ul>
+<h2 id="section4-teacher-student-architecture">Section4 Teacher-Student
+Architecture</h2>
+<p>现阶段，许多教师和学生模型的参数等等都是预先设定的，导致了一些模型容量上的固有的差距。下面这张图大致介绍了都有哪些教师-学生模型架构。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302212216.png" /></p>
+<p>通常学生网络有两种：</p>
+<ul>
+<li>更薄，更窄的教师网络</li>
+<li>保持教师网络结构的量化版本</li>
+<li>一个具有高效基本操作的小型网络</li>
+<li>一个拥有优化全局网络的小型网络</li>
+<li>和老师的网络相同</li>
+</ul>
+<h3 id="现阶段的一些研究方向">现阶段的一些研究方向</h3>
+<ul>
+<li>提出“teacher assistant”，助理教师模型来学习学习残差</li>
+<li>将量化网络和知识蒸馏相结合，学生模型是小而量化后的模型</li>
+<li>深度可分离卷积</li>
+<li>nas神经结构搜索</li>
+<li>在教师模型的指导下，研究学生网络的结构和知识转移</li>
+</ul>
+<h2 id="section5-distillation-algorithms">Section5 Distillation
+Algorithms</h2>
+<p>最基本的蒸馏算法就是，match responsed-based
+knowledge例如logins，feature-based knowledge还有feature
+space的representations。下面是一些更加匹配的设计</p>
+<ul>
+<li><p>对抗性蒸馏算法</p>
+<ul>
+<li>GAN生成数据，老师模型可以当作鉴别器，</li>
+<li>老师作为生成器，GAN模型中的鉴别器确保学生能够一直模仿老师</li>
+<li>老师和学生模型共同作为生成器，鉴别器用来加强在线知识蒸馏的效果。</li>
+</ul>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302224431.png" /></p>
+<p>某些应用和探索：</p>
+<ul>
+<li>鉴别器使用logits或者features来区分student和teacher的samples</li>
+<li>使用未标记的数据进行知识转移</li>
+<li>使用中间层监督的方法来缩小教师和学生模型之间的差距</li>
+</ul>
+<p>gan的优点：</p>
+<ul>
+<li>高效</li>
+<li>可以克服有效数据不足的缺点</li>
+<li>KD也可以用来压缩GAN</li>
+</ul></li>
+</ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">

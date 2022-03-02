@@ -81,6 +81,53 @@ alt="在这里插入图片描述" /></p>
       </tags>
   </entry>
   <entry>
+    <title>YML配置文件使用小结</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
+<h2 id="什么是yml文件">什么是YML文件</h2>
+<p><strong>YAML（Yet Another Markup Language）</strong>（发音 /ˈjæməl/
+）是 一种基于<a
+href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
+<p>yaml文件是一种通用的数据串行化格式。（我们在用于模块通信的时候，会将对象序列化为通信流，高效地传输到另一个模块，并且提供反序列化还原数据）</p>
+<h2 id="基本格式">基本格式</h2>
+<p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
+<ul>
+<li>大小写敏感</li>
+<li>使用缩进表示层级关系</li>
+<li>缩进时不允许使用Tab键，只允许使用空格。</li>
+<li>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</li>
+</ul>
+<p>在yml文件中，<span
+class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类型有</p>
+<ul>
+<li>对象：键值对的集合，又称为映射（mapping）/ 哈希（hashes） /
+字典（dictionary）</li>
+<li>数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</li>
+<li>纯量（scalars）：单个的、不可再分的值</li>
+</ul>
+<h4 id="对象">对象</h4>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">animal:</span> <span class="string">pets</span></span><br><span class="line"><span class="attr">hash:</span> &#123; <span class="attr">name:</span> <span class="string">Steve</span>, <span class="attr">foo:</span> <span class="string">bar</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>转化为json为：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// conf.json</span></span><br><span class="line">&#123;</span><br><span class="line">    &#123; <span class="attr">&quot;animal&quot;</span>: <span class="string">&quot;pets&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;hash&quot;</span>: &#123; <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Steve&quot;</span>, <span class="attr">&quot;foo&quot;</span>: <span class="string">&quot;bar&quot;</span> &#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="数组">数组</h4>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">Animal:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Cat</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Dog</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Goldfish</span></span><br></pre></td></tr></table></figure>
+<p>转化为json为：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">//conf.json</span></span><br><span class="line">&#123; <span class="attr">&quot;Animal&quot;</span>: [ <span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Goldfish&quot;</span> ] &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="字符串">字符串</h4>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="comment"># 正常情况下字符串不用写引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">这是一行字符串</span></span><br><span class="line"><span class="comment"># 字符串内有空格或者特殊字符时需要加引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">&#x27;内容： 字符串&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="空值">空值</h4>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">parent:</span> <span class="string">~</span></span><br></pre></td></tr></table></figure>
+<p>等价于json中的</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">&quot;parent&quot;</span>: <span class="literal">null</span> &#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>YML</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MIPS汇编语言（一）</title>
     <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
@@ -152,50 +199,55 @@ registers!</strong></li>
       </tags>
   </entry>
   <entry>
-    <title>YML配置文件使用小结</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</url>
-    <content><![CDATA[<p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
-<h2 id="什么是yml文件">什么是YML文件</h2>
-<p><strong>YAML（Yet Another Markup Language）</strong>（发音 /ˈjæməl/
-）是 一种基于<a
-href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
-<p>yaml文件是一种通用的数据串行化格式。（我们在用于模块通信的时候，会将对象序列化为通信流，高效地传输到另一个模块，并且提供反序列化还原数据）</p>
-<h2 id="基本格式">基本格式</h2>
-<p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
+    <title>Django配置中的一系列问题</title>
+    <url>/2022/03/02/Django%E9%85%8D%E7%BD%AE%E4%B8%AD%E7%9A%84%E4%B8%80%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="pycharm">pycharm</h2>
+<p>这两天在配置Django的时候，又遇到了关于pycharm配置虚拟环境的问题。</p>
+<p>整体来说，我们需要看下面这一张图，这是关于项目配置信息的：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194058.png" /></p>
+<p>我们可以看到“工具”-“终端”里面有shell的路径，一般来说，我们的shell都是会默认使用系统base的路径。这会导致在pycharm自带的终端下进行操作会使用环境变量的包（当然这些都是windows上面的问题，上述图片是mac的，不过意思大致相同）</p>
+<p>有两种方法：</p>
 <ul>
-<li>大小写敏感</li>
-<li>使用缩进表示层级关系</li>
-<li>缩进时不允许使用Tab键，只允许使用空格。</li>
-<li>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</li>
+<li>第一种是在shell路径的后面 +
+<code>/k + "虚拟环境路径中的activate脚本"</code></li>
+<li>第二种方法是去到venv文件夹里，手动执行activate，然后再回来看，就发现终端已经变成虚拟环境了</li>
 </ul>
-<p>在yml文件中，<span
-class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类型有</p>
+<p>就像这样：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194942.png" /></p>
+<h2 id="git">git</h2>
+<p>最近学到了一些新的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --graph</span><br></pre></td></tr></table></figure>
+<p>这个基本上可以展示当前仓库里所有的分支提交和合并的记录，以图片的形式展示。</p>
+<p>比较麻烦的主要是CI/CD的部署。</p>
+<p>CI/CD，我的理解就是，能够在提前配置好任务的情况下，在你push代码到云端的时候，在一个指定的container里面跑你的测试。</p>
+<p>总体来说就是分为三步：</p>
 <ul>
-<li>对象：键值对的集合，又称为映射（mapping）/ 哈希（hashes） /
-字典（dictionary）</li>
-<li>数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</li>
-<li>纯量（scalars）：单个的、不可再分的值</li>
+<li>配置Dockerfile，用来指定容器的规模。</li>
+<li>配置.gitlab-ci.yaml，用来指定要完成的任务。</li>
+<li>配置gitlab-runner，用来配置容器。</li>
 </ul>
-<h4 id="对象">对象</h4>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">animal:</span> <span class="string">pets</span></span><br><span class="line"><span class="attr">hash:</span> &#123; <span class="attr">name:</span> <span class="string">Steve</span>, <span class="attr">foo:</span> <span class="string">bar</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>转化为json为：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// conf.json</span></span><br><span class="line">&#123;</span><br><span class="line">    &#123; <span class="attr">&quot;animal&quot;</span>: <span class="string">&quot;pets&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;hash&quot;</span>: &#123; <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Steve&quot;</span>, <span class="attr">&quot;foo&quot;</span>: <span class="string">&quot;bar&quot;</span> &#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="数组">数组</h4>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">Animal:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Cat</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Dog</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">Goldfish</span></span><br></pre></td></tr></table></figure>
-<p>转化为json为：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">//conf.json</span></span><br><span class="line">&#123; <span class="attr">&quot;Animal&quot;</span>: [ <span class="string">&quot;Cat&quot;</span>, <span class="string">&quot;Dog&quot;</span>, <span class="string">&quot;Goldfish&quot;</span> ] &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="字符串">字符串</h4>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="comment"># 正常情况下字符串不用写引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">这是一行字符串</span></span><br><span class="line"><span class="comment"># 字符串内有空格或者特殊字符时需要加引号</span></span><br><span class="line"><span class="attr">str:</span> <span class="string">&#x27;内容： 字符串&#x27;</span></span><br></pre></td></tr></table></figure>
-<h4 id="空值">空值</h4>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">parent:</span> <span class="string">~</span></span><br></pre></td></tr></table></figure>
-<p>等价于json中的</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">&quot;parent&quot;</span>: <span class="literal">null</span> &#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>配置文件语言</category>
       </categories>
       <tags>
-        <tag>YML</tag>
+        <tag>Pycharm</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gitignore不生效问题</title>
+    <url>/2022/02/17/gitignore%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>因为年前换了两台电脑，需要在不同的地方管理我的hexo博客，所以我采取了git存储一份source资源，两边每次都需要先拉取云端资源，再做本地更新，然后再deploy到hexo分支。因为有些步骤是重复的，所以我就写了一个脚本，短短的几句话：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git status</span><br><span class="line">git add --all</span><br><span class="line">git commit -m &quot;mac部署&quot;</span><br><span class="line">git push origin master:source</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p>但是因为我的mac和win语句不一样，所以显然这个不能被push到source分支里，所以我把它添加到<code>.gitignore</code>文件里了。可是最近经过我观察发现，它依然出现在了我的git远程仓库里！不仅如此，<code>.gitignore</code>里的文件都没有被忽略，甚至连ignore文件自己都被上传了上去。所以我才研究了一下，发现是我当时添加<code>.gitignore</code>文件比较迟，并没有在init的同时添加，导致文件时无效的。解决办法也很简单，只需要用下面的命令删除缓存即可：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意后面有一个点</span></span><br><span class="line">git rm -rf --cache .</span><br></pre></td></tr></table></figure>
+<p>然后在重新添加所有的更改并且commit提交即可。</p>
+]]></content>
+      <tags>
+        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -233,19 +285,6 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220
       </tags>
   </entry>
   <entry>
-    <title>gitignore不生效问题</title>
-    <url>/2022/02/17/gitignore%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>因为年前换了两台电脑，需要在不同的地方管理我的hexo博客，所以我采取了git存储一份source资源，两边每次都需要先拉取云端资源，再做本地更新，然后再deploy到hexo分支。因为有些步骤是重复的，所以我就写了一个脚本，短短的几句话：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git status</span><br><span class="line">git add --all</span><br><span class="line">git commit -m &quot;mac部署&quot;</span><br><span class="line">git push origin master:source</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<p>但是因为我的mac和win语句不一样，所以显然这个不能被push到source分支里，所以我把它添加到<code>.gitignore</code>文件里了。可是最近经过我观察发现，它依然出现在了我的git远程仓库里！不仅如此，<code>.gitignore</code>里的文件都没有被忽略，甚至连ignore文件自己都被上传了上去。所以我才研究了一下，发现是我当时添加<code>.gitignore</code>文件比较迟，并没有在init的同时添加，导致文件时无效的。解决办法也很简单，只需要用下面的命令删除缓存即可：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意后面有一个点</span></span><br><span class="line">git rm -rf --cache .</span><br></pre></td></tr></table></figure>
-<p>然后在重新添加所有的更改并且commit提交即可。</p>
-]]></content>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2021/09/01/hello-world/</url>
     <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
@@ -275,33 +314,6 @@ href="https://hexo.io/docs/generating.html">Generating</a></p>
 <p>More info: <a
 href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>pycharm 环境变量问题</title>
-    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
-desktop虚拟机。</p>
-<blockquote>
-<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
-</blockquote>
-<p>言归正传，我遇到的问题如下：</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
-<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>的错误。实在是让我很破防。</p>
-<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
-<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
-<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
-]]></content>
-      <categories>
-        <category>Ubuntu</category>
-      </categories>
-      <tags>
-        <tag>Pycharm</tag>
-      </tags>
   </entry>
   <entry>
     <title>联邦学习（一）</title>
@@ -614,6 +626,33 @@ Learning\)</span>相比还是有很大的进步空间。</p>
       </tags>
   </entry>
   <entry>
+    <title>pycharm 环境变量问题</title>
+    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
+desktop虚拟机。</p>
+<blockquote>
+<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+</blockquote>
+<p>言归正传，我遇到的问题如下：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
+<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>的错误。实在是让我很破防。</p>
+<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
+<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
+<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
+]]></content>
+      <categories>
+        <category>Ubuntu</category>
+      </categories>
+      <tags>
+        <tag>Pycharm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>年度总结</title>
     <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<table>
@@ -697,47 +736,6 @@ style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友
 <p>物物而不物于物，也可以简单地理解为，不要成为物质的奴隶。我现在倒是觉得我失去了曾经的那种感觉，也就是从心所欲不为成绩所羁绊。遁天倍情，忘其所受。</p>
 <p>今天听完了第一节庄子课之后，学到了很多新的故事，整体的观点和我之前所感受到的几乎相同。以人生哲学和生死哲学为主要精华。听了一个庄子与骷髅头聊天的故事。庄子问骷髅，如果我让你重返人间，回到你的家人朋友身边，你愿意吗？骷髅头表示很不解，死亡不用考虑那么多的羁绊，那么为什么还要去人间操劳呢？</p>
 <p>虽然老师的解读为善生善死，并且引向了珍惜生命、知道了生命的意义所在。我觉得超越人事是不太可能的存在，结合今天我想到的一些事情。我才觉得如果做事的话，需要分清什么是必须要做的事情，什么是自己喜欢做的事情。只有这两件事都做好了，我们的生活才能变得很有意思而不劳累。至于其他的因素，都不应该成为我们主要考虑的目标。</p>
-]]></content>
-      <categories>
-        <category>读书笔记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活，庄子</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>庄子（三）-齐物论</title>
-    <url>/2022/02/26/%E5%BA%84%E5%AD%90%EF%BC%88%E4%B8%89%EF%BC%89-%E9%BD%90%E7%89%A9%E8%AE%BA/</url>
-    <content><![CDATA[<ul>
-<li>所谓“唯达者知通为一，为是不用而寓诸庸。”现在流行的解释都是，把“用”这个字翻译为“因任众人的好恶”。包括前文所提到的，“可乎可，不可乎不可”，解释为“别人认可的，我也跟着认可；别人不认可的，我也跟着不认可。”过度地顺从所谓的天性，是否有一种随波逐流，不假思索的体现？</li>
-<li>“昔者庄周梦为胡蝶，栩栩然胡蝶也，自喻适志与，不知周也。俄然觉，则蘧蘧然周也。不知周之梦为胡蝶与，胡蝶之梦为周与？周与胡蝶，则必有分矣。此之谓物化。”这段话虽然说的是“周与胡蝶则必有分矣”，但是其背后的意思是不是还是物我两忘的境地呢？也就是说，庄周和胡蝶已经不再有了分别，成为世界的一份子。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>读书笔记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活，庄子</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>庄子（二） 逍遥游</title>
-    <url>/2022/02/23/%E5%BA%84%E5%AD%90%EF%BC%88%E4%BA%8C%EF%BC%89-%E9%80%8D%E9%81%A5%E6%B8%B8/</url>
-    <content><![CDATA[<p>我有一个问题。</p>
-<p>关于逍遥游的前半部分是我我们高中曾经学过的知识，描绘了“乘天地之正，御六气之辩”的人生的理想境界，要求人与万物为一的状态。这是可以理解的。但是逍遥游的后半段关于惠子和庄子对于“材用”的辩论引起了我的思考。</p>
-<p>“子有大树，患其无用，何不树之于无何有之乡，广莫之野，彷徨乎无为其侧，逍遥乎寝卧其下。不夭斤斧，物无害者，无所可用，安所困苦哉！”这段话无论从什么角度来看，都有一种避世而不入的思想在里面。所谓“物无害者，无所可用，安所困苦哉！”的意思貌似就是告诉惠子，如果一个人在世人的眼中本身就没有什么本领，那么就可以免除世事的困苦，不必奔波劳碌。这是否就是在劝诫人们多为“无用之人”呢？如果天下人人如此，是否会导致进取的思想逐渐消失？</p>
-<p>当然，今天发生了俄罗斯入侵乌克兰的军事活动。当然这其中有非常复杂的历史原因，我今天一整天也都在了解北约以及俄罗斯西部地区历史以来的遗留问题。我看到了一篇评价说的很中肯：国小而不处卑，力少而不畏强，无礼而侮大邻，贪愎而拙交者，可亡也。这句话是韩非子中说的，理解起来也非常地容易。</p>
-<p>三个通用方法来理解经典文献：</p>
-<ol type="1">
-<li>文字训诂和义理辨析相结合</li>
-<li>学思结合</li>
-<li>阅读经典和人生境界相结合</li>
-</ol>
-<p>《庄子》文章的两种模式，先讲寓言，再讲卮言；另外一种是反过来。</p>
-<p>变化。其中变代表量变，化代表质变。</p>
-<p>旋立旋破，随说随扫。知小而不自小，知大而不自大。要永远不能以自己为中心。</p>
-<p>庄子逍遥吗？符合自己的志向生活着，就是一种逍遥。</p>
-<p>无待，乘正御变。</p>
 ]]></content>
       <categories>
         <category>读书笔记</category>
@@ -900,9 +898,51 @@ class="math inline">\(DLG\)</span>攻击。</p>
       </tags>
   </entry>
   <entry>
+    <title>庄子（二） 逍遥游</title>
+    <url>/2022/02/23/%E5%BA%84%E5%AD%90%EF%BC%88%E4%BA%8C%EF%BC%89-%E9%80%8D%E9%81%A5%E6%B8%B8/</url>
+    <content><![CDATA[<p>我有一个问题。</p>
+<p>关于逍遥游的前半部分是我我们高中曾经学过的知识，描绘了“乘天地之正，御六气之辩”的人生的理想境界，要求人与万物为一的状态。这是可以理解的。但是逍遥游的后半段关于惠子和庄子对于“材用”的辩论引起了我的思考。</p>
+<p>“子有大树，患其无用，何不树之于无何有之乡，广莫之野，彷徨乎无为其侧，逍遥乎寝卧其下。不夭斤斧，物无害者，无所可用，安所困苦哉！”这段话无论从什么角度来看，都有一种避世而不入的思想在里面。所谓“物无害者，无所可用，安所困苦哉！”的意思貌似就是告诉惠子，如果一个人在世人的眼中本身就没有什么本领，那么就可以免除世事的困苦，不必奔波劳碌。这是否就是在劝诫人们多为“无用之人”呢？如果天下人人如此，是否会导致进取的思想逐渐消失？</p>
+<p>当然，今天发生了俄罗斯入侵乌克兰的军事活动。当然这其中有非常复杂的历史原因，我今天一整天也都在了解北约以及俄罗斯西部地区历史以来的遗留问题。我看到了一篇评价说的很中肯：国小而不处卑，力少而不畏强，无礼而侮大邻，贪愎而拙交者，可亡也。这句话是韩非子中说的，理解起来也非常地容易。</p>
+<p>三个通用方法来理解经典文献：</p>
+<ol type="1">
+<li>文字训诂和义理辨析相结合</li>
+<li>学思结合</li>
+<li>阅读经典和人生境界相结合</li>
+</ol>
+<p>《庄子》文章的两种模式，先讲寓言，再讲卮言；另外一种是反过来。</p>
+<p>变化。其中变代表量变，化代表质变。</p>
+<p>旋立旋破，随说随扫。知小而不自小，知大而不自大。要永远不能以自己为中心。</p>
+<p>庄子逍遥吗？符合自己的志向生活着，就是一种逍遥。</p>
+<p>无待，乘正御变。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活，庄子</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>庄子（三）-齐物论</title>
+    <url>/2022/02/26/%E5%BA%84%E5%AD%90%EF%BC%88%E4%B8%89%EF%BC%89-%E9%BD%90%E7%89%A9%E8%AE%BA/</url>
+    <content><![CDATA[<ul>
+<li>所谓“唯达者知通为一，为是不用而寓诸庸。”现在流行的解释都是，把“用”这个字翻译为“因任众人的好恶”。包括前文所提到的，“可乎可，不可乎不可”，解释为“别人认可的，我也跟着认可；别人不认可的，我也跟着不认可。”过度地顺从所谓的天性，是否有一种随波逐流，不假思索的体现？</li>
+<li>“昔者庄周梦为胡蝶，栩栩然胡蝶也，自喻适志与，不知周也。俄然觉，则蘧蘧然周也。不知周之梦为胡蝶与，胡蝶之梦为周与？周与胡蝶，则必有分矣。此之谓物化。”这段话虽然说的是“周与胡蝶则必有分矣”，但是其背后的意思是不是还是物我两忘的境地呢？也就是说，庄周和胡蝶已经不再有了分别，成为世界的一份子。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活，庄子</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>知识蒸馏调研</title>
     <url>/2022/02/28/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E8%B0%83%E7%A0%94/</url>
-    <content><![CDATA[<p><img
+    <content><![CDATA[<p>生活本来沉闷，但跑起来就会有风。</p>
+<p><img
 src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220228191815.png" /></p>
 <p>Knowledge Distillation: A Survey
 ：这篇文章系统性的总结了关于知识蒸馏技术目前的所有发展技术，以及未来的展望。</p>
@@ -999,63 +1039,86 @@ class="math inline">\(L\)</span>衡量距离。</p>
 <li>虽然现在提供了一些基于特征或者数据关系的知识类别，但是如何就关系合理建模依然值得研究。</li>
 </ul>
 </blockquote>
+<h2 id="section3-distillation-schemes">Section3 Distillation
+Schemes</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302205323.png" /></p>
+<p>第三部分讲了现有的一些知识蒸馏的方式，根据教师和学生模型能否同步更新，区分为离线蒸馏，在线蒸馏，自蒸馏。</p>
+<p>离线蒸馏：</p>
+<ul>
+<li><p>单向知识蒸馏和双过程训练</p></li>
+<li><p>无法避免大型的教师模型</p></li>
+</ul>
+<p>在线蒸馏：</p>
+<ul>
+<li>老师模型和学生模型的角色是相对的</li>
+<li>多分枝结构，不同的分支代表同一个模型</li>
+<li>共蒸馏</li>
+<li>是一个单过程的端到端的并行训练</li>
+</ul>
+<p>自蒸馏：</p>
+<ul>
+<li>老师和学生使用相同的网络</li>
+<li>将知识从深层次蒸馏到浅层次</li>
+<li>一种无教师的蒸馏方案</li>
+<li>采用数据增强的方法</li>
+<li>对于老师和学生模型都单独使用自蒸馏方法进行优化</li>
+<li><strong>自蒸馏和在线蒸馏可以通过多知识转移框架进行一定程度上的融合</strong></li>
+</ul>
+<h2 id="section4-teacher-student-architecture">Section4 Teacher-Student
+Architecture</h2>
+<p>现阶段，许多教师和学生模型的参数等等都是预先设定的，导致了一些模型容量上的固有的差距。下面这张图大致介绍了都有哪些教师-学生模型架构。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302212216.png" /></p>
+<p>通常学生网络有两种：</p>
+<ul>
+<li>更薄，更窄的教师网络</li>
+<li>保持教师网络结构的量化版本</li>
+<li>一个具有高效基本操作的小型网络</li>
+<li>一个拥有优化全局网络的小型网络</li>
+<li>和老师的网络相同</li>
+</ul>
+<h3 id="现阶段的一些研究方向">现阶段的一些研究方向</h3>
+<ul>
+<li>提出“teacher assistant”，助理教师模型来学习学习残差</li>
+<li>将量化网络和知识蒸馏相结合，学生模型是小而量化后的模型</li>
+<li>深度可分离卷积</li>
+<li>nas神经结构搜索</li>
+<li>在教师模型的指导下，研究学生网络的结构和知识转移</li>
+</ul>
+<h2 id="section5-distillation-algorithms">Section5 Distillation
+Algorithms</h2>
+<p>最基本的蒸馏算法就是，match responsed-based
+knowledge例如logins，feature-based knowledge还有feature
+space的representations。下面是一些更加匹配的设计</p>
+<ul>
+<li><p>对抗性蒸馏算法</p>
+<ul>
+<li>GAN生成数据，老师模型可以当作鉴别器，</li>
+<li>老师作为生成器，GAN模型中的鉴别器确保学生能够一直模仿老师</li>
+<li>老师和学生模型共同作为生成器，鉴别器用来加强在线知识蒸馏的效果。</li>
+</ul>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302224431.png" /></p>
+<p>某些应用和探索：</p>
+<ul>
+<li>鉴别器使用logits或者features来区分student和teacher的samples</li>
+<li>使用未标记的数据进行知识转移</li>
+<li>使用中间层监督的方法来缩小教师和学生模型之间的差距</li>
+</ul>
+<p>gan的优点：</p>
+<ul>
+<li>高效</li>
+<li>可以克服有效数据不足的缺点</li>
+<li>KD也可以用来压缩GAN</li>
+</ul></li>
+</ul>
 ]]></content>
       <categories>
         <category>深度学习</category>
       </categories>
       <tags>
         <tag>联邦学习，知识蒸馏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>颜色基础、图像模型、Phong光照模型</title>
-    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型">颜色模型</h2>
-<p>RGB模型</p>
-<p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of
-brightness亮度），使用圆锥来表示颜色。</p>
-<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素">像素</h2>
-<h2 id="三角网格模型">三角网格模型</h2>
-<p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量
-：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型">光照模型</h2>
-<ul>
-<li>局部光照明</li>
-<li>全局光照明</li>
-</ul>
-<h2 id="phong模型">Phong模型</h2>
-<p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
-<ul>
-<li><p>漫反射效果 <span
-class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
-<li><p>镜面反射效果 <span
-class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
-<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
-</ul>
-<h4 id="明暗处理">明暗处理</h4>
-<p>#### 视点变换和视点对象</p>
-<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
-<ul>
-<li>刚体变换</li>
-<li>相似变换</li>
-<li>线性变换</li>
-<li>仿射变换</li>
-<li>投影变换</li>
-</ul>
-<h2 id="光栅图形学">光栅图形学</h2>
-]]></content>
-      <categories>
-        <category>Computer-Graphics</category>
-      </categories>
-      <tags>
-        <tag>Phong模型</tag>
       </tags>
   </entry>
   <entry>
@@ -1201,6 +1264,57 @@ Learning</a>是需要优先阅读的。进度先记录到这里。</p>
       </categories>
       <tags>
         <tag>Federated Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>颜色基础、图像模型、Phong光照模型</title>
+    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
+<h2 id="颜色模型">颜色模型</h2>
+<p>RGB模型</p>
+<p>CMY模型（是RGB的补色，或者说减色模型）</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of
+brightness亮度），使用圆锥来表示颜色。</p>
+<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
+<h2 id="像素">像素</h2>
+<h2 id="三角网格模型">三角网格模型</h2>
+<p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量
+：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型">光照模型</h2>
+<ul>
+<li>局部光照明</li>
+<li>全局光照明</li>
+</ul>
+<h2 id="phong模型">Phong模型</h2>
+<p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
+<ul>
+<li><p>漫反射效果 <span
+class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
+<li><p>镜面反射效果 <span
+class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
+<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
+</ul>
+<h4 id="明暗处理">明暗处理</h4>
+<p>#### 视点变换和视点对象</p>
+<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<ul>
+<li>刚体变换</li>
+<li>相似变换</li>
+<li>线性变换</li>
+<li>仿射变换</li>
+<li>投影变换</li>
+</ul>
+<h2 id="光栅图形学">光栅图形学</h2>
+]]></content>
+      <categories>
+        <category>Computer-Graphics</category>
+      </categories>
+      <tags>
+        <tag>Phong模型</tag>
       </tags>
   </entry>
 </search>
