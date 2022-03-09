@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>knowledge in distillation - Drenched in my pain.</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="今天这一篇我们主要介绍三种基于不同知识的知识蒸馏方法的技术概括。
+Response-based knowledge
+这也是最常见，最容易理解的知识蒸馏： \[
+q_{i}=\frac{\exp \l,"> 
+    <meta name="author" content="vinci"> 
+    <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
+    <link rel="icon" href="/img/my_favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <link rel="stylesheet" href="/js/prism/prism.css">
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Drenched in my pain.</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">knowledge in distillation</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">knowledge in distillation</h1>
+        <div class="stuff">
+            <span>三月 06, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%EF%BC%8C%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/" rel="tag">联邦学习，知识蒸馏</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>今天这一篇我们主要介绍三种基于不同知识的知识蒸馏方法的技术概括。</p>
+<h2 id="response-based-knowledge">Response-based knowledge</h2>
+<p>这也是最常见，最容易理解的知识蒸馏： <span class="math display">\[
+q_{i}=\frac{\exp \left(z_{i} / T\right)}{\sum_{j} \exp \left(z_{j} /
+T\right)}
+\]</span>
+神经网络通常使用softmax层来揭示分类任务的预测概率，我们可以改变蒸馏温度<span
+class="math inline">\(T\)</span>，然后使得概率分布更加的平滑化。紧接着小模型可以模拟大模型在同一个数据集上的softmax输出的概率表现，同时结合hard-labels给出的预测误差，来共同训练一个更小、更容易部署的student
+model。下面分别是蒸馏损失和student模型预测的交叉熵损失，训练损失是二者的线性组合：
+<span class="math display">\[
+L_{\operatorname{Res} D}\left(p\left(z_{t}, T\right), p\left(z_{s},
+T\right)\right)=\mathcal{L}_{R}\left(p\left(z_{t}, T\right),
+p\left(z_{s}, T\right)\right) \\
+\mathcal{L}_{C E}\left(y, p\left(z_{s}, T=1\right)\right) \\
+\mathcal{L} = \alpha \mathcal{L}_{R} + \beta \mathcal{L}_{CE}
+\]</span> <img
+src="/Users/wangwenqi/Library/Application%20Support/typora-user-images/image-20220306151204550.png"
+alt="image-20220306151204550" /></p>
+<h2 id="feature-based-knowledge">Feature-based Knowledge</h2>
+<p>在训练student
+model，尤其是更深更窄的神经网络上，加入中间特征层的引导有时候能够起到很好的效果。</p>
+<h3 id="fitnet">FitNet</h3>
+<p>核心的思想是：</p>
+<blockquote>
+<p>We introduce <em>intermediate-level hints</em> from the teacher
+hidden layers to guide the training process of the student,
+<em>i.e.</em>, we want the student network (FitNet) to learn an
+intermediate representation that is predictive of the intermediate
+representations of the teacher network.</p>
+</blockquote>
+<p>FitNet的目的是为了加强KD的学习，训练一个更深、更窄的学生网络模型，因为更深的模型往往具有更好的非线性，在做出决策时往往有更好的表现。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220307232850.png" /></p>
+<blockquote>
+<ul>
+<li><p>主要分为两个部分，第一部分是利用训练好的教师模型对student模型的中间层参数进行正则化处理，是一个预训练的过程</p></li>
+<li><p>第二部分是对于整个student model的KD训练</p></li>
+</ul>
+</blockquote>
+<p><span class="math display">\[
+stage-1:&amp; \  
+\mathcal{L}_{H T}\left(\mathbf{W}_{\text {Guided }},
+\mathbf{W}_{\mathbf{r}}\right)=\frac{1}{2}\left\|u_{h}\left(\mathbf{x} ;
+\mathbf{W}_{\mathbf{H i n t}}\right)-r\left(v_{g}\left(\mathbf{x} ;
+\mathbf{W}_{\mathbf{G u i d e d}}\right) ;
+\mathbf{W}_{\mathbf{r}}\right)\right\|^{2} \\
+stage-2:&amp; \
+\mathcal{L}_{K
+D}\left(\mathbf{W}_{\mathbf{S}}\right)=\mathcal{H}\left(\mathbf{y}_{\text
+{true }}, \mathrm{P}_{\mathrm{S}}\right)+\lambda
+\mathcal{H}\left(\mathrm{P}_{\mathrm{T}}^{\tau},
+\mathrm{P}_{\mathrm{S}}^{\tau}\right)
+\]</span></p>
+<h3 id="attention-maps">Attention Maps</h3>
+<blockquote>
+<ul>
+<li>将注意力作为知识在不同网路之间转移的机制</li>
+<li>提出了activation-based 和 gradient-based 的特征空间注意力映射。</li>
+</ul>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='true'
+        data-ci='ff344aadf12b27b1b89e'
+        data-cs='f52347d027bfae073c0c4dcf016d54363b8f1957'
+        data-r='wenqi-wang20.github.io'
+        data-o='wenqi-wang20'
+        data-a='wenqi-wang20'
+        data-d='true'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

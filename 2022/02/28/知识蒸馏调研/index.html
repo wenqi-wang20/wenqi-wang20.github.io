@@ -230,6 +230,75 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302224431
 <li>可以克服有效数据不足的缺点</li>
 <li>KD也可以用来压缩GAN</li>
 </ul></li>
+<li><p>多教师模型</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303141151.png" /></p>
+<ul>
+<li>简单平均来自每一个教师的logits或者feature</li>
+<li>整合两种</li>
+<li>重生网络：t步的学生是t+1步学生的老师</li>
+<li>多教师模型的扩展可以用于知识适应领域，并且保护数据隐私安全</li>
+<li>如何有效的整合来自不同教师之间的知识？</li>
+</ul></li>
+<li><p>跨模态知识蒸馏</p>
+<ul>
+<li>using pair-wise relationship like RGB videos and skeleton-based
+human sequence</li>
+<li>总结来说，就是将知识从一种模态转化为另一种模态的知识蒸馏，在视觉领域应用良好</li>
+<li><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303142552.png" /></li>
+</ul></li>
+<li><p>基于图的知识蒸馏</p>
+<ul>
+<li>研究数据之间的关系，而不是仅仅将数据样本里的知识传递给学生（relation-based）</li>
+<li>一种是使用图作为教师知识传播的载体，另一种是使用图来作为教师传递信息的方式
+（比如利用有向图来表达多模态之间的关系）</li>
+<li><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303143808.png" /></li>
+</ul></li>
+<li><p>无数据知识蒸馏（Data-Free）</p>
+<ul>
+<li><p>处于数据隐私或者是安全性、政策性的考虑</p></li>
+<li><p>数据由GAN生成</p></li>
+<li><p>通过教师网络的激活层传递数据</p></li>
+<li><p>提出了深度反演deepinversion</p></li>
+<li><p>zero-shot few-shot</p></li>
+<li><p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303152330.png" /></p></li>
+<li><p>主要还是利用预先训练的教师模型的特征层表示来生成新的数据进行训练</p></li>
+</ul></li>
+<li><p>量化知识蒸馏</p>
+<ul>
+<li><p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303153009.png" /></p></li>
+<li><p>网络量化通过降低网络精度（如32位，降低到8位），减少了神经网络计算的复杂度</p></li>
+</ul></li>
+<li><p>终身知识蒸馏</p>
+<ul>
+<li>类似于人类的终身学习</li>
+<li>知识蒸馏提供一种有效的方法来保留和转移所学到的知识</li>
+</ul></li>
+<li><p>NAS-based 基于神经结构搜索的知识蒸馏</p>
+<ul>
+<li>自动识别深度神经网络，并且自适应地学习神经网络的结构
+<ul>
+<li>在TGSA模型中，每一步神经网络的搜索步骤都用来模拟教师网络的中间特征表示。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="section6-comparison">Section6 Comparison</h2>
+<h2 id="section7-application">Section7 Application</h2>
+<ul>
+<li>CV领域</li>
+<li>NLP领域</li>
+</ul>
+<h2 id="section8-futures">Section8 Futures</h2>
+<p>四种压缩模型的方法，是否可以融合？</p>
+<ul>
+<li>parameter pruning and sharing</li>
+<li>low-rank factorization</li>
+<li>transferred compact convolutional fifilters</li>
+<li>knowledge distillation</li>
 </ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->

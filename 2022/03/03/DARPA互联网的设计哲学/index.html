@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DARPA互联网的设计哲学 - Drenched in my pain.</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="这篇文章的题目非常好理解，\(The \ Design
+\  Philosophy \ of \ the \ DARPA \ Internet \
+Protocols\)，直译过来的意思就是关于DA,"> 
+    <meta name="author" content="vinci"> 
+    <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
+    <link rel="icon" href="/img/my_favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <link rel="stylesheet" href="/js/prism/prism.css">
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Drenched in my pain.</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">DARPA互联网的设计哲学</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">DARPA互联网的设计哲学</h1>
+        <div class="stuff">
+            <span>三月 03, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/" rel="tag">计算机网络原理</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>这篇文章的题目非常好理解，<span class="math inline">\(The \ Design
+\  Philosophy \ of \ the \ DARPA \ Internet \
+Protocols\)</span>，直译过来的意思就是关于DARPA互联网的设计哲学。作者是被称为两位互联网之父的其中一位：David
+Clark。但是很有意思的是，如果现在在网上只是单独搜索这个名字，热度已经远远消弭。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303203326.png"
+alt="在百度引擎上搜索David Clark" />
+<figcaption aria-hidden="true">在百度引擎上搜索David Clark</figcaption>
+</figure>
+<p>但是很多人不知道的是，三十年来全世界人民使用的互联网以及它所赖以存在的结构基础，与这位伟大的计算机科学家有着密不可分的联系。</p>
+<p>首先完整阅读整篇文章下来，我承认对于其中技术性的细节，以及一些专有的名词，其实是没办法掌握的。但是我依然被作者严谨的学术态度和条分缕析的陈列事实所打动，深刻地感知到了计算机科学的严谨性、适用性以及迷人的魅力。</p>
+<p>TCP/IP协议是DARPA于1973开始设计和开发的，最开始在军事领域使用，后来发展为商业化的互联网络。IP协议被正式标准化为RFC791在1981年，TCP协议被正式标准化为RFC793也是1981年。就像该文所说，有时候很难判断，是什么动力或者原因导致协议被设计为这个样子，也就是协议为什么是这样。</p>
+<p>在文章的介绍看来，我理解的他们所设计的互联网的基础架构就是，<strong>一个包交换的网络设备，使用一系列被称作为网关（gateways）的包交换处理器，并且连接不同的网络，执行存储并且转发数据包的算法。</strong></p>
+<p>接下来，文章描述了为了建立有效的互联，必须要进行怎么样的定义。作者按照他们的重要程度进行了下面的排序：</p>
+<ol type="1">
+<li>如果网络有丢包或者网关故障，网络通信还可以继续可用。</li>
+<li>互联网必须支持多种通讯设备。</li>
+<li>互联网的架构必须可以承载在不同结构的网络之上。</li>
+<li>互联网的架构必须允许资源的分布式管理。</li>
+<li>互联网的成本必须是可以接受的。</li>
+<li>互联网必须降低主机的接入成本。</li>
+<li>互联网中使用的资源必须是有限数量。</li>
+</ol>
+<p>就像文章中自己所说的那样，为什么这七条数据会按照这样的顺序排列呢？：“上面的顺序是重要的，因为这表示了网络的设计宗旨。如果顺序不一样，那么可能设计出来的网络就不是现在这个样子的了。这涉及到网络设计中的取舍和折中问题。比如说这个网络因为是被设计为军事领域，因为系统可用性就是最重要的；而如果是商业网络，那么网络资源数量，部署成本就是重要的考量了。本质来说，上述目标就是网络设计的顶层需求，但是需求是有优先级的，只有最重要的特性满足了，低优先级的特性才被加以考虑。”</p>
+<p>然后作者讨论服务类型对于网络设计的影响。并且摒弃了所谓的简单的copy的分布式发送，因为这样会导致互联网处理故障的能力有一定的上限，进而提出了“fate-sharing”的方法。</p>
+<p>紧接着，作者讨论了服务类型对于互联网设计的影响，同时指出了TCP协议无法很好地支持XNET和实时的演讲，同时这也直接导致了UDP协议的出现。</p>
+<p>进而，作者讨论了剩下的四条准则中出现的各种技术性的问题以及为什么会导致这样的协议准则的出现。最后连接提到了报文协议和TCP协议，列举了设计TCP协议背后的设计原因。</p>
+<p>这篇文章最令我打动的一点就是作者从设计的驱动和需求的方面来考虑为什么我们要设计互联网，以及我们的互联网为什么会变成今天这个样子。这是很多当今的设计者和科研工作者都缺少的思考，很多时候，在阐述一个新技术的产生的时候，我们需要去深度地探讨为什么会产生这门技术，现实需求对于设计的规则有着怎样的影响，我想，只有想清楚了这些问题，也许技术的进步才能变得更快更深刻。</p>
+<p>最后提到一个非常有意思的现象，在本世纪前叶提出了这样的一个问题：能否重新评估现行的网络架构，尤其是现在的网络架构对于很多电子商务、文件共享。</p>
+<blockquote>
+<p>Clark说“现在的系统已经僵化。每一次网络应用的进步都是递进式的，新的应用越来越难在旧应用上添加功能。”所以，设计出新的网络架构是非常必要的。</p>
+<p>但也有专家对目前是否有必要考虑设计新网络架构持怀疑态度。例如同样享有“互联网之父”的Robert
+Kahn就表示目前的架构能够满足应用需求。</p>
+</blockquote>
+<p>这让我有了一个更深的认识：<strong>没有最优秀的技术，只有不断进步的技术。</strong></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='true'
+        data-ci='ff344aadf12b27b1b89e'
+        data-cs='f52347d027bfae073c0c4dcf016d54363b8f1957'
+        data-r='wenqi-wang20.github.io'
+        data-o='wenqi-wang20'
+        data-a='wenqi-wang20'
+        data-d='true'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

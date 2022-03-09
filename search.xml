@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Cocos Creator使用心得（一）</title>
-    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
-]]></content>
-      <categories>
-        <category>游戏引擎</category>
-      </categories>
-      <tags>
-        <tag>Cocos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DLG的代码实现</title>
     <url>/2022/02/05/DLG%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<p>上一章我们简单地说明了<span class="math inline">\(Deep \ Leakage \
@@ -44,6 +32,65 @@ imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话�
       </categories>
       <tags>
         <tag>梯度泄漏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DARPA互联网的设计哲学</title>
+    <url>/2022/03/03/DARPA%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6/</url>
+    <content><![CDATA[<p>这篇文章的题目非常好理解，<span class="math inline">\(The \ Design
+\  Philosophy \ of \ the \ DARPA \ Internet \
+Protocols\)</span>，直译过来的意思就是关于DARPA互联网的设计哲学。作者是被称为两位互联网之父的其中一位：David
+Clark。但是很有意思的是，如果现在在网上只是单独搜索这个名字，热度已经远远消弭。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303203326.png"
+alt="在百度引擎上搜索David Clark" />
+<figcaption aria-hidden="true">在百度引擎上搜索David Clark</figcaption>
+</figure>
+<p>但是很多人不知道的是，三十年来全世界人民使用的互联网以及它所赖以存在的结构基础，与这位伟大的计算机科学家有着密不可分的联系。</p>
+<p>首先完整阅读整篇文章下来，我承认对于其中技术性的细节，以及一些专有的名词，其实是没办法掌握的。但是我依然被作者严谨的学术态度和条分缕析的陈列事实所打动，深刻地感知到了计算机科学的严谨性、适用性以及迷人的魅力。</p>
+<p>TCP/IP协议是DARPA于1973开始设计和开发的，最开始在军事领域使用，后来发展为商业化的互联网络。IP协议被正式标准化为RFC791在1981年，TCP协议被正式标准化为RFC793也是1981年。就像该文所说，有时候很难判断，是什么动力或者原因导致协议被设计为这个样子，也就是协议为什么是这样。</p>
+<p>在文章的介绍看来，我理解的他们所设计的互联网的基础架构就是，<strong>一个包交换的网络设备，使用一系列被称作为网关（gateways）的包交换处理器，并且连接不同的网络，执行存储并且转发数据包的算法。</strong></p>
+<p>接下来，文章描述了为了建立有效的互联，必须要进行怎么样的定义。作者按照他们的重要程度进行了下面的排序：</p>
+<ol type="1">
+<li>如果网络有丢包或者网关故障，网络通信还可以继续可用。</li>
+<li>互联网必须支持多种通讯设备。</li>
+<li>互联网的架构必须可以承载在不同结构的网络之上。</li>
+<li>互联网的架构必须允许资源的分布式管理。</li>
+<li>互联网的成本必须是可以接受的。</li>
+<li>互联网必须降低主机的接入成本。</li>
+<li>互联网中使用的资源必须是有限数量。</li>
+</ol>
+<p>就像文章中自己所说的那样，为什么这七条数据会按照这样的顺序排列呢？：“上面的顺序是重要的，因为这表示了网络的设计宗旨。如果顺序不一样，那么可能设计出来的网络就不是现在这个样子的了。这涉及到网络设计中的取舍和折中问题。比如说这个网络因为是被设计为军事领域，因为系统可用性就是最重要的；而如果是商业网络，那么网络资源数量，部署成本就是重要的考量了。本质来说，上述目标就是网络设计的顶层需求，但是需求是有优先级的，只有最重要的特性满足了，低优先级的特性才被加以考虑。”</p>
+<p>然后作者讨论服务类型对于网络设计的影响。并且摒弃了所谓的简单的copy的分布式发送，因为这样会导致互联网处理故障的能力有一定的上限，进而提出了“fate-sharing”的方法。</p>
+<p>紧接着，作者讨论了服务类型对于互联网设计的影响，同时指出了TCP协议无法很好地支持XNET和实时的演讲，同时这也直接导致了UDP协议的出现。</p>
+<p>进而，作者讨论了剩下的四条准则中出现的各种技术性的问题以及为什么会导致这样的协议准则的出现。最后连接提到了报文协议和TCP协议，列举了设计TCP协议背后的设计原因。</p>
+<p>这篇文章最令我打动的一点就是作者从设计的驱动和需求的方面来考虑为什么我们要设计互联网，以及我们的互联网为什么会变成今天这个样子。这是很多当今的设计者和科研工作者都缺少的思考，很多时候，在阐述一个新技术的产生的时候，我们需要去深度地探讨为什么会产生这门技术，现实需求对于设计的规则有着怎样的影响，我想，只有想清楚了这些问题，也许技术的进步才能变得更快更深刻。</p>
+<p>最后提到一个非常有意思的现象，在本世纪前叶提出了这样的一个问题：能否重新评估现行的网络架构，尤其是现在的网络架构对于很多电子商务、文件共享。</p>
+<blockquote>
+<p>Clark说“现在的系统已经僵化。每一次网络应用的进步都是递进式的，新的应用越来越难在旧应用上添加功能。”所以，设计出新的网络架构是非常必要的。</p>
+<p>但也有专家对目前是否有必要考虑设计新网络架构持怀疑态度。例如同样享有“互联网之父”的Robert
+Kahn就表示目前的架构能够满足应用需求。</p>
+</blockquote>
+<p>这让我有了一个更深的认识：<strong>没有最优秀的技术，只有不断进步的技术。</strong></p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机网络原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cocos Creator使用心得（一）</title>
+    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
+]]></content>
+      <categories>
+        <category>游戏引擎</category>
+      </categories>
+      <tags>
+        <tag>Cocos</tag>
       </tags>
   </entry>
   <entry>
@@ -238,40 +285,6 @@ class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类�
       </tags>
   </entry>
   <entry>
-    <title>YML配置文件使用小结（二）</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2
-id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
-<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
-<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
-<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
-读入YAML文件并且对其进行修改</h2>
-<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
-<ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
-</ul>
-<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
-]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
-      <tags>
-        <tag>YML</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>gitignore不生效问题</title>
     <url>/2022/02/17/gitignore%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>因为年前换了两台电脑，需要在不同的地方管理我的hexo博客，所以我采取了git存储一份source资源，两边每次都需要先拉取云端资源，再做本地更新，然后再deploy到hexo分支。因为有些步骤是重复的，所以我就写了一个脚本，短短的几句话：</p>
@@ -340,6 +353,21 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333
       </categories>
       <tags>
         <tag>Pycharm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wireshark抓包实验</title>
+    <url>/2022/03/05/wireshark%E6%8A%93%E5%8C%85%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082106.png" /></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082250.png" /></p>
+]]></content>
+      <categories>
+        <category>实验报告</category>
+      </categories>
+      <tags>
+        <tag>计算机网络原理</tag>
       </tags>
   </entry>
   <entry>
@@ -547,6 +575,77 @@ class="math inline">\(n_{k}\)</span>个样例，</p>
       </tags>
   </entry>
   <entry>
+    <title>knowledge in distillation</title>
+    <url>/2022/03/06/knowledge-in-distillation/</url>
+    <content><![CDATA[<p>今天这一篇我们主要介绍三种基于不同知识的知识蒸馏方法的技术概括。</p>
+<h2 id="response-based-knowledge">Response-based knowledge</h2>
+<p>这也是最常见，最容易理解的知识蒸馏： <span class="math display">\[
+q_{i}=\frac{\exp \left(z_{i} / T\right)}{\sum_{j} \exp \left(z_{j} /
+T\right)}
+\]</span>
+神经网络通常使用softmax层来揭示分类任务的预测概率，我们可以改变蒸馏温度<span
+class="math inline">\(T\)</span>，然后使得概率分布更加的平滑化。紧接着小模型可以模拟大模型在同一个数据集上的softmax输出的概率表现，同时结合hard-labels给出的预测误差，来共同训练一个更小、更容易部署的student
+model。下面分别是蒸馏损失和student模型预测的交叉熵损失，训练损失是二者的线性组合：
+<span class="math display">\[
+L_{\operatorname{Res} D}\left(p\left(z_{t}, T\right), p\left(z_{s},
+T\right)\right)=\mathcal{L}_{R}\left(p\left(z_{t}, T\right),
+p\left(z_{s}, T\right)\right) \\
+\mathcal{L}_{C E}\left(y, p\left(z_{s}, T=1\right)\right) \\
+\mathcal{L} = \alpha \mathcal{L}_{R} + \beta \mathcal{L}_{CE}
+\]</span> <img
+src="/Users/wangwenqi/Library/Application%20Support/typora-user-images/image-20220306151204550.png"
+alt="image-20220306151204550" /></p>
+<h2 id="feature-based-knowledge">Feature-based Knowledge</h2>
+<p>在训练student
+model，尤其是更深更窄的神经网络上，加入中间特征层的引导有时候能够起到很好的效果。</p>
+<h3 id="fitnet">FitNet</h3>
+<p>核心的思想是：</p>
+<blockquote>
+<p>We introduce <em>intermediate-level hints</em> from the teacher
+hidden layers to guide the training process of the student,
+<em>i.e.</em>, we want the student network (FitNet) to learn an
+intermediate representation that is predictive of the intermediate
+representations of the teacher network.</p>
+</blockquote>
+<p>FitNet的目的是为了加强KD的学习，训练一个更深、更窄的学生网络模型，因为更深的模型往往具有更好的非线性，在做出决策时往往有更好的表现。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220307232850.png" /></p>
+<blockquote>
+<ul>
+<li><p>主要分为两个部分，第一部分是利用训练好的教师模型对student模型的中间层参数进行正则化处理，是一个预训练的过程</p></li>
+<li><p>第二部分是对于整个student model的KD训练</p></li>
+</ul>
+</blockquote>
+<p><span class="math display">\[
+stage-1:&amp; \  
+\mathcal{L}_{H T}\left(\mathbf{W}_{\text {Guided }},
+\mathbf{W}_{\mathbf{r}}\right)=\frac{1}{2}\left\|u_{h}\left(\mathbf{x} ;
+\mathbf{W}_{\mathbf{H i n t}}\right)-r\left(v_{g}\left(\mathbf{x} ;
+\mathbf{W}_{\mathbf{G u i d e d}}\right) ;
+\mathbf{W}_{\mathbf{r}}\right)\right\|^{2} \\
+stage-2:&amp; \
+\mathcal{L}_{K
+D}\left(\mathbf{W}_{\mathbf{S}}\right)=\mathcal{H}\left(\mathbf{y}_{\text
+{true }}, \mathrm{P}_{\mathrm{S}}\right)+\lambda
+\mathcal{H}\left(\mathrm{P}_{\mathrm{T}}^{\tau},
+\mathrm{P}_{\mathrm{S}}^{\tau}\right)
+\]</span></p>
+<h3 id="attention-maps">Attention Maps</h3>
+<blockquote>
+<ul>
+<li>将注意力作为知识在不同网路之间转移的机制</li>
+<li>提出了activation-based 和 gradient-based 的特征空间注意力映射。</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>联邦学习，知识蒸馏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于高效同态加密的Cross-silo联邦学习</title>
     <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="background">Background</h2>
@@ -716,6 +815,40 @@ style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友
       </tags>
   </entry>
   <entry>
+    <title>YML配置文件使用小结（二）</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
+<h2
+id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
+<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
+<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
+<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
+<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
+读入YAML文件并且对其进行修改</h2>
+<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<ul>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
+</ul>
+<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>YML</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>庄子笔记（一）</title>
     <url>/2022/02/22/%E5%BA%84%E5%AD%90%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<p>“取法其上，得乎其中；取法其中，得乎其下。”所以读书一定要读最好的书，最好的书就是经典。<strong>因为他们关心的通常是永恒的问题。</strong></p>
@@ -777,6 +910,23 @@ style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友
 <p>旋立旋破，随说随扫。知小而不自小，知大而不自大。要永远不能以自己为中心。</p>
 <p>庄子逍遥吗？符合自己的志向生活着，就是一种逍遥。</p>
 <p>无待，乘正御变。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活，庄子</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>庄子（四）-养生主</title>
+    <url>/2022/03/04/%E5%BA%84%E5%AD%90%EF%BC%88%E5%9B%9B%EF%BC%89-%E5%85%BB%E7%94%9F%E4%B8%BB/</url>
+    <content><![CDATA[<p>关于庄子的养生主，我有几个问题：</p>
+<ul>
+<li>首先，庖丁解牛这个故事是怎么样体现所谓的“养生”的道理的？我的理解可能是庖丁用刀的故事，事实上体现出了庄子思想并不是完全的“无为”，而是本着事物自然的发展规律而“为”？</li>
+<li>养生主为什么最后又加了一段“指穷于为薪，
+火传也，不知其尽也”这句话？因为从语境来看，似乎与前文所提到的“养生之道”没有什么关系。</li>
+</ul>
 ]]></content>
       <categories>
         <category>读书笔记</category>
@@ -1112,6 +1262,75 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302224431
 <li>可以克服有效数据不足的缺点</li>
 <li>KD也可以用来压缩GAN</li>
 </ul></li>
+<li><p>多教师模型</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303141151.png" /></p>
+<ul>
+<li>简单平均来自每一个教师的logits或者feature</li>
+<li>整合两种</li>
+<li>重生网络：t步的学生是t+1步学生的老师</li>
+<li>多教师模型的扩展可以用于知识适应领域，并且保护数据隐私安全</li>
+<li>如何有效的整合来自不同教师之间的知识？</li>
+</ul></li>
+<li><p>跨模态知识蒸馏</p>
+<ul>
+<li>using pair-wise relationship like RGB videos and skeleton-based
+human sequence</li>
+<li>总结来说，就是将知识从一种模态转化为另一种模态的知识蒸馏，在视觉领域应用良好</li>
+<li><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303142552.png" /></li>
+</ul></li>
+<li><p>基于图的知识蒸馏</p>
+<ul>
+<li>研究数据之间的关系，而不是仅仅将数据样本里的知识传递给学生（relation-based）</li>
+<li>一种是使用图作为教师知识传播的载体，另一种是使用图来作为教师传递信息的方式
+（比如利用有向图来表达多模态之间的关系）</li>
+<li><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303143808.png" /></li>
+</ul></li>
+<li><p>无数据知识蒸馏（Data-Free）</p>
+<ul>
+<li><p>处于数据隐私或者是安全性、政策性的考虑</p></li>
+<li><p>数据由GAN生成</p></li>
+<li><p>通过教师网络的激活层传递数据</p></li>
+<li><p>提出了深度反演deepinversion</p></li>
+<li><p>zero-shot few-shot</p></li>
+<li><p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303152330.png" /></p></li>
+<li><p>主要还是利用预先训练的教师模型的特征层表示来生成新的数据进行训练</p></li>
+</ul></li>
+<li><p>量化知识蒸馏</p>
+<ul>
+<li><p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220303153009.png" /></p></li>
+<li><p>网络量化通过降低网络精度（如32位，降低到8位），减少了神经网络计算的复杂度</p></li>
+</ul></li>
+<li><p>终身知识蒸馏</p>
+<ul>
+<li>类似于人类的终身学习</li>
+<li>知识蒸馏提供一种有效的方法来保留和转移所学到的知识</li>
+</ul></li>
+<li><p>NAS-based 基于神经结构搜索的知识蒸馏</p>
+<ul>
+<li>自动识别深度神经网络，并且自适应地学习神经网络的结构
+<ul>
+<li>在TGSA模型中，每一步神经网络的搜索步骤都用来模拟教师网络的中间特征表示。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="section6-comparison">Section6 Comparison</h2>
+<h2 id="section7-application">Section7 Application</h2>
+<ul>
+<li>CV领域</li>
+<li>NLP领域</li>
+</ul>
+<h2 id="section8-futures">Section8 Futures</h2>
+<p>四种压缩模型的方法，是否可以融合？</p>
+<ul>
+<li>parameter pruning and sharing</li>
+<li>low-rank factorization</li>
+<li>transferred compact convolutional fifilters</li>
+<li>knowledge distillation</li>
 </ul>
 ]]></content>
       <categories>
@@ -1119,6 +1338,81 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302224431
       </categories>
       <tags>
         <tag>联邦学习，知识蒸馏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软工</title>
+    <url>/2022/03/01/%E8%BD%AF%E5%B7%A5/</url>
+    <content><![CDATA[<p>华为需求跟踪系统</p>
+<ul>
+<li>对开发过程进行分配和跟踪</li>
+<li>JIRA</li>
+</ul>
+<p>特性卡片系统</p>
+<ul>
+<li>制作特性卡片</li>
+<li>提取关键词</li>
+<li>Redis</li>
+</ul>
+<p>新人培训系统Bootcamp</p>
+<ul>
+<li>简洁高效地管理新人培训</li>
+<li>导师制，一名新人分配一名导师</li>
+<li>管理员 - HRDP - 导师 - 新人</li>
+<li>纯Web端应用</li>
+</ul>
+<p>AI图像修复</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>颜色基础、图像模型、Phong光照模型</title>
+    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
+<h2 id="颜色模型">颜色模型</h2>
+<p>RGB模型</p>
+<p>CMY模型（是RGB的补色，或者说减色模型）</p>
+<p>HSV模型（hue色调 Saturation饱和度 Value of
+brightness亮度），使用圆锥来表示颜色。</p>
+<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
+<h2 id="像素">像素</h2>
+<h2 id="三角网格模型">三角网格模型</h2>
+<p>欧式空间中的三维顶点</p>
+<p>三角面片的法向量，朝外的法向量
+：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
+<h2 id="光照模型">光照模型</h2>
+<ul>
+<li>局部光照明</li>
+<li>全局光照明</li>
+</ul>
+<h2 id="phong模型">Phong模型</h2>
+<p>所有的游戏软件都会用的模型。</p>
+<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
+<ul>
+<li><p>漫反射效果 <span
+class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
+<li><p>镜面反射效果 <span
+class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
+<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
+</ul>
+<h4 id="明暗处理">明暗处理</h4>
+<p>#### 视点变换和视点对象</p>
+<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
+<ul>
+<li>刚体变换</li>
+<li>相似变换</li>
+<li>线性变换</li>
+<li>仿射变换</li>
+<li>投影变换</li>
+</ul>
+<h2 id="光栅图形学">光栅图形学</h2>
+]]></content>
+      <categories>
+        <category>Computer-Graphics</category>
+      </categories>
+      <tags>
+        <tag>Phong模型</tag>
       </tags>
   </entry>
   <entry>
@@ -1264,57 +1558,6 @@ Learning</a>是需要优先阅读的。进度先记录到这里。</p>
       </categories>
       <tags>
         <tag>Federated Learning</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>颜色基础、图像模型、Phong光照模型</title>
-    <url>/2022/01/12/%E9%A2%9C%E8%89%B2%E5%9F%BA%E7%A1%80%E3%80%81%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9E%8B%E3%80%81Phong%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>谁能够抵御花里胡哨的图片的诱惑呢（划去）……尽管之前一直听到行内人有这样一种说法说的额是计算机图形学“已死”，影射的意思大约是时至如今，图形学的发展已然相当完备，后人已经很难有大的“坑”可以填埋或者是优化进步的空间了。</p>
-<h2 id="颜色模型">颜色模型</h2>
-<p>RGB模型</p>
-<p>CMY模型（是RGB的补色，或者说减色模型）</p>
-<p>HSV模型（hue色调 Saturation饱和度 Value of
-brightness亮度），使用圆锥来表示颜色。</p>
-<p>CIE XYZ色彩空间，使用RGB基的线性变换。</p>
-<h2 id="像素">像素</h2>
-<h2 id="三角网格模型">三角网格模型</h2>
-<p>欧式空间中的三维顶点</p>
-<p>三角面片的法向量，朝外的法向量
-：顶点处法向量有两种加权方法，一种是面积加权平均，一种是角度加权平均。</p>
-<h2 id="光照模型">光照模型</h2>
-<ul>
-<li>局部光照明</li>
-<li>全局光照明</li>
-</ul>
-<h2 id="phong模型">Phong模型</h2>
-<p>所有的游戏软件都会用的模型。</p>
-<p>是一种简化的局部光照模型，效果分解为三个效果：</p>
-<ul>
-<li><p>漫反射效果 <span
-class="math inline">\(I_d=I_iK_d*(L·N)\)</span></p></li>
-<li><p>镜面反射效果 <span
-class="math inline">\(I_s=I_iK_s*(R·V)\)</span></p></li>
-<li><p>环境光效果 <span class="math inline">\(I_a=I_iK_a\)</span></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220113002810.png" /></p></li>
-</ul>
-<h4 id="明暗处理">明暗处理</h4>
-<p>#### 视点变换和视点对象</p>
-<p>快速地进行图形的变换，<strong>不变，平移，旋转，均衡缩放</strong>，变换之间也可以相互复合和嵌套。简单变换都是可逆的。</p>
-<ul>
-<li>刚体变换</li>
-<li>相似变换</li>
-<li>线性变换</li>
-<li>仿射变换</li>
-<li>投影变换</li>
-</ul>
-<h2 id="光栅图形学">光栅图形学</h2>
-]]></content>
-      <categories>
-        <category>Computer-Graphics</category>
-      </categories>
-      <tags>
-        <tag>Phong模型</tag>
       </tags>
   </entry>
 </search>
