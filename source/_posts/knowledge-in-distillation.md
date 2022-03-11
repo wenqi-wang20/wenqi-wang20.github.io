@@ -25,7 +25,7 @@ $$
 
 在训练student model，尤其是更深更窄的神经网络上，加入中间特征层的引导有时候能够起到很好的效果。
 
-### FitNet
+### FitNet(hint layers)
 
 核心的思想是：
 
@@ -46,7 +46,49 @@ stage-2:& \
 \mathcal{L}_{K D}\left(\mathbf{W}_{\mathbf{S}}\right)=\mathcal{H}\left(\mathbf{y}_{\text {true }}, \mathrm{P}_{\mathrm{S}}\right)+\lambda \mathcal{H}\left(\mathrm{P}_{\mathrm{T}}^{\tau}, \mathrm{P}_{\mathrm{S}}^{\tau}\right)
 $$
 
-### Attention Maps
+### Attention Maps (multi-layer group)
 
 > - 将注意力作为知识在不同网路之间转移的机制
 > - 提出了activation-based 和 gradient-based 的特征空间注意力映射。
+
+#### activation-based attention
+
+卷积神经网络的激活张量$A \in R^{C \times H \times W}$，含义是C张包括大小为$H \times W$的特征平面，同时我们可以利用以下的映射来帮助我们“压缩”到一个平面上
+$$
+\mathcal{F}: R^{C \times H \times W} \rightarrow R^{H \times W}
+$$
+![](https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220311150304.png)
+
+可以用以下几种方式来产生activation-based 的注意力映射
+
+- $F_{\operatorname{sum}}(A)=\sum_{i=1}^{C}\left|A_{i}\right|$
+- $F_{\text {sum }}^{p}(A)=\sum_{i=1}^{C}\left|A_{i}\right|^{p}$，对激活程度更高的某些神经元所在的空间位置给予更多的权重
+- $F_{\max }^{p}(A)=\max _{i=1, C}\left|A_{i}\right|^{p}$，每次仅仅携带单个激活程度最好的神经元
+
+我们可以挑选教师模型和学生模型特定的residual block之后的输出层作为注意力映射匹配的pair:
+$$
+\mathcal{L}_{A T}=\mathcal{L}\left(\mathbf{W}_{S}, x\right)+\frac{\beta}{2} \sum_{j \in \mathcal{I}}\left\|\frac{Q_{S}^{j}}{\left\|Q_{S}^{j}\right\|_{2}}-\frac{Q_{T}^{j}}{\left\|Q_{T}^{j}\right\|_{2}}\right\|_{p}
+$$
+上面是定义的损失函数，其中Q代表的是注意力映射函数的向量化表示，p是范数，通常采用l-2范数进行归一化。
+
+#### Gradient-based Attention
+
+简而言之就是可以看成为一个输入敏感性映射，在某些空间位置的attention的意思就是代表这个空间位置的输入的微小改变能够带来结果上的很大变化，也就是需要**特别关注的地方**。
+
+我们先定义教师和学生网络关于输入的梯度：
+$$
+J_{S}=\frac{\partial}{\partial x} \mathcal{L}\left(\mathbf{W}_{\mathbf{S}}, x\right), J_{T}=\frac{\partial}{\partial x} \mathcal{L}\left(\mathbf{W}_{\mathbf{T}}, x\right)
+$$
+然后再定义优化函数，也就是需要让学生网络靠近教师网络关注的目标：
+$$
+\mathcal{L}_{A T}\left(\mathbf{W}_{\mathbf{S}}, \mathbf{W}_{\mathbf{T}}, x\right)=\mathcal{L}\left(\mathbf{W}_{\mathbf{S}}, x\right)+\frac{\beta}{2}\left\|J_{S}-J_{T}\right\|_{2}
+$$
+
+### Activation Boundaries (Pre-ReLU)
+
+这篇文章主要想做的就是在学生网络开始训练之前就将教师有关神经元的相关信息转移到学生模型上。之前的损失函数都是基于神经元的响应的均方差损失，但是这些损失都是建立在强响应上的，但是神经元的决策边界通常是介于零响应和无响应的
+$$
+\mathcal{L}(\boldsymbol{I})=\|\sigma(\mathcal{T}(\boldsymbol{I}))-\sigma(\mathcal{S}(\boldsymbol{I}))\|_{2}^{2}
+$$
+
+
