@@ -19,7 +19,7 @@ L_{\operatorname{Res} D}\left(p\left(z_{t}, T\right), p\left(z_{s}, T\right)\rig
 \mathcal{L}_{C E}\left(y, p\left(z_{s}, T=1\right)\right) \\
 \mathcal{L} = \alpha \mathcal{L}_{R} + \beta \mathcal{L}_{CE}
 $$
-![image-20220306151204550](/Users/wangwenqi/Library/Application Support/typora-user-images/image-20220306151204550.png)
+![](https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313000242.png)
 
 ## Feature-based Knowledge
 
