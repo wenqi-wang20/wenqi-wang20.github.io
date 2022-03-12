@@ -164,7 +164,54 @@ x\right)+\frac{\beta}{2}\left\|J_{S}-J_{T}\right\|_{2}
 <p>这篇文章主要想做的就是在学生网络开始训练之前就将教师有关神经元的相关信息转移到学生模型上。之前的损失函数都是基于神经元的响应的均方差损失，但是这些损失都是建立在强响应上的，但是神经元的决策边界通常是介于零响应和无响应的
 <span class="math display">\[
 \mathcal{L}(\boldsymbol{I})=\|\sigma(\mathcal{T}(\boldsymbol{I}))-\sigma(\mathcal{S}(\boldsymbol{I}))\|_{2}^{2}
-\]</span></p>
+\]</span> <img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220311162135.png" /></p>
+<p>所以他们定义了一种元素级别的激活指标函数来表示，并且给出了离散形式的损失函数
+<span class="math display">\[
+\rho(x)=\left\{\begin{array}{ll}
+1, &amp; \text { if } x&gt;0 \\
+0, &amp; \text { otherwise }
+\end{array}\right. \\
+\mathcal{L}(\boldsymbol{I})=\|\rho(\mathcal{T}(\boldsymbol{I}))-\rho(\mathcal{S}(\boldsymbol{I}))\|_{1}
+\]</span>
+为了使得这种损失可以被梯度下降的方法进行优化，作者采取了在支持向量机里用到的一种损失：hingle
+loss，并且给出了在不同的情况下，损失函数求导的结果： <span
+class="math display">\[
+\mathcal{L}(\boldsymbol{I})=\| \rho(\mathcal{T}(\boldsymbol{I})) \odot
+\sigma(\mu \mathbf{1}-\mathcal{S}(\boldsymbol{I}))
++(\mathbf{1}-\rho(\mathcal{T}(\boldsymbol{I}))) \odot \sigma(\mu
+\mathbf{1}+\mathcal{S}(\boldsymbol{I})) \|_{2}^{2} \\
+-\frac{\partial \mathcal{L}(\boldsymbol{I})}{\partial
+s_{i}}=\left\{\begin{array}{ll}
+2\left(s_{i}-\mu\right), &amp; \text { if } \rho\left(t_{i}\right)=1
+\text { and } s_{i}&lt;\mu \\
+-2\left(s_{i}+\mu\right), &amp; \text { if } \rho\left(t_{i}\right)=0
+\text { and } s_{i}&gt;-\mu \\
+0, &amp; \text { otherwise. }
+\end{array}\right.
+\]</span>
+以上方法是建立在老师和学生模型的神经元数量完全一致的情况下。当我们
+考虑到模型压缩的时候，老师和学生模型的结构就会产生差别，所以一般会使用一个全连接层或者是批处理规范化层。定义一连接器的功能将学生的response的大小转化为和老师一样的respense向量的大小。</p>
+<h2 id="relation-based-knowledge">Relation-based Knowledge</h2>
+<p>之前的方法主要关注的都是单个数据本身能够体现的知识，并且利用教师模型中某些特定层的输出。我们可以考虑基于relation的知识，这种关系有两种来源：来自不同层之间的关系，以及来自不同样本数据之间的关系。</p>
+<h3 id="singular-value-decomposition-in-kd-between-layers">Singular
+Value Decomposition in KD (between layers)</h3>
+<ul>
+<li>用奇异值分解的方法对特征信息进行降维，并且通过一个RBF函数来描述特征映射函数之间的关系，也就是通常的核学习（kernalize
+learning）</li>
+<li>采用自监督的方法，自己产生标签。这可以解决知识遗忘问题，并且提供更有力的正则化手段。</li>
+</ul>
+<p>方法没怎么看懂</p>
+<h3 id="information-flow-model.-between-data-samples">Information Flow
+Model. (between data samples)</h3>
+<p>这个方法对于教师模型的不同层之间的信息流进行建模。</p>
+<p>实验表明，在训练的早期，会形成神经元之间的关键连接道路，经过了这几轮训练之后，信息可塑性就会下降，事实上学生模型能够从教师模型那里学到的知识就会变得有限。那么文章提出了一种可能性，就是在模型训练的不同阶段，使用不同强度的监督。具体来说，采用以下的方法：</p>
+<ul>
+<li>设计辅助教师模型（size和学生模型差不多）来帮助在教师模型和学生模型之间建立一对一的、有效的匹配</li>
+<li>在关键学习路径上模仿教师模型的信息流</li>
+</ul>
+<p>需要用到核函数（<span class="math inline">\(Kernal \
+Function\)</span>），待研究。</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
