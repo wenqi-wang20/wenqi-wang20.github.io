@@ -90,5 +90,51 @@ $$
 $$
 \mathcal{L}(\boldsymbol{I})=\|\sigma(\mathcal{T}(\boldsymbol{I}))-\sigma(\mathcal{S}(\boldsymbol{I}))\|_{2}^{2}
 $$
+![](https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220311162135.png)
+
+所以他们定义了一种元素级别的激活指标函数来表示，并且给出了离散形式的损失函数
+$$
+\rho(x)=\left\{\begin{array}{ll}
+1, & \text { if } x>0 \\
+0, & \text { otherwise }
+\end{array}\right. \\
+\mathcal{L}(\boldsymbol{I})=\|\rho(\mathcal{T}(\boldsymbol{I}))-\rho(\mathcal{S}(\boldsymbol{I}))\|_{1}
+$$
+为了使得这种损失可以被梯度下降的方法进行优化，作者采取了在支持向量机里用到的一种损失：hingle loss，并且给出了在不同的情况下，损失函数求导的结果：
+$$
+\mathcal{L}(\boldsymbol{I})=\| \rho(\mathcal{T}(\boldsymbol{I})) \odot \sigma(\mu \mathbf{1}-\mathcal{S}(\boldsymbol{I})) 
++(\mathbf{1}-\rho(\mathcal{T}(\boldsymbol{I}))) \odot \sigma(\mu \mathbf{1}+\mathcal{S}(\boldsymbol{I})) \|_{2}^{2} \\
+-\frac{\partial \mathcal{L}(\boldsymbol{I})}{\partial s_{i}}=\left\{\begin{array}{ll}
+2\left(s_{i}-\mu\right), & \text { if } \rho\left(t_{i}\right)=1 \text { and } s_{i}<\mu \\
+-2\left(s_{i}+\mu\right), & \text { if } \rho\left(t_{i}\right)=0 \text { and } s_{i}>-\mu \\
+0, & \text { otherwise. }
+\end{array}\right.
+$$
+以上方法是建立在老师和学生模型的神经元数量完全一致的情况下。当我们 考虑到模型压缩的时候，老师和学生模型的结构就会产生差别，所以一般会使用一个全连接层或者是批处理规范化层。定义一连接器的功能将学生的response的大小转化为和老师一样的respense向量的大小。
+
+
+
+## Relation-based Knowledge
+
+之前的方法主要关注的都是单个数据本身能够体现的知识，并且利用教师模型中某些特定层的输出。我们可以考虑基于relation的知识，这种关系有两种来源：来自不同层之间的关系，以及来自不同样本数据之间的关系。
+
+### Singular Value Decomposition in KD (between layers)
+
+- 用奇异值分解的方法对特征信息进行降维，并且通过一个RBF函数来描述特征映射函数之间的关系，也就是通常的核学习（kernalize learning）
+- 采用自监督的方法，自己产生标签。这可以解决知识遗忘问题，并且提供更有力的正则化手段。
+
+方法没怎么看懂
+
+### Information Flow Model. (between data samples)
+
+这个方法对于教师模型的不同层之间的信息流进行建模。
+
+实验表明，在训练的早期，会形成神经元之间的关键连接道路，经过了这几轮训练之后，信息可塑性就会下降，事实上学生模型能够从教师模型那里学到的知识就会变得有限。那么文章提出了一种可能性，就是在模型训练的不同阶段，使用不同强度的监督。具体来说，采用以下的方法：
+
+- 设计辅助教师模型（size和学生模型差不多）来帮助在教师模型和学生模型之间建立一对一的、有效的匹配
+- 在关键学习路径上模仿教师模型的信息流
+
+需要用到核函数（$Kernal \ Function$），待研究。
+
 
 
