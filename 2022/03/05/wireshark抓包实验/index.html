@@ -10,9 +10,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="
+    <meta name="description" content="抓包实验一
 
-"> 
+
+
+观察上述抓包过程可以得知，涉及到39.156.66.14(www.baidu.com)的ping功能采取的都是\(ICMP \ protocol\)。
+主机host会先向远程服务器,"> 
     <meta name="author" content="vinci"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -57,10 +60,38 @@
 
         </div>
         <div class="content markdown">
-            <p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082106.png" /></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082250.png" /></p>
+            <h2 id="抓包实验一">抓包实验一</h2>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082106.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082250.png" style="zoom: 25%;" /></p>
+<ol type="1">
+<li>观察上述抓包过程可以得知，涉及到39.156.66.14(www.baidu.com)的ping功能采取的都是<span
+class="math inline">\(ICMP \ protocol\)</span>。</li>
+<li>主机host会先向远程服务器发送一个request请求，并且携带时间戳；然后服务器返回一个response的事件，这样就可以计算出ping的延时。</li>
+</ol>
+<h2 id="抓包实验二">抓包实验二</h2>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313215119.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221113.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221143.png" style="zoom:25%;" /></p>
+<ol type="1">
+<li>我们观察发现，抓取中国政府网(http://www.gov.cn/)的数据是可以从中直接看到html网页源代码内容的。</li>
+<li>抓取清华首页(https://www.tsinghua.edu.cn/)的数据得到的是乱码，无法获取html网页源代码的内容。</li>
+</ol>
+<h2 id="抓包实验三">抓包实验三</h2>
+<p><img src="/Users/wangwenqi/Library/Application Support/typora-user-images/image-20220313224114381.png" alt="image-20220313224114381" style="zoom:25%;" /></p>
+<p>我们首先关闭foxmail的ssl安全连接，然后登陆tsinghu邮箱，然后开启wireshark进行抓包。紧接着我们开启smtp过滤，这样就可以专注地看到和邮件收发相关的信息。紧接着我们看到user，password以及发送邮箱的from和to以及内容都可以看见，只不过是经过<strong>base64加密后的数据</strong>。</p>
+<ol type="1">
+<li>可以看见发送邮件的收发方以及发送内容等等信息。</li>
+<li>我们可以直接使用在线的base64解码器获取user的密码信息，可见不加ssl安全验证证书的连接是极其不安全的。</li>
+</ol>
+<h2 id="协议分层结构">协议分层结构</h2>
+<p>ICMP协议：</p>
+<p>ICMP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt; 物理层</p>
+<p>http协议：</p>
+<p>HTTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame 数据帧 -&gt;
+物理层</p>
+<p>邮件协议（SMTP协议）:</p>
+<p>SMTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt;
+物理层</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
