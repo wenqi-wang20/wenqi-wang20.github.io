@@ -1,40 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Cocos Creator使用心得（一）</title>
-    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
-]]></content>
-      <categories>
-        <category>游戏引擎</category>
-      </categories>
-      <tags>
-        <tag>Cocos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/11/01/Delphi/</url>
-    <content><![CDATA[<h2 id="introduction">Introduction</h2>
-<ul>
-<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。
-提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。
-<img
-src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70"
-alt="在这里插入图片描述" /></li>
-</ul>
-<h2 id="tech">Tech</h2>
-<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。
-本篇论文的优化：
-线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。
-非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。
-然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。
-把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。
-<img src="https://img-blog.csdnimg.cn/20201230144547607.png"
-alt="在这里插入图片描述" /></p>
-]]></content>
-  </entry>
-  <entry>
     <title>DARPA互联网的设计哲学</title>
     <url>/2022/03/03/DARPA%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6/</url>
     <content><![CDATA[<p>这篇文章的题目非常好理解，<span class="math inline">\(The \ Design
@@ -116,6 +82,79 @@ imput\)</span>的loss足够的小，这样才能顺利地收敛，不然的话�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/11/01/Delphi/</url>
+    <content><![CDATA[<h2 id="introduction">Introduction</h2>
+<ul>
+<li>Delphi是一个实现安全推理的框架，使用各种混合协议提高了安全推理的效率和通信量。
+提出了安全推理的使用场景，即家庭监控系统。客户不希望泄露自己的隐私，服务器不希望泄露自己的模型，因此可以把模型部署在云上，同过密码协议和客户交互实现安全的推理。然而这种安全推理的技术距离实际应用还有一段的距离。因为它需要复杂的计算和高通信量。即使是当前最先进的安全推理协议Gazelle运行在ResNet-32上也要用82s，560MB的通信量。
+<img
+src="https://img-blog.csdnimg.cn/20201229134010937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTA4NDE0,size_16,color_FFFFFF,t_70"
+alt="在这里插入图片描述" /></li>
+</ul>
+<h2 id="tech">Tech</h2>
+<p>这篇论文相对于Gazelle主要减少了在线阶段的计算消耗，提高了整体的效率。其是在Gazelle的基础上发展而来的。Gazelle使用LHE同态加密技术计算线性层，使用GC混淆电路计算，还描述了如何有效的使用秘密分享技术在这两个协议之间转换。
+本篇论文的优化：
+线性层：为了降低线性运算的在线计算成本，将LHE密文上的复杂的密码运算移到预处理阶段。服务器上的模型是已经知道的，因此，可以使用LHE在预处理过程中创建模型的秘密共享，然后用户输入数据后，所有的操作都可以使用秘密共享完成，而不是复杂的密码学计算，而且也不需要相互作用来进行矩阵向量相乘。这种技术的好处有两方面。首先，在线阶段只需要传输秘密共享而不是密文，这立即导致线性层在线通信减少8倍。第二，由于在线阶段只对素数域的元素进行计算，并且我们的系统使用具体的32位素数来实现这一目的，该系统可以利用最先进的CPU和GPU库来计算线性层。
+非线性层：Gazelle使用的Relu协议是使用GC实现的，GC的开销仍然是比较大的。Delphi框架采用了多项式近似的方案。由于这些协议在每次乘法运算中只需要传输少量恒定数目的字段元素，使用二次近似可以显著减少每次激活层的通信开销，而不需要引入额外的通信轮数。同样，由于底层的乘法协议只需要少量廉价的有限域操作，计算成本也减少了几个数量级。具体来说，在线通信和安全计算二次近似的计算成本分别比相应的GC混淆电路的成本小192×和10000×。
+然而，这种近似不可避免的会产生训练上的误差，已经证明，这种误差可能导致训练精度快速下降还可能使训练时间快速增加。为了克服这个问题，作者开发了一个混合密码协议，同时使用ReLU协议和二次近似协议达到较好的精度和较好的效率。
+把这两种协议混在一起使用，必然要考虑的是何时使用Relu何时使用二次近似。作者设计一个计划器，自动的把某些Relu以二次近似替代，以便使精度仍然保持在阈值之上。计划器采用的技术是NAS（神经网络搜索）和超参数优化。神经网络架构搜索（NAS）是自动机器学习里面一个热门的研究领域。它致力于自动寻找自动神经网络架构。
+<img src="https://img-blog.csdnimg.cn/20201230144547607.png"
+alt="在这里插入图片描述" /></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Cocos Creator使用心得（一）</title>
+    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
+]]></content>
+      <categories>
+        <category>游戏引擎</category>
+      </categories>
+      <tags>
+        <tag>Cocos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Django配置中的一系列问题</title>
+    <url>/2022/03/02/Django%E9%85%8D%E7%BD%AE%E4%B8%AD%E7%9A%84%E4%B8%80%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="pycharm">pycharm</h2>
+<p>这两天在配置Django的时候，又遇到了关于pycharm配置虚拟环境的问题。</p>
+<p>整体来说，我们需要看下面这一张图，这是关于项目配置信息的：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194058.png" /></p>
+<p>我们可以看到“工具”-“终端”里面有shell的路径，一般来说，我们的shell都是会默认使用系统base的路径。这会导致在pycharm自带的终端下进行操作会使用环境变量的包（当然这些都是windows上面的问题，上述图片是mac的，不过意思大致相同）</p>
+<p>有两种方法：</p>
+<ul>
+<li>第一种是在shell路径的后面 +
+<code>/k + "虚拟环境路径中的activate脚本"</code></li>
+<li>第二种方法是去到venv文件夹里，手动执行activate，然后再回来看，就发现终端已经变成虚拟环境了</li>
+</ul>
+<p>就像这样：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194942.png" /></p>
+<h2 id="git">git</h2>
+<p>最近学到了一些新的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --graph</span><br></pre></td></tr></table></figure>
+<p>这个基本上可以展示当前仓库里所有的分支提交和合并的记录，以图片的形式展示。</p>
+<p>比较麻烦的主要是CI/CD的部署。</p>
+<p>CI/CD，我的理解就是，能够在提前配置好任务的情况下，在你push代码到云端的时候，在一个指定的container里面跑你的测试。</p>
+<p>总体来说就是分为三步：</p>
+<ul>
+<li>配置Dockerfile，用来指定容器的规模。</li>
+<li>配置.gitlab-ci.yaml，用来指定要完成的任务。</li>
+<li>配置gitlab-runner，用来配置容器。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>Pycharm</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MIPS汇编语言（一）</title>
     <url>/2021/11/16/MIPS%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h3 id="mips汇编语言入门">MIPS汇编语言入门</h3>
@@ -187,45 +226,6 @@ registers!</strong></li>
       </tags>
   </entry>
   <entry>
-    <title>Django配置中的一系列问题</title>
-    <url>/2022/03/02/Django%E9%85%8D%E7%BD%AE%E4%B8%AD%E7%9A%84%E4%B8%80%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="pycharm">pycharm</h2>
-<p>这两天在配置Django的时候，又遇到了关于pycharm配置虚拟环境的问题。</p>
-<p>整体来说，我们需要看下面这一张图，这是关于项目配置信息的：</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194058.png" /></p>
-<p>我们可以看到“工具”-“终端”里面有shell的路径，一般来说，我们的shell都是会默认使用系统base的路径。这会导致在pycharm自带的终端下进行操作会使用环境变量的包（当然这些都是windows上面的问题，上述图片是mac的，不过意思大致相同）</p>
-<p>有两种方法：</p>
-<ul>
-<li>第一种是在shell路径的后面 +
-<code>/k + "虚拟环境路径中的activate脚本"</code></li>
-<li>第二种方法是去到venv文件夹里，手动执行activate，然后再回来看，就发现终端已经变成虚拟环境了</li>
-</ul>
-<p>就像这样：</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194942.png" /></p>
-<h2 id="git">git</h2>
-<p>最近学到了一些新的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --graph</span><br></pre></td></tr></table></figure>
-<p>这个基本上可以展示当前仓库里所有的分支提交和合并的记录，以图片的形式展示。</p>
-<p>比较麻烦的主要是CI/CD的部署。</p>
-<p>CI/CD，我的理解就是，能够在提前配置好任务的情况下，在你push代码到云端的时候，在一个指定的container里面跑你的测试。</p>
-<p>总体来说就是分为三步：</p>
-<ul>
-<li>配置Dockerfile，用来指定容器的规模。</li>
-<li>配置.gitlab-ci.yaml，用来指定要完成的任务。</li>
-<li>配置gitlab-runner，用来配置容器。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
-      <tags>
-        <tag>Pycharm</tag>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Machine Learning</title>
     <url>/2021/11/16/Machine-Learning/</url>
     <content><![CDATA[<h3 id="初识深度学习">初识深度学习</h3>
@@ -285,37 +285,6 @@ class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类�
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/09/01/hello-world/</url>
-    <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
-<p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
-<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>YML配置文件使用小结（二）</title>
     <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
@@ -350,6 +319,37 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/09/01/hello-world/</url>
+    <content><![CDATA[<h2 id="新起点的标志">新起点的标志。</h2>
+<p>很久以前就听说了hexo部署博客。最近在我的身上发生了很多足以改变我的思想和生活态度的事情。再加上学习与生活的领域不断地深入。也许我开始需要一个兼具情感和理性的工具来记录自己的内心，记录人生这颗树上的片片落叶。</p>
+<p>下面是hexo原有的部署教程，恰好作为我的第一篇博客的内容，就不再加以修改了。祝大家好运。</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>gitignore不生效问题</title>
     <url>/2022/02/17/gitignore%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>因为年前换了两台电脑，需要在不同的地方管理我的hexo博客，所以我采取了git存储一份source资源，两边每次都需要先拉取云端资源，再做本地更新，然后再deploy到hexo分支。因为有些步骤是重复的，所以我就写了一个脚本，短短的几句话：</p>
@@ -360,6 +360,76 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220
 ]]></content>
       <tags>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pycharm 环境变量问题</title>
+    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
+desktop虚拟机。</p>
+<blockquote>
+<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+</blockquote>
+<p>言归正传，我遇到的问题如下：</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
+<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>的错误。实在是让我很破防。</p>
+<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
+<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
+<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
+]]></content>
+      <categories>
+        <category>Ubuntu</category>
+      </categories>
+      <tags>
+        <tag>Pycharm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wireshark抓包实验</title>
+    <url>/2022/03/05/wireshark%E6%8A%93%E5%8C%85%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<h2 id="抓包实验一">抓包实验一</h2>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082106.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082250.png" style="zoom: 25%;" /></p>
+<ol type="1">
+<li>观察上述抓包过程可以得知，涉及到39.156.66.14(www.baidu.com)的ping功能采取的都是<span
+class="math inline">\(ICMP \ protocol\)</span>。</li>
+<li>主机host会先向远程服务器发送一个request请求，并且携带时间戳；然后服务器返回一个response的事件，这样就可以计算出ping的延时。</li>
+</ol>
+<h2 id="抓包实验二">抓包实验二</h2>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313215119.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221113.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221143.png" style="zoom:25%;" /></p>
+<ol type="1">
+<li>我们观察发现，抓取中国政府网(http://www.gov.cn/)的数据是可以从中直接看到html网页源代码内容的。</li>
+<li>抓取清华首页(https://www.tsinghua.edu.cn/)的数据得到的是乱码，无法获取html网页源代码的内容。</li>
+</ol>
+<h2 id="抓包实验三">抓包实验三</h2>
+<p><img src="/Users/wangwenqi/Library/Application Support/typora-user-images/image-20220313224114381.png" alt="image-20220313224114381" style="zoom:25%;" /></p>
+<p>我们首先关闭foxmail的ssl安全连接，然后登陆tsinghu邮箱，然后开启wireshark进行抓包。紧接着我们开启smtp过滤，这样就可以专注地看到和邮件收发相关的信息。紧接着我们看到user，password以及发送邮箱的from和to以及内容都可以看见，只不过是经过<strong>base64加密后的数据</strong>。</p>
+<ol type="1">
+<li>可以看见发送邮件的收发方以及发送内容等等信息。</li>
+<li>我们可以直接使用在线的base64解码器获取user的密码信息，可见不加ssl安全验证证书的连接是极其不安全的。</li>
+</ol>
+<h2 id="协议分层结构">协议分层结构</h2>
+<p>ICMP协议：</p>
+<p>ICMP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt; 物理层</p>
+<p>http协议：</p>
+<p>HTTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame 数据帧 -&gt;
+物理层</p>
+<p>邮件协议（SMTP协议）:</p>
+<p>SMTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt;
+物理层</p>
+]]></content>
+      <categories>
+        <category>实验报告</category>
+      </categories>
+      <tags>
+        <tag>计算机网络原理</tag>
       </tags>
   </entry>
   <entry>
@@ -527,242 +597,30 @@ Function\)</span>），待研究。</p>
       </tags>
   </entry>
   <entry>
-    <title>pycharm 环境变量问题</title>
-    <url>/2022/02/16/pycharm-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel
-desktop虚拟机。</p>
-<blockquote>
-<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
-</blockquote>
-<p>言归正传，我遇到的问题如下：</p>
+    <title>《解放思想》一文读后感</title>
+    <url>/2022/04/12/%E3%80%8A%E8%A7%A3%E6%94%BE%E6%80%9D%E6%83%B3%E3%80%8B%E4%B8%80%E6%96%87%E8%AF%BB%E5%90%8E%E6%84%9F/</url>
+    <content><![CDATA[<h4
+id="这篇文章是毛概课的读书笔记要求的是从矛盾论新民主主义论解放思想实事求是团结一致向前看以及最新的历史决议这四篇文章中选择一篇进行读书笔记我选择的是邓小平同志的解放思想简称一文不仅因为语言简单而且深切要害读来感觉毫无架子之感有很深的共鸣下面是全文仅供记录">这篇文章是毛概课的读书笔记，要求的是从《矛盾论》《新民主主义论》《解放思想，实事求是，团结一致向前看》以及最新的历史决议这四篇文章中选择一篇进行读书笔记。我选择的是邓小平同志的《解放思想》（简称）一文，不仅因为语言简单，而且深切要害，读来感觉毫无架子之感，有很深的共鸣。下面是全文，仅供记录。</h4>
+<p>当通读了这四篇文章的时候，给我的第一感受就是：毛泽东同志的文章恢弘大气、思维跳跃但是逻辑严谨，最新的历史决议文章庄重肃穆，对于许多问题和历史的定义都力求准确，落笔谨慎。而邓小平同志的文章则较为平易近人，读起来很有一种亲切的感觉。如果用字体来表示的话，这三者的文章分别就像是：行草、宋体和楷体。</p>
+<p>1978年12月13日下午，中央工作会议第四次全体会议举行。而就在这次会议中，邓小平同志发表了一次总结讲话。这次总结讲话经过了几番变更，并且由邓小平同志亲自参与了修改，最终成型为了现在著名的《解放思想，实事求是，团结一致向前看》这篇文章。从这里就可以看出，这篇文章对于当时的全党内外、乃至全国上下，都有着非常重要的影响。</p>
+<p>首先简单地回顾一下这次讲话的内容，同时捋清楚整个讲话的逻辑结构——到底产生了哪些伟大的思想、有什么值得我们学习的地方。这篇讲话分成了四个部分。第一部分告诉我们：解放思想是当前的一个重大的政治问题。这也是第一次将“解放思想”这一要求上升到了政治的高度。因为长期的历史原因，当时党内的很多同志的思想都并不是非常解放，深受“四人帮”大搞禁区禁令、制造迷信之害。导致民主集中制遭到破坏、制度上是非功过不清、赏罚不明、干和不干一个样甚至干了还没有不干的下场好；民众层面上也是因循守旧，不敢创新、不求进步、不愿意接受新的事物。在这种情况下，是没有办法更好地执行马列主义和毛泽东思想的指导，更不要谈“实事求是”地搞好建设和发展。而“实事求是”，恰恰就是无产阶级世界观的基础，是马克思思想的基础。所以“解放思想”和“实事求是”结合，才能鼓励更多人去探索和创新，打破当时的僵局。</p>
+<p>第二个部分讲述了民主是解放思想的重要条件。邓小平同志在这里也勇敢而直接指出了“在过去的相当长的一段时间里，民主集中制没有真正实行。”在这里，邓小平同志突出强调了改革开放新时期加强民主生活的重要性，不仅仅发扬经济民主，有计划地下放经济权力、充分调动国家、地方、企业和劳动者个人四个方面的生产积极性，更提出了民主制度化和法律化的思想。这其实从根本上指明了中国特色社会主义民主政治建设的方向。这说明，从“十年文革”的浩劫中，党中央意识到了过去法律制度的极度不完善，甚至往往把领导人说过的话当成是法，这是不利于整个社会的思想解放和生产力发展的。</p>
+<p>第三个部分讲述了对于处理历史遗留问题的态度。苏联五十年代全面否定斯大林，造成了苏共和苏联社会以及东欧社会主义国家的思想混乱和社会动荡。邓小平同志充分吸取了经验教训，以客观和实事求是的态度评价无产阶级政党领袖人物，完整和正确地理解和发扬毛泽东思想的科学原理，及时扼杀了当时党内外出现的许多“非毛化”的趋势，避免了我们党重蹈覆辙，也为后来新一代党的领导人在毛泽东思想的旗帜下团结全国人民开辟中国特色社会主义奠定了基础。</p>
+<p>第四部分强调了研究新情况、解决新问题，其实是为改革开放提供了科学方法论的指导。这一部分也是最能够体现出邓小平同志长远的战略眼光之处。很多经典的理论，例如“允许一部分人生活先好起来”，克服官僚主义，加强责任制，都是出自这一部分。同时，报告的最后，邓小平同志也满怀信心地展望了美好的未来，提出了建设现代化的社会主义强国的美好愿景，催人奋进。</p>
+<p>纵观整篇文章，我们经常说到一个词叫做“不破不立”，而《解放思想》（代指文章标题）这篇文章则非常准确地切中了要害，不仅“破”除了建国以来社会主义建设探索过程中，主要是“十年文革浩劫”里留下的思想毒瘤，也为全党全社会树“立”了一个方向——我们未来的路到底该怎么走？是否要坚持马列主义和毛泽东思想？邓小平同志都给出了科学的解答。</p>
+<p>但是，其实这篇文章给予我最大的震撼就是，他浅显而又直白地讲述了一个道理：要解放思想，要多听听群众的声音。历朝历代、或者是存在于世界上的各种政治形态存在的历史，都几乎无法避免国家的治理沦为一两个人或者是一小支队伍的手中。无产阶级的胜利靠的是什么？靠的就是紧密联系群众。新中国的建立，打败帝国主义侵略者和资产阶级反动派靠的也是紧密联系群众。</p>
+<p>“一个革命政党，就怕听不到人的声音，最可怕的是鸦雀无声。”可以说，我认为，真正让这场讲话以及后来的改革开放获得举世瞩目的成就就在于邓小平同志重新拉回了民主制度和群众路线的方针。一个国家的人民需要的不是“愚民”政策一样的洗脑，也不是社会舆论和新闻媒体的不切实际的宣传，人们支持一个政府、一项政策是因为他在为人民“发声”；就像我们迎接社会主义市场经济和中国特色社会主义道路是因为它们与人民的生活需求相契合。所以，走进人民群众中去，听取群众的声音，抛弃“条条框框”真正为群众着想，这才是我认为的这篇讲话带给党和人民群众最宝贵的启示。</p>
+<h3 id="每日一图">每日一图</h3>
+<p><strong>淡淡微红色不深，依依偏得似春心。</strong></p>
+<p>紫荆公寓前的海棠树，在月光下格外可人。</p>
 <p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
-<p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>的错误。实在是让我很破防。</p>
-<p>后来我听取网友的建议，在右下角python解释器设置里，添加了解释器路径。在控制台里输出<code>sys.path</code>发现也可以找到当前项目路径。但是在终端里就是不行。鉴于需要添加的文件太多，我总不能每次都在文件前面加入</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append()</span><br></pre></td></tr></table></figure>
-<p>我也activate了虚拟环境，仍然出现这种情况，说明系统对于解释器设置的环境变量不认账。所以我决定以逸待劳，直接设置全局的<code>PYTHONPATH</code>，把项目目录包括到python的搜索路径里面。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PYTHONPATH</span></span><br></pre></td></tr></table></figure>
-<p>果然什么都没有。于是我在pycharm添加了用户环境变量，重启IDE，发现就可以运行了。这样就可以在venv中直接使用了。</p>
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220412001312.png" /></p>
 ]]></content>
       <categories>
-        <category>Ubuntu</category>
+        <category>读书笔记</category>
       </categories>
       <tags>
-        <tag>Pycharm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>wireshark抓包实验</title>
-    <url>/2022/03/05/wireshark%E6%8A%93%E5%8C%85%E5%AE%9E%E9%AA%8C/</url>
-    <content><![CDATA[<h2 id="抓包实验一">抓包实验一</h2>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082106.png" style="zoom:25%;" /></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082250.png" style="zoom: 25%;" /></p>
-<ol type="1">
-<li>观察上述抓包过程可以得知，涉及到39.156.66.14(www.baidu.com)的ping功能采取的都是<span
-class="math inline">\(ICMP \ protocol\)</span>。</li>
-<li>主机host会先向远程服务器发送一个request请求，并且携带时间戳；然后服务器返回一个response的事件，这样就可以计算出ping的延时。</li>
-</ol>
-<h2 id="抓包实验二">抓包实验二</h2>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313215119.png" style="zoom:25%;" /></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221113.png" style="zoom:25%;" /></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221143.png" style="zoom:25%;" /></p>
-<ol type="1">
-<li>我们观察发现，抓取中国政府网(http://www.gov.cn/)的数据是可以从中直接看到html网页源代码内容的。</li>
-<li>抓取清华首页(https://www.tsinghua.edu.cn/)的数据得到的是乱码，无法获取html网页源代码的内容。</li>
-</ol>
-<h2 id="抓包实验三">抓包实验三</h2>
-<p><img src="/Users/wangwenqi/Library/Application Support/typora-user-images/image-20220313224114381.png" alt="image-20220313224114381" style="zoom:25%;" /></p>
-<p>我们首先关闭foxmail的ssl安全连接，然后登陆tsinghu邮箱，然后开启wireshark进行抓包。紧接着我们开启smtp过滤，这样就可以专注地看到和邮件收发相关的信息。紧接着我们看到user，password以及发送邮箱的from和to以及内容都可以看见，只不过是经过<strong>base64加密后的数据</strong>。</p>
-<ol type="1">
-<li>可以看见发送邮件的收发方以及发送内容等等信息。</li>
-<li>我们可以直接使用在线的base64解码器获取user的密码信息，可见不加ssl安全验证证书的连接是极其不安全的。</li>
-</ol>
-<h2 id="协议分层结构">协议分层结构</h2>
-<p>ICMP协议：</p>
-<p>ICMP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt; 物理层</p>
-<p>http协议：</p>
-<p>HTTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame 数据帧 -&gt;
-物理层</p>
-<p>邮件协议（SMTP协议）:</p>
-<p>SMTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt;
-物理层</p>
-]]></content>
-      <categories>
-        <category>实验报告</category>
-      </categories>
-      <tags>
-        <tag>计算机网络原理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于高效同态加密的Cross-silo联邦学习</title>
-    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="background">Background</h2>
-<blockquote>
-<p>回顾<a
-href="https://www.zhihu.com/search?q=联邦学习&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">联邦学习</a>（federated
-learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a
-href="https://www.zhihu.com/search?q=梯度更新&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a
-href="https://www.zhihu.com/search?q=安全聚合&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">安全聚合</a>（e.g.,
-求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a
-href="https://www.zhihu.com/search?q=同态加密&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">同态加密</a>（Homomorphic
-Encryption，HE）的方案。各种方案各有利弊。
-本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。
-<em>Main Contributions:
-本文主要提出了一种梯度量化的方法，并对量化梯度进行batch
-encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
-</blockquote>
-<figure>
-<img
-src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png"
-alt="image-20211203123128193" />
-<figcaption aria-hidden="true">image-20211203123128193</figcaption>
-</figure>
-<h2 id="process">Process</h2>
-<p>前人的量化方案：将一个 <span class="math inline">\(y \in \left [ -1,
-1
-\right]\)</span>的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
-<p><img
-src="https://www.zhihu.com/equation?tex=Q%28g%29%3D%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D"
-alt="[公式]" /> ，其中 <img
-src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]" /> 是就近<a
-href="https://www.zhihu.com/search?q=取整函数&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">取整函数</a>（rounding
-function）; <img
-src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D%2Bn%5Ccdot+min"
-alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n"
-alt="[公式]" /> 是 <img src="https://www.zhihu.com/equation?tex=n"
-alt="[公式]" /> 个量化梯度之和。</p>
-<p>但是上述量化方法存在一定的问题：</p>
-<blockquote>
-<ol type="1">
-<li>要正确计算 <img
-src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28%5Ccdot%29"
-alt="[公式]" /> ，必须事先预知 <img
-src="https://www.zhihu.com/equation?tex=n" alt="[公式]" />
-。因此，每次加入新的用户，需要手动检验调整 <img
-src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 的取值；</li>
-<li>容易溢出。因为所有的<a
-href="https://www.zhihu.com/search?q=正负梯度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a
-href="https://www.zhihu.com/search?q=累加值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">累加值</a>容易导致溢出；</li>
-<li>不能区分正溢出和负溢出。</li>
-</ol>
-</blockquote>
-<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
-<blockquote>
-<p>\1.
-有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；
-\2. 关于<a
-href="https://www.zhihu.com/search?q=原点对称&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将
-<img src="https://www.zhihu.com/equation?tex=%5B-1%2C1%5D"
-alt="[公式]" /> 量化到 <img
-src="https://www.zhihu.com/equation?tex=%5B-128%2C127%5D"
-alt="[公式]" /> ，那么 <img
-src="https://www.zhihu.com/equation?tex=%28-1%2B1%29%5CRightarrow%28-128%2B127%29%3D-1"
-alt="[公式]" /> ，结果错误； \3. 均匀量化。这是为了保证<a
-href="https://www.zhihu.com/search?q=量化数值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
-</blockquote>
-<p>粗略来说便是将 <img
-src="https://www.zhihu.com/equation?tex=%5B-%5Calpha%2C0%5D"
-alt="[公式]" /> 量化到 <img
-src="https://www.zhihu.com/equation?tex=%5B-%282%5Er-1%29%2C0%5D"
-alt="[公式]" /> ，将 <img
-src="https://www.zhihu.com/equation?tex=%5B0%2C%5Calpha%5D"
-alt="[公式]" />量化到 <img
-src="https://www.zhihu.com/equation?tex=%5B0%2C%282%5Er-1%29%5D"
-alt="[公式]" /> 。；公式化表示如下： <img
-src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q%28g%29%3D+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil%2C+g%5Cin+%5B-%5Calpha%2C0%5D%3B%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor%2C+g+%5Cin+%5B0%2C%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+"
-alt="[公式]" /> ，其中 <img
-src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil"
-alt="[公式]" /> 和 <img
-src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor"
-alt="[公式]" /> 分别是向上取整和向下取整函数； <img
-src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%2F2%5Er"
-alt="[公式]" /> ； 进一步，实用2-bits 表示符号位（<a
-href="https://www.zhihu.com/search?q=sign-bits&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">sign-bits</a>）。如此，
-<img src="https://www.zhihu.com/equation?tex=0" alt="[公式]" />
-便有了两种编码方式。</p>
-<figure>
-<img
-src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png"
-alt="image-20211203132307261" />
-<figcaption aria-hidden="true">image-20211203132307261</figcaption>
-</figure>
-<h2 id="performance">Performance</h2>
-<p>实验的最终表现也是体现出<span
-class="math inline">\(BatchCrypt\)</span>和<span
-class="math inline">\(stock\)</span>相比在通信和计算上都有着很大的提升，但是和<span
-class="math inline">\(Plaintext
-Learning\)</span>相比还是有很大的进步空间。</p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" /></p>
-<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" /></p>
-]]></content>
-      <tags>
-        <tag>联邦学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>年度总结</title>
-    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 88%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>姓名</th>
-<th style="text-align: left;">王文琦</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生活情况</td>
-<td
-style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
-</tr>
-<tr class="even">
-<td>社工情况</td>
-<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
-</tr>
-<tr class="odd">
-<td>文体情况</td>
-<td
-style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
-</tr>
-<tr class="even">
-<td>实践情况</td>
-<td
-style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
-</tr>
-<tr class="odd">
-<td>个人总结</td>
-<td
-style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
-</tr>
-<tr class="even">
-<td>FLAG</td>
-<td
-style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
-1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
-好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
-争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
-争取暑假的时候可以去业界完成一次实习。<br>6.
-争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
-争取明年能和室友一起出去游玩一次…………</td>
-</tr>
-</tbody>
-</table>
-<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
-<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
-<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
-]]></content>
-      <categories>
-        <category>日记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活</tag>
+        <tag>贵系生活， 毛概</tag>
       </tags>
   </entry>
   <entry>
@@ -970,6 +828,175 @@ class="math inline">\(n_{k}\)</span>个样例，</p>
       </tags>
   </entry>
   <entry>
+    <title>基于高效同态加密的Cross-silo联邦学习</title>
+    <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="background">Background</h2>
+<blockquote>
+<p>回顾<a
+href="https://www.zhihu.com/search?q=联邦学习&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">联邦学习</a>（federated
+learning，FL）的发展，目前目前主要有Cross-Silo的模式和Cross-device模式。前者面向机构，后者则是针对终端。其次，也有许多工作研究FL中<a
+href="https://www.zhihu.com/search?q=梯度更新&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">梯度更新</a>带来的隐私泄露。针对隐私泄露，目前主要通过<a
+href="https://www.zhihu.com/search?q=安全聚合&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">安全聚合</a>（e.g.,
+求和/平均）来实现保护隐私的目的。现在主要的安全聚合方案，主要有基于秘密分享、基于成对加性掩码、基于差分隐私，和基于<a
+href="https://www.zhihu.com/search?q=同态加密&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">同态加密</a>（Homomorphic
+Encryption，HE）的方案。各种方案各有利弊。
+本文主要针对Cross-Silo场景下，加速基于HE的安全聚合方案，并减少通信开销。
+<em>Main Contributions:
+本文主要提出了一种梯度量化的方法，并对量化梯度进行batch
+encoding。进一步，在batch encoding的梯度上进行HE 操作。</em></p>
+</blockquote>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203123128193.png"
+alt="image-20211203123128193" />
+<figcaption aria-hidden="true">image-20211203123128193</figcaption>
+</figure>
+<h2 id="process">Process</h2>
+<p>前人的量化方案：将一个 <span class="math inline">\(y \in \left [ -1,
+1
+\right]\)</span>的梯度量化为一个8-Bit的无符号整数，量化函数和解量化函数如下：</p>
+<p><img
+src="https://www.zhihu.com/equation?tex=Q%28g%29%3D%5B255%5Ccdot+%5Cfrac%7Bg-min%7D%7Bmax-min%7D%5D"
+alt="[公式]" /> ，其中 <img
+src="https://www.zhihu.com/equation?tex=%5B%5D" alt="[公式]" /> 是就近<a
+href="https://www.zhihu.com/search?q=取整函数&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">取整函数</a>（rounding
+function）; <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%5Ccdot+%5Cfrac%7Bmax-min%7D%7B255%7D%2Bn%5Ccdot+min"
+alt="[公式]" /> ，其中 <img src="https://www.zhihu.com/equation?tex=q_n"
+alt="[公式]" /> 是 <img src="https://www.zhihu.com/equation?tex=n"
+alt="[公式]" /> 个量化梯度之和。</p>
+<p>但是上述量化方法存在一定的问题：</p>
+<blockquote>
+<ol type="1">
+<li>要正确计算 <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28%5Ccdot%29"
+alt="[公式]" /> ，必须事先预知 <img
+src="https://www.zhihu.com/equation?tex=n" alt="[公式]" />
+。因此，每次加入新的用户，需要手动检验调整 <img
+src="https://www.zhihu.com/equation?tex=n" alt="[公式]" /> 的取值；</li>
+<li>容易溢出。因为所有的<a
+href="https://www.zhihu.com/search?q=正负梯度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">正负梯度</a>都编码为无符号整数，多个用户的<a
+href="https://www.zhihu.com/search?q=累加值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">累加值</a>容易导致溢出；</li>
+<li>不能区分正溢出和负溢出。</li>
+</ol>
+</blockquote>
+<p>本篇文章进行了一定的改善，主要解决了以下几个问题：</p>
+<blockquote>
+<p>\1.
+有符号量化：梯度被量化为有符号的整数，这样一来正负值相互抵消有助于解决溢出问题；
+\2. 关于<a
+href="https://www.zhihu.com/search?q=原点对称&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">原点对称</a>的量化区间：为了保证相反符号数能够正确的抵消，量化区间必须关于原点对称。否则，假设将
+<img src="https://www.zhihu.com/equation?tex=%5B-1%2C1%5D"
+alt="[公式]" /> 量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B-128%2C127%5D"
+alt="[公式]" /> ，那么 <img
+src="https://www.zhihu.com/equation?tex=%28-1%2B1%29%5CRightarrow%28-128%2B127%29%3D-1"
+alt="[公式]" /> ，结果错误； \3. 均匀量化。这是为了保证<a
+href="https://www.zhihu.com/search?q=量化数值&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">量化数值</a>的加同态性质需要满足的性质。</p>
+</blockquote>
+<p>粗略来说便是将 <img
+src="https://www.zhihu.com/equation?tex=%5B-%5Calpha%2C0%5D"
+alt="[公式]" /> 量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B-%282%5Er-1%29%2C0%5D"
+alt="[公式]" /> ，将 <img
+src="https://www.zhihu.com/equation?tex=%5B0%2C%5Calpha%5D"
+alt="[公式]" />量化到 <img
+src="https://www.zhihu.com/equation?tex=%5B0%2C%282%5Er-1%29%5D"
+alt="[公式]" /> 。；公式化表示如下： <img
+src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bequation%7D+Q%28g%29%3D+%5Cbegin%7Bcases%7D+%5Clceil+g%5Ccdot+2%5Er%5Crceil%2C+g%5Cin+%5B-%5Calpha%2C0%5D%3B%5C%5C+%5Clfloor+g%5Ccdot+2%5Er%5Crfloor%2C+g+%5Cin+%5B0%2C%5Calpha%5D+%5Cend%7Bcases%7D+%5Cend%7Bequation%7D+"
+alt="[公式]" /> ，其中 <img
+src="https://www.zhihu.com/equation?tex=%5Clceil+%5Ccdot+%5Crceil"
+alt="[公式]" /> 和 <img
+src="https://www.zhihu.com/equation?tex=%5Clfloor+%5Ccdot%5Crfloor"
+alt="[公式]" /> 分别是向上取整和向下取整函数； <img
+src="https://www.zhihu.com/equation?tex=Q%5E%7B-1%7D%28q_n%29%3Dq_n%2F2%5Er"
+alt="[公式]" /> ； 进一步，实用2-bits 表示符号位（<a
+href="https://www.zhihu.com/search?q=sign-bits&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A326712188%7D">sign-bits</a>）。如此，
+<img src="https://www.zhihu.com/equation?tex=0" alt="[公式]" />
+便有了两种编码方式。</p>
+<figure>
+<img
+src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203132307261.png"
+alt="image-20211203132307261" />
+<figcaption aria-hidden="true">image-20211203132307261</figcaption>
+</figure>
+<h2 id="performance">Performance</h2>
+<p>实验的最终表现也是体现出<span
+class="math inline">\(BatchCrypt\)</span>和<span
+class="math inline">\(stock\)</span>相比在通信和计算上都有着很大的提升，但是和<span
+class="math inline">\(Plaintext
+Learning\)</span>相比还是有很大的进步空间。</p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133101593.png" alt="image-20211203133101593" style="zoom:50%;" /></p>
+<p><img src="C:\Users\19749\AppData\Roaming\Typora\typora-user-images\image-20211203133118275.png" alt="image-20211203133118275" style="zoom:50%;" /></p>
+]]></content>
+      <tags>
+        <tag>联邦学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>年度总结</title>
+    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>姓名</th>
+<th style="text-align: left;">王文琦</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>生活情况</td>
+<td
+style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
+</tr>
+<tr class="even">
+<td>社工情况</td>
+<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
+</tr>
+<tr class="odd">
+<td>文体情况</td>
+<td
+style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
+</tr>
+<tr class="even">
+<td>实践情况</td>
+<td
+style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
+</tr>
+<tr class="odd">
+<td>个人总结</td>
+<td
+style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
+</tr>
+<tr class="even">
+<td>FLAG</td>
+<td
+style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
+1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
+好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
+争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
+争取暑假的时候可以去业界完成一次实习。<br>6.
+争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
+争取明年能和室友一起出去游玩一次…………</td>
+</tr>
+</tbody>
+</table>
+<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
+<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
+<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>庄子笔记（一）</title>
     <url>/2022/02/22/%E5%BA%84%E5%AD%90%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<p>“取法其上，得乎其中；取法其中，得乎其下。”所以读书一定要读最好的书，最好的书就是经典。<strong>因为他们关心的通常是永恒的问题。</strong></p>
@@ -1014,14 +1041,23 @@ class="math inline">\(n_{k}\)</span>个样例，</p>
       </tags>
   </entry>
   <entry>
-    <title>庄子（四）-养生主</title>
-    <url>/2022/03/04/%E5%BA%84%E5%AD%90%EF%BC%88%E5%9B%9B%EF%BC%89-%E5%85%BB%E7%94%9F%E4%B8%BB/</url>
-    <content><![CDATA[<p>关于庄子的养生主，我有几个问题：</p>
-<ul>
-<li>首先，庖丁解牛这个故事是怎么样体现所谓的“养生”的道理的？我的理解可能是庖丁用刀的故事，事实上体现出了庄子思想并不是完全的“无为”，而是本着事物自然的发展规律而“为”？</li>
-<li>养生主为什么最后又加了一段“指穷于为薪，
-火传也，不知其尽也”这句话？因为从语境来看，似乎与前文所提到的“养生之道”没有什么关系。</li>
-</ul>
+    <title>庄子（二） 逍遥游</title>
+    <url>/2022/02/23/%E5%BA%84%E5%AD%90%EF%BC%88%E4%BA%8C%EF%BC%89-%E9%80%8D%E9%81%A5%E6%B8%B8/</url>
+    <content><![CDATA[<p>我有一个问题。</p>
+<p>关于逍遥游的前半部分是我我们高中曾经学过的知识，描绘了“乘天地之正，御六气之辩”的人生的理想境界，要求人与万物为一的状态。这是可以理解的。但是逍遥游的后半段关于惠子和庄子对于“材用”的辩论引起了我的思考。</p>
+<p>“子有大树，患其无用，何不树之于无何有之乡，广莫之野，彷徨乎无为其侧，逍遥乎寝卧其下。不夭斤斧，物无害者，无所可用，安所困苦哉！”这段话无论从什么角度来看，都有一种避世而不入的思想在里面。所谓“物无害者，无所可用，安所困苦哉！”的意思貌似就是告诉惠子，如果一个人在世人的眼中本身就没有什么本领，那么就可以免除世事的困苦，不必奔波劳碌。这是否就是在劝诫人们多为“无用之人”呢？如果天下人人如此，是否会导致进取的思想逐渐消失？</p>
+<p>当然，今天发生了俄罗斯入侵乌克兰的军事活动。当然这其中有非常复杂的历史原因，我今天一整天也都在了解北约以及俄罗斯西部地区历史以来的遗留问题。我看到了一篇评价说的很中肯：国小而不处卑，力少而不畏强，无礼而侮大邻，贪愎而拙交者，可亡也。这句话是韩非子中说的，理解起来也非常地容易。</p>
+<p>三个通用方法来理解经典文献：</p>
+<ol type="1">
+<li>文字训诂和义理辨析相结合</li>
+<li>学思结合</li>
+<li>阅读经典和人生境界相结合</li>
+</ol>
+<p>《庄子》文章的两种模式，先讲寓言，再讲卮言；另外一种是反过来。</p>
+<p>变化。其中变代表量变，化代表质变。</p>
+<p>旋立旋破，随说随扫。知小而不自小，知大而不自大。要永远不能以自己为中心。</p>
+<p>庄子逍遥吗？符合自己的志向生活着，就是一种逍遥。</p>
+<p>无待，乘正御变。</p>
 ]]></content>
       <categories>
         <category>读书笔记</category>
@@ -1047,23 +1083,14 @@ class="math inline">\(n_{k}\)</span>个样例，</p>
       </tags>
   </entry>
   <entry>
-    <title>庄子（二） 逍遥游</title>
-    <url>/2022/02/23/%E5%BA%84%E5%AD%90%EF%BC%88%E4%BA%8C%EF%BC%89-%E9%80%8D%E9%81%A5%E6%B8%B8/</url>
-    <content><![CDATA[<p>我有一个问题。</p>
-<p>关于逍遥游的前半部分是我我们高中曾经学过的知识，描绘了“乘天地之正，御六气之辩”的人生的理想境界，要求人与万物为一的状态。这是可以理解的。但是逍遥游的后半段关于惠子和庄子对于“材用”的辩论引起了我的思考。</p>
-<p>“子有大树，患其无用，何不树之于无何有之乡，广莫之野，彷徨乎无为其侧，逍遥乎寝卧其下。不夭斤斧，物无害者，无所可用，安所困苦哉！”这段话无论从什么角度来看，都有一种避世而不入的思想在里面。所谓“物无害者，无所可用，安所困苦哉！”的意思貌似就是告诉惠子，如果一个人在世人的眼中本身就没有什么本领，那么就可以免除世事的困苦，不必奔波劳碌。这是否就是在劝诫人们多为“无用之人”呢？如果天下人人如此，是否会导致进取的思想逐渐消失？</p>
-<p>当然，今天发生了俄罗斯入侵乌克兰的军事活动。当然这其中有非常复杂的历史原因，我今天一整天也都在了解北约以及俄罗斯西部地区历史以来的遗留问题。我看到了一篇评价说的很中肯：国小而不处卑，力少而不畏强，无礼而侮大邻，贪愎而拙交者，可亡也。这句话是韩非子中说的，理解起来也非常地容易。</p>
-<p>三个通用方法来理解经典文献：</p>
-<ol type="1">
-<li>文字训诂和义理辨析相结合</li>
-<li>学思结合</li>
-<li>阅读经典和人生境界相结合</li>
-</ol>
-<p>《庄子》文章的两种模式，先讲寓言，再讲卮言；另外一种是反过来。</p>
-<p>变化。其中变代表量变，化代表质变。</p>
-<p>旋立旋破，随说随扫。知小而不自小，知大而不自大。要永远不能以自己为中心。</p>
-<p>庄子逍遥吗？符合自己的志向生活着，就是一种逍遥。</p>
-<p>无待，乘正御变。</p>
+    <title>庄子（四）-养生主</title>
+    <url>/2022/03/04/%E5%BA%84%E5%AD%90%EF%BC%88%E5%9B%9B%EF%BC%89-%E5%85%BB%E7%94%9F%E4%B8%BB/</url>
+    <content><![CDATA[<p>关于庄子的养生主，我有几个问题：</p>
+<ul>
+<li>首先，庖丁解牛这个故事是怎么样体现所谓的“养生”的道理的？我的理解可能是庖丁用刀的故事，事实上体现出了庄子思想并不是完全的“无为”，而是本着事物自然的发展规律而“为”？</li>
+<li>养生主为什么最后又加了一段“指穷于为薪，
+火传也，不知其尽也”这句话？因为从语境来看，似乎与前文所提到的“养生之道”没有什么关系。</li>
+</ul>
 ]]></content>
       <categories>
         <category>读书笔记</category>
@@ -1139,6 +1166,90 @@ x&#39;=x+\epsilon·sign[\nabla_xJ(\theta,x,y&#39;)]
       </categories>
       <tags>
         <tag>Adversarial_Attacks</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度神经网络中的梯度泄露问题</title>
+    <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
+<p>过年这几天虽然没少玩，但是也没少反思自己。觉得自己现在的成绩并不是完全没有原因的。尽管对外会说来到了顶级学府，身边多了更多了优秀的伙伴和竞争对手。但是我自己的内心知道，所谓鲶鱼效应，只有竞争才能激发自己的潜能。鄙人不才，但却自认为潜能远远没有开发完全。更多的时候，我因为个人性格的原因，会经常想得很多，喜欢漫无目的地乱走。但大家都知道，<strong>如果以路灯为起点，漫无目的地乱走，最终的期望就是回到终点。</strong>2021一整年对于我来说过得并不是很好。在这个同龄人在不断进步的时代，仿佛逆水行舟，不进则退。</p>
+<p><strong>但是每个人都会经历这样一段经历吧，人生的极小值点</strong>。所以对我来说，接下来的2022年，有一些确定的目标和计划就成为了迫在眉睫的事情。我相信自己的能力，从来都是如此。从科研方向来说，我还是得要在寒假期间，最起码需要了解梯度泄露是怎么回事，并且复现出代码。剩下的我想要看完吴恩达的机器学习课程，并且对于深度学习的花园书有所了解。争取在春季学期进行1-2个论文项目的参与。必须要在大三之前有所收获。</p>
+<p>那么我们就进入正题。</p>
+<h3 id="abstract">Abstract</h3>
+<p>首先作者告诉我们，在分布式训练或者协作训练中，梯度的共享是一件很正常的事。人们通常也很放心地认为梯度并不会泄露分布的训练数据。但是这篇文章用极其大胆的猜想和实验的佐证（包括<span
+class="math inline">\(NLP\)</span>和图像处理的两个实验都得到了非常好的效果）告诉我们梯度共享也有可能会泄露用户数据，并且称之为<span
+class="math inline">\(Deep \ Leakage \ from \
+Gradients\)</span>。并且指出了以梯度剪枝<span
+class="math inline">\((gradients \
+pruning)\)</span>为首的一些防御方法。</p>
+<h3 id="introduction">Introduction</h3>
+<p>首先作者指出，已经有研究表明，梯度的共享会泄露一些<span
+class="math inline">\(properties \ of \ training \ data\)</span>，
+结合<span
+class="math inline">\(GAN\)</span>就可以生成和原图像相似的图片。但是作者给出的<strong><em>DLG</em></strong>方法则声称可以还原完整的数据和标签，甚至不用借助任何其他的生成网络模型。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203225947.png" style="zoom:50%;" /></p>
+<p>作者提出了一种优化算法来完成这一攻击：首先随机生成一种<span
+class="math inline">\(dummy \
+inputs\)</span>，然后通过正常的梯度推导过程生成一个<span
+class="math inline">\(dummy \
+gradients\)</span>，然后<strong>这个算法并不会像一般的优化算法一样去优化模型的权重，而是会优化dummy
+gradients和正常的梯度之间的“距离”，然后修改dummy
+inputs和输入标签，使得我们的伪数据越来越接近真实的数据，最终优化算法结束的时候，就是伪数据和真实数据完全匹配的时候。</strong></p>
+<p>同时，作者还指出<strong>梯度扰动，低精度和梯度压缩三种方法中，尺度大于1e-2的高斯噪声和拉普拉斯噪声有明显的作用，20％的梯度剪枝同样也能起到保护的作用，但是半精度的方法却不起作用。</strong></p>
+<h3 id="related-work">Related Work</h3>
+<p>首先注意到的是，与“深度梯度泄露”相对应的是，浅层的梯度泄露。前人的研究表示从梯度中推断训练数据的信息特征是可能的。例如在语言任务中对训练单词的梯度就可以揭露哪些单词参与了训练集，我们明显可以察觉到，这类泄露是<strong>肤浅的</strong>，并且也没有过多的作用。</p>
+<p>然后作者指出了分布式机器学习中一定会出现的梯度交换问题。并且指出了无论是哪种分布方式，去中心化或者中心化的分布式训练，都有可能存在“深度梯度泄露”的问题。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203224347.png" style="zoom: 50%;" /></p>
+<h3 id="method-experiment">Method &amp; Experiment</h3>
+<p>接下来我们来看看具体的方法。</p>
+<p>首先我们关注传统的分布式学习方法，在第<span
+class="math inline">\(t\)</span>轮训练过程中，第<span
+class="math inline">\(i\)</span>方节点从训练集中选取<span
+class="math inline">\(minibatch(x_{t,i},y_{t,i})\)</span>的数据来计算梯度，迭代的过程如下：
+<span class="math display">\[
+\nabla{ W_{t,i} }=\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})} }
+{\partial{W_t} } \\
+\nabla{W_t}=\frac{1} {N}\sum_{j}^{N} {\nabla{W_{t,j} } } \ ; \ \ \
+W_{t+1}=W_t-\eta \nabla{W_t}
+\]</span> 以中心服务器式分布训练为例，中心服务器会获得<span
+class="math inline">\(k\)</span>方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入。
+<span class="math display">\[
+\nabla{W&#39;} = \frac{\partial{l(F(x&#39;,W),y&#39;)} } {\partial{W} }
+\\\
+x^{&#39;*},y^{&#39;*} = \underset{x&#39;,y&#39;} {argmin}\left \|
+\nabla{W&#39;-\nabla{W} }\right\|^2
+\]</span>
+在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。
+<span class="math display">\[
+x^{&#39;i \ mod \ N}_{t+1} \gets x^{&#39;i \ mod \ N}_{t} -
+\nabla_{x^{&#39;i \ mod \ N}_{t+1} }\mathbb{D} \\\
+y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} -
+\nabla_{y^{&#39;i \ mod \ N}_{t+1} }\mathbb{D}
+\]</span>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" /></p>
+<p>这听起来是一个天方夜谭，但是从实际的实验来看，效果出奇的好，除了个别像素伪影和顺序不同以外，几乎可以完全还原所有的源数据，比前人研究的方法也要明显占优。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205153618.png" style="zoom:50%;" /></p>
+<h3 id="defense-strategy">Defense Strategy</h3>
+<p>如之前的介绍所示，作者给出了三种防御的方法，其中比较有效的就是使用差分隐私<span
+class="math inline">\((Differential \
+Privacy)\)</span>的方法来进行防御。言简意赅的说，就是给梯度加上一定的“扰动”，使得攻击者无法获得准确的梯度信息，也就没办法从梯度中还原准确的源输入。噪声的种类有高斯噪声和拉普拉斯噪声，防御的效果与噪声的种类之间没有特别明显的关系，但是和噪声的扰动尺度有明显的正相关关系。同时，作者也顺便验证了减少梯度精度的方法无法起到有效的防御效果。下面是实验结果的截图：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205163716.png" style="zoom:50%;" /></p>
+<p>值得注意的是，尽管成功达到一定的干扰程度之后能够起到防御作用，但是<span
+class="math inline">\(acc\)</span>率明显下降，已经开始影响收敛效率了。</p>
+<p>最后，作者还指出了“梯度剪枝”<span class="math inline">\((gradients \
+pruning)\)</span>的方法是有效的。经过实验发现，能够让<span
+class="math inline">\(DLG\)</span>还原的原始输入有明显偏差的情况下，修剪率应该在20%以上。但是最新的误差补偿技术和梯度压缩技术可以将梯度压缩300倍的情况下不影响<span
+class="math inline">\(acc\)</span>，远远高于阈值20%。所以可以得知梯度修剪的方法是有效的。</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>针对分布式训练的情况来说，在这篇文章的指出下，我们已经发现，“共享梯度，使得训练数据集留在本地”的做法已经不再安全了。仅仅通过简单的修改输入和标签，来靠近标准梯度的做法，就可以完全地还原源数据，这无异给分布式和协作式学习的模式带来了新的挑战。下一节我会用代码模拟一遍作者的实验，来还原<span
+class="math inline">\(DLG\)</span>攻击。</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>梯度泄露</tag>
       </tags>
   </entry>
   <entry>
@@ -1394,114 +1505,6 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220
       </tags>
   </entry>
   <entry>
-    <title>软工</title>
-    <url>/2022/03/01/%E8%BD%AF%E5%B7%A5/</url>
-    <content><![CDATA[<p>华为需求跟踪系统</p>
-<ul>
-<li>对开发过程进行分配和跟踪</li>
-<li>JIRA</li>
-</ul>
-<p>特性卡片系统</p>
-<ul>
-<li>制作特性卡片</li>
-<li>提取关键词</li>
-<li>Redis</li>
-</ul>
-<p>新人培训系统Bootcamp</p>
-<ul>
-<li>简洁高效地管理新人培训</li>
-<li>导师制，一名新人分配一名导师</li>
-<li>管理员 - HRDP - 导师 - 新人</li>
-<li>纯Web端应用</li>
-</ul>
-<p>AI图像修复</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>深度神经网络中的梯度泄露问题</title>
-    <url>/2022/02/02/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>寒假摸鱼摸久了，才想起来年初是要找学姐交差的，要是再没有进展，估计明年的论文就没戏了。遂起身，爬下床，打开电脑开始看论文。</p>
-<p>过年这几天虽然没少玩，但是也没少反思自己。觉得自己现在的成绩并不是完全没有原因的。尽管对外会说来到了顶级学府，身边多了更多了优秀的伙伴和竞争对手。但是我自己的内心知道，所谓鲶鱼效应，只有竞争才能激发自己的潜能。鄙人不才，但却自认为潜能远远没有开发完全。更多的时候，我因为个人性格的原因，会经常想得很多，喜欢漫无目的地乱走。但大家都知道，<strong>如果以路灯为起点，漫无目的地乱走，最终的期望就是回到终点。</strong>2021一整年对于我来说过得并不是很好。在这个同龄人在不断进步的时代，仿佛逆水行舟，不进则退。</p>
-<p><strong>但是每个人都会经历这样一段经历吧，人生的极小值点</strong>。所以对我来说，接下来的2022年，有一些确定的目标和计划就成为了迫在眉睫的事情。我相信自己的能力，从来都是如此。从科研方向来说，我还是得要在寒假期间，最起码需要了解梯度泄露是怎么回事，并且复现出代码。剩下的我想要看完吴恩达的机器学习课程，并且对于深度学习的花园书有所了解。争取在春季学期进行1-2个论文项目的参与。必须要在大三之前有所收获。</p>
-<p>那么我们就进入正题。</p>
-<h3 id="abstract">Abstract</h3>
-<p>首先作者告诉我们，在分布式训练或者协作训练中，梯度的共享是一件很正常的事。人们通常也很放心地认为梯度并不会泄露分布的训练数据。但是这篇文章用极其大胆的猜想和实验的佐证（包括<span
-class="math inline">\(NLP\)</span>和图像处理的两个实验都得到了非常好的效果）告诉我们梯度共享也有可能会泄露用户数据，并且称之为<span
-class="math inline">\(Deep \ Leakage \ from \
-Gradients\)</span>。并且指出了以梯度剪枝<span
-class="math inline">\((gradients \
-pruning)\)</span>为首的一些防御方法。</p>
-<h3 id="introduction">Introduction</h3>
-<p>首先作者指出，已经有研究表明，梯度的共享会泄露一些<span
-class="math inline">\(properties \ of \ training \ data\)</span>，
-结合<span
-class="math inline">\(GAN\)</span>就可以生成和原图像相似的图片。但是作者给出的<strong><em>DLG</em></strong>方法则声称可以还原完整的数据和标签，甚至不用借助任何其他的生成网络模型。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203225947.png" style="zoom:50%;" /></p>
-<p>作者提出了一种优化算法来完成这一攻击：首先随机生成一种<span
-class="math inline">\(dummy \
-inputs\)</span>，然后通过正常的梯度推导过程生成一个<span
-class="math inline">\(dummy \
-gradients\)</span>，然后<strong>这个算法并不会像一般的优化算法一样去优化模型的权重，而是会优化dummy
-gradients和正常的梯度之间的“距离”，然后修改dummy
-inputs和输入标签，使得我们的伪数据越来越接近真实的数据，最终优化算法结束的时候，就是伪数据和真实数据完全匹配的时候。</strong></p>
-<p>同时，作者还指出<strong>梯度扰动，低精度和梯度压缩三种方法中，尺度大于1e-2的高斯噪声和拉普拉斯噪声有明显的作用，20％的梯度剪枝同样也能起到保护的作用，但是半精度的方法却不起作用。</strong></p>
-<h3 id="related-work">Related Work</h3>
-<p>首先注意到的是，与“深度梯度泄露”相对应的是，浅层的梯度泄露。前人的研究表示从梯度中推断训练数据的信息特征是可能的。例如在语言任务中对训练单词的梯度就可以揭露哪些单词参与了训练集，我们明显可以察觉到，这类泄露是<strong>肤浅的</strong>，并且也没有过多的作用。</p>
-<p>然后作者指出了分布式机器学习中一定会出现的梯度交换问题。并且指出了无论是哪种分布方式，去中心化或者中心化的分布式训练，都有可能存在“深度梯度泄露”的问题。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220203224347.png" style="zoom: 50%;" /></p>
-<h3 id="method-experiment">Method &amp; Experiment</h3>
-<p>接下来我们来看看具体的方法。</p>
-<p>首先我们关注传统的分布式学习方法，在第<span
-class="math inline">\(t\)</span>轮训练过程中，第<span
-class="math inline">\(i\)</span>方节点从训练集中选取<span
-class="math inline">\(minibatch(x_{t,i},y_{t,i})\)</span>的数据来计算梯度，迭代的过程如下：
-<span class="math display">\[
-\nabla{ W_{t,i} }=\frac{\partial{l(F(x_{t,i},W_t),y_{t,i})} }
-{\partial{W_t} } \\
-\nabla{W_t}=\frac{1} {N}\sum_{j}^{N} {\nabla{W_{t,j} } } \ ; \ \ \
-W_{t+1}=W_t-\eta \nabla{W_t}
-\]</span> 以中心服务器式分布训练为例，中心服务器会获得<span
-class="math inline">\(k\)</span>方的梯度数据，并且作平均聚合，然后反向调整。但是这里的优化算法不会按照这样的步骤来，它的目的是恢复数据。简单来说，就是先利用一个随机的“伪输入”和“伪标签”，得到一个“伪梯度”，然后将伪梯度和真实梯度之间的第二范数作为优化的目标（要求模型F二次可微，不过一般的神经网络模型都是二次可微的），不断地调整输入和标签值，使得“伪梯度”不断地接近真实梯度，最终就能够完全还原原输入。
-<span class="math display">\[
-\nabla{W&#39;} = \frac{\partial{l(F(x&#39;,W),y&#39;)} } {\partial{W} }
-\\\
-x^{&#39;*},y^{&#39;*} = \underset{x&#39;,y&#39;} {argmin}\left \|
-\nabla{W&#39;-\nabla{W} }\right\|^2
-\]</span>
-在迭代的过程中有可能出现的问题就是，这种做法对于batchsize等于1的数据集很有效，如果大于1，就会出现收敛速度很慢的情况。最后作者给出的方法就是单次更新只更新一个训练样本，这样就可以快速而且稳定的收敛效果。
-<span class="math display">\[
-x^{&#39;i \ mod \ N}_{t+1} \gets x^{&#39;i \ mod \ N}_{t} -
-\nabla_{x^{&#39;i \ mod \ N}_{t+1} }\mathbb{D} \\\
-y^{&#39;i \ mod \ N}_{t+1} \gets y^{&#39;i \ mod \ N}_{t} -
-\nabla_{y^{&#39;i \ mod \ N}_{t+1} }\mathbb{D}
-\]</span>
-<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205152218.png" style="zoom: 50%;" /></p>
-<p>这听起来是一个天方夜谭，但是从实际的实验来看，效果出奇的好，除了个别像素伪影和顺序不同以外，几乎可以完全还原所有的源数据，比前人研究的方法也要明显占优。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205153618.png" style="zoom:50%;" /></p>
-<h3 id="defense-strategy">Defense Strategy</h3>
-<p>如之前的介绍所示，作者给出了三种防御的方法，其中比较有效的就是使用差分隐私<span
-class="math inline">\((Differential \
-Privacy)\)</span>的方法来进行防御。言简意赅的说，就是给梯度加上一定的“扰动”，使得攻击者无法获得准确的梯度信息，也就没办法从梯度中还原准确的源输入。噪声的种类有高斯噪声和拉普拉斯噪声，防御的效果与噪声的种类之间没有特别明显的关系，但是和噪声的扰动尺度有明显的正相关关系。同时，作者也顺便验证了减少梯度精度的方法无法起到有效的防御效果。下面是实验结果的截图：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220205163716.png" style="zoom:50%;" /></p>
-<p>值得注意的是，尽管成功达到一定的干扰程度之后能够起到防御作用，但是<span
-class="math inline">\(acc\)</span>率明显下降，已经开始影响收敛效率了。</p>
-<p>最后，作者还指出了“梯度剪枝”<span class="math inline">\((gradients \
-pruning)\)</span>的方法是有效的。经过实验发现，能够让<span
-class="math inline">\(DLG\)</span>还原的原始输入有明显偏差的情况下，修剪率应该在20%以上。但是最新的误差补偿技术和梯度压缩技术可以将梯度压缩300倍的情况下不影响<span
-class="math inline">\(acc\)</span>，远远高于阈值20%。所以可以得知梯度修剪的方法是有效的。</p>
-<h3 id="conclusion">Conclusion</h3>
-<p>针对分布式训练的情况来说，在这篇文章的指出下，我们已经发现，“共享梯度，使得训练数据集留在本地”的做法已经不再安全了。仅仅通过简单的修改输入和标签，来靠近标准梯度的做法，就可以完全地还原源数据，这无异给分布式和协作式学习的模式带来了新的挑战。下一节我会用代码模拟一遍作者的实验，来还原<span
-class="math inline">\(DLG\)</span>攻击。</p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>梯度泄露</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>联邦学习论文汇总</title>
     <url>/2021/11/18/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<h4
@@ -1645,6 +1648,30 @@ Learning</a>是需要优先阅读的。进度先记录到这里。</p>
       <tags>
         <tag>Federated Learning</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>软工</title>
+    <url>/2022/03/01/%E8%BD%AF%E5%B7%A5/</url>
+    <content><![CDATA[<p>华为需求跟踪系统</p>
+<ul>
+<li>对开发过程进行分配和跟踪</li>
+<li>JIRA</li>
+</ul>
+<p>特性卡片系统</p>
+<ul>
+<li>制作特性卡片</li>
+<li>提取关键词</li>
+<li>Redis</li>
+</ul>
+<p>新人培训系统Bootcamp</p>
+<ul>
+<li>简洁高效地管理新人培训</li>
+<li>导师制，一名新人分配一名导师</li>
+<li>管理员 - HRDP - 导师 - 新人</li>
+<li>纯Web端应用</li>
+</ul>
+<p>AI图像修复</p>
+]]></content>
   </entry>
   <entry>
     <title>颜色基础、图像模型、Phong光照模型</title>
