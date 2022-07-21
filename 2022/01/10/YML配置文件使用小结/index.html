@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fechin,"> 
     <meta name="description" content="今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。
 什么是YML文件
-YAML（Yet ,"> 
+YAML（Yet An,"> 
     <meta name="author" content="vinci"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -58,22 +58,36 @@ YAML（Yet ,">
         </div>
         <div class="content markdown">
             <p>今天在配置hexo的时候发现想要更新照片封面必须要编辑yml文件，想到之前捣腾linux的时候也见过这个格式的文件，但是当时不甚了了，今天不如一起了解一下。</p>
-<h2 id="什么是yml文件">什么是YML文件</h2>
+<h2 id="什么是YML文件">什么是YML文件</h2>
 <p><strong>YAML（Yet Another Markup Language）</strong>（发音 /ˈjæməl/ ）是 一种基于<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Unicode">Unicode</a>容易阅读，容易和脚本语言交互的，用来表达资料序列的编程语言。</p>
 <p>yaml文件是一种通用的数据串行化格式。（我们在用于模块通信的时候，会将对象序列化为通信流，高效地传输到另一个模块，并且提供反序列化还原数据）</p>
 <h2 id="基本格式">基本格式</h2>
 <p>Yaml语言编辑的文件，后缀为.yml。格式有以下几点基本要求：</p>
-<ul>
-<li>大小写敏感</li>
-<li>使用缩进表示层级关系</li>
-<li>缩进时不允许使用Tab键，只允许使用空格。</li>
-<li>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</li>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>大小写敏感</p>
+</li>
+<li class="lvl-2">
+<p>使用缩进表示层级关系</p>
+</li>
+<li class="lvl-2">
+<p>缩进时不允许使用Tab键，只允许使用空格。</p>
+</li>
+<li class="lvl-2">
+<p>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</p>
+</li>
 </ul>
-<p>在yml文件中，<span class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类型有</p>
-<ul>
-<li>对象：键值对的集合，又称为映射（mapping）/ 哈希（hashes） / 字典（dictionary）</li>
-<li>数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</li>
-<li>纯量（scalars）：单个的、不可再分的值</li>
+<p>在yml文件中，$#$符号表示的注释。yaml支持的数据类型有</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>对象：键值对的集合，又称为映射（mapping）/ 哈希（hashes） / 字典（dictionary）</p>
+</li>
+<li class="lvl-2">
+<p>数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</p>
+</li>
+<li class="lvl-2">
+<p>纯量（scalars）：单个的、不可再分的值</p>
+</li>
 </ul>
 <h4 id="对象">对象</h4>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># conf.yml</span></span><br><span class="line"><span class="attr">animal:</span> <span class="string">pets</span></span><br><span class="line"><span class="attr">hash:</span> &#123; <span class="attr">name:</span> <span class="string">Steve</span>, <span class="attr">foo:</span> <span class="string">bar</span> &#125;</span><br></pre></td></tr></table></figure>

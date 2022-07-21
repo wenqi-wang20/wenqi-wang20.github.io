@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fechin,"> 
     <meta name="description" content="前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel desktop虚拟机。
 
-在这里不得不吐血推荐，pd真的是比vm好了太多。我虽,"> 
+**在这里不得不吐血推荐，pd真的是比vm好了太多。**,"> 
     <meta name="author" content="vinci"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -59,10 +59,10 @@
         <div class="content markdown">
             <p>前几天在重装fedml系统的时候遇到了一个小小的问题，起因是因为我更换了mac系统，所以也用了新的parallel desktop虚拟机。</p>
 <blockquote>
-<p><strong>在这里不得不吐血推荐，pd真的是比vm好了太多。</strong>我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，<strong>共享文件系统做的很方便，网络也都是预先搭接好的。</strong>甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
+<p>**在这里不得不吐血推荐，pd真的是比vm好了太多。**我虽然不是资深果粉，但是对于苹果系统的流畅和比较良好的生态还是有所耳闻的。pd最好用的一点，也是我觉得最方便的一点就是，**共享文件系统做的很方便，网络也都是预先搭接好的。**甚至可以直接从我的ubuntu里访问mac的所有文件系统。</p>
 </blockquote>
 <p>言归正传，我遇到的问题如下：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333.png" alt=""></p>
 <p>就是在pycharm里，我标记了项目根目录为源根，而且无论是控制台还是文件视图里都没有出现报错，也可以正常导入根目录下的包。但是当我在terminal里run一个文件的时候，他就会报出类似：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ModuleNotFoundError: No Module named <span class="string">&#x27;fedml_api&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>的错误。实在是让我很破防。</p>

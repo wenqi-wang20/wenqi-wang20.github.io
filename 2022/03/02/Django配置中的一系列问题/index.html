@@ -14,7 +14,7 @@
 这两天在配置Django的时候，又遇到了关于pycharm配置虚拟环境的问题。
 整体来说，我们需要看下面这一张图，这是关于项目配置信息的：
 
-我们可以看到“工具”-“终端”里,"> 
+我们可以看到“工具”-“终端”里面有sh,"> 
     <meta name="author" content="vinci"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -62,15 +62,19 @@
             <h2 id="pycharm">pycharm</h2>
 <p>这两天在配置Django的时候，又遇到了关于pycharm配置虚拟环境的问题。</p>
 <p>整体来说，我们需要看下面这一张图，这是关于项目配置信息的：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194058.png" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194058.png" alt=""></p>
 <p>我们可以看到“工具”-“终端”里面有shell的路径，一般来说，我们的shell都是会默认使用系统base的路径。这会导致在pycharm自带的终端下进行操作会使用环境变量的包（当然这些都是windows上面的问题，上述图片是mac的，不过意思大致相同）</p>
 <p>有两种方法：</p>
-<ul>
-<li>第一种是在shell路径的后面 + <code>/k + "虚拟环境路径中的activate脚本"</code></li>
-<li>第二种方法是去到venv文件夹里，手动执行activate，然后再回来看，就发现终端已经变成虚拟环境了</li>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>第一种是在shell路径的后面  +  <code>/k + &quot;虚拟环境路径中的activate脚本&quot;</code></p>
+</li>
+<li class="lvl-2">
+<p>第二种方法是去到venv文件夹里，手动执行activate，然后再回来看，就发现终端已经变成虚拟环境了</p>
+</li>
 </ul>
 <p>就像这样：</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194942.png" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220302194942.png" alt=""></p>
 <h2 id="git">git</h2>
 <p>最近学到了一些新的命令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --graph</span><br></pre></td></tr></table></figure>
@@ -78,10 +82,16 @@
 <p>比较麻烦的主要是CI/CD的部署。</p>
 <p>CI/CD，我的理解就是，能够在提前配置好任务的情况下，在你push代码到云端的时候，在一个指定的container里面跑你的测试。</p>
 <p>总体来说就是分为三步：</p>
-<ul>
-<li>配置Dockerfile，用来指定容器的规模。</li>
-<li>配置.gitlab-ci.yaml，用来指定要完成的任务。</li>
-<li>配置gitlab-runner，用来配置容器。</li>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>配置Dockerfile，用来指定容器的规模。</p>
+</li>
+<li class="lvl-2">
+<p>配置.gitlab-ci.yaml，用来指定要完成的任务。</p>
+</li>
+<li class="lvl-2">
+<p>配置gitlab-runner，用来配置容器。</p>
+</li>
 </ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->

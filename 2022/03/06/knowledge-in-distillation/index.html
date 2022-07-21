@@ -12,8 +12,9 @@
     <meta name="keywords" content="Fechin,"> 
     <meta name="description" content="今天这一篇我们主要介绍三种基于不同知识的知识蒸馏方法的技术概括。
 Response-based knowledge
-这也是最常见，最容易理解的知识蒸馏： \[
-q_{i}=\frac{\exp,"> 
+这也是最常见，最容易理解的知识蒸馏：
+$$
+q_{i}=\frac{\exp \l,"> 
     <meta name="author" content="vinci"> 
     <link rel="alternative" href="atom.xml" title="Drenched in my pain." type="application/atom+xml"> 
     <link rel="icon" href="/img/my_favicon.png"> 
@@ -59,97 +60,136 @@ q_{i}=\frac{\exp,">
         </div>
         <div class="content markdown">
             <p>今天这一篇我们主要介绍三种基于不同知识的知识蒸馏方法的技术概括。</p>
-<h2 id="response-based-knowledge">Response-based knowledge</h2>
-<p>这也是最常见，最容易理解的知识蒸馏： <span class="math display">\[
-q_{i}=\frac{\exp \left(z_{i} / T\right)}{\sum_{j} \exp \left(z_{j} / T\right)}
-\]</span> 神经网络通常使用softmax层来揭示分类任务的预测概率，我们可以改变蒸馏温度<span class="math inline">\(T\)</span>，然后使得概率分布更加的平滑化。紧接着小模型可以模拟大模型在同一个数据集上的softmax输出的概率表现，同时结合hard-labels给出的预测误差，来共同训练一个更小、更容易部署的student model。下面分别是蒸馏损失和student模型预测的交叉熵损失，训练损失是二者的线性组合： <span class="math display">\[
-L_{\operatorname{Res} D}\left(p\left(z_{t}, T\right), p\left(z_{s}, T\right)\right)=\mathcal{L}_{R}\left(p\left(z_{t}, T\right), p\left(z_{s}, T\right)\right) \\
-\mathcal{L}_{C E}\left(y, p\left(z_{s}, T=1\right)\right) \\
-\mathcal{L} = \alpha \mathcal{L}_{R} + \beta \mathcal{L}_{CE}
-\]</span> <img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313000242.png" /></p>
-<h2 id="feature-based-knowledge">Feature-based Knowledge</h2>
+<h2 id="Response-based-knowledge">Response-based knowledge</h2>
+<p>这也是最常见，最容易理解的知识蒸馏：<br>
+$$<br>
+q_{i}=\frac{\exp \left(z_{i} / T\right)}{\sum_{j} \exp \left(z_{j} / T\right)}<br>
+$$<br>
+神经网络通常使用softmax层来揭示分类任务的预测概率，我们可以改变蒸馏温度$T$，然后使得概率分布更加的平滑化。紧接着小模型可以模拟大模型在同一个数据集上的softmax输出的概率表现，同时结合hard-labels给出的预测误差，来共同训练一个更小、更容易部署的student model。下面分别是蒸馏损失和student模型预测的交叉熵损失，训练损失是二者的线性组合：<br>
+$$<br>
+L_{\operatorname{Res} D}\left(p\left(z_{t}, T\right), p\left(z_{s}, T\right)\right)=\mathcal{L}<em>{R}\left(p\left(z</em>{t}, T\right), p\left(z_{s}, T\right)\right) \<br>
+\mathcal{L}<em>{C E}\left(y, p\left(z</em>{s}, T=1\right)\right) \<br>
+\mathcal{L} = \alpha \mathcal{L}<em>{R} + \beta \mathcal{L}</em>{CE}<br>
+$$<br>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313000242.png" alt=""></p>
+<h2 id="Feature-based-Knowledge">Feature-based Knowledge</h2>
 <p>在训练student model，尤其是更深更窄的神经网络上，加入中间特征层的引导有时候能够起到很好的效果。</p>
-<h3 id="fitnethint-layers">FitNet(hint layers)</h3>
+<h3 id="FitNet-hint-layers">FitNet(hint layers)</h3>
 <p>核心的思想是：</p>
 <blockquote>
 <p>We introduce <em>intermediate-level hints</em> from the teacher hidden layers to guide the training process of the student, <em>i.e.</em>, we want the student network (FitNet) to learn an intermediate representation that is predictive of the intermediate representations of the teacher network.</p>
 </blockquote>
 <p>FitNet的目的是为了加强KD的学习，训练一个更深、更窄的学生网络模型，因为更深的模型往往具有更好的非线性，在做出决策时往往有更好的表现。</p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220307232850.png" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220307232850.png" alt=""></p>
 <blockquote>
-<ul>
-<li><p>主要分为两个部分，第一部分是利用训练好的教师模型对student模型的中间层参数进行正则化处理，是一个预训练的过程</p></li>
-<li><p>第二部分是对于整个student model的KD训练</p></li>
+<ul class="lvl-1">
+<li class="lvl-2">
+<p>主要分为两个部分，第一部分是利用训练好的教师模型对student模型的中间层参数进行正则化处理，是一个预训练的过程</p>
+</li>
+<li class="lvl-2">
+<p>第二部分是对于整个student model的KD训练</p>
+</li>
 </ul>
 </blockquote>
-<p><span class="math display">\[
-stage-1:&amp; \  
-\mathcal{L}_{H T}\left(\mathbf{W}_{\text {Guided }}, \mathbf{W}_{\mathbf{r}}\right)=\frac{1}{2}\left\|u_{h}\left(\mathbf{x} ; \mathbf{W}_{\mathbf{H i n t}}\right)-r\left(v_{g}\left(\mathbf{x} ; \mathbf{W}_{\mathbf{G u i d e d}}\right) ; \mathbf{W}_{\mathbf{r}}\right)\right\|^{2} \\ 
-stage-2:&amp; \
-\mathcal{L}_{K D}\left(\mathbf{W}_{\mathbf{S}}\right)=\mathcal{H}\left(\mathbf{y}_{\text {true }}, \mathrm{P}_{\mathrm{S}}\right)+\lambda \mathcal{H}\left(\mathrm{P}_{\mathrm{T}}^{\tau}, \mathrm{P}_{\mathrm{S}}^{\tau}\right)
-\]</span></p>
-<h3 id="attention-maps-multi-layer-group">Attention Maps (multi-layer group)</h3>
+<p>$$<br>
+stage-1:&amp; \<br>
+\mathcal{L}<em>{H T}\left(\mathbf{W}</em>{\text {Guided }}, \mathbf{W}<em>{\mathbf{r}}\right)=\frac{1}{2}\left|u</em>{h}\left(\mathbf{x} ; \mathbf{W}<em>{\mathbf{H i n t}}\right)-r\left(v</em>{g}\left(\mathbf{x} ; \mathbf{W}<em>{\mathbf{G u i d e d}}\right) ; \mathbf{W}</em>{\mathbf{r}}\right)\right|^{2} \<br>
+stage-2:&amp; <br>
+\mathcal{L}<em>{K D}\left(\mathbf{W}</em>{\mathbf{S}}\right)=\mathcal{H}\left(\mathbf{y}<em>{\text {true }}, \mathrm{P}</em>{\mathrm{S}}\right)+\lambda \mathcal{H}\left(\mathrm{P}<em>{\mathrm{T}}^{\tau}, \mathrm{P}</em>{\mathrm{S}}^{\tau}\right)<br>
+$$</p>
+<h3 id="Attention-Maps-multi-layer-group">Attention Maps (multi-layer group)</h3>
 <blockquote>
-<ul>
-<li>将注意力作为知识在不同网路之间转移的机制</li>
-<li>提出了activation-based 和 gradient-based 的特征空间注意力映射。</li>
+<ul class="lvl-1">
+<li class="lvl-2">
+<p>将注意力作为知识在不同网路之间转移的机制</p>
+</li>
+<li class="lvl-2">
+<p>提出了activation-based 和 gradient-based 的特征空间注意力映射。</p>
+</li>
 </ul>
 </blockquote>
 <h4 id="activation-based-attention">activation-based attention</h4>
-<p>卷积神经网络的激活张量<span class="math inline">\(A \in R^{C \times H \times W}\)</span>，含义是C张包括大小为<span class="math inline">\(H \times W\)</span>的特征平面，同时我们可以利用以下的映射来帮助我们“压缩”到一个平面上 <span class="math display">\[
-\mathcal{F}: R^{C \times H \times W} \rightarrow R^{H \times W}
-\]</span> <img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220311150304.png" /></p>
+<p>卷积神经网络的激活张量$A \in R^{C \times H \times W}$，含义是C张包括大小为$H \times W$的特征平面，同时我们可以利用以下的映射来帮助我们“压缩”到一个平面上<br>
+$$<br>
+\mathcal{F}: R^{C \times H \times W} \rightarrow R^{H \times W}<br>
+$$<br>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220311150304.png" alt=""></p>
 <p>可以用以下几种方式来产生activation-based 的注意力映射</p>
-<ul>
-<li><span class="math inline">\(F_{\operatorname{sum}}(A)=\sum_{i=1}^{C}\left|A_{i}\right|\)</span></li>
-<li><span class="math inline">\(F_{\text {sum }}^{p}(A)=\sum_{i=1}^{C}\left|A_{i}\right|^{p}\)</span>，对激活程度更高的某些神经元所在的空间位置给予更多的权重</li>
-<li><span class="math inline">\(F_{\max }^{p}(A)=\max _{i=1, C}\left|A_{i}\right|^{p}\)</span>，每次仅仅携带单个激活程度最好的神经元</li>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>$F_{\operatorname{sum}}(A)=\sum_{i=1}^{C}\left|A_{i}\right|$</p>
+</li>
+<li class="lvl-2">
+<p>$F_{\text {sum }}<sup>{p}(A)=\sum_{i=1}</sup>{C}\left|A_{i}\right|^{p}$，对激活程度更高的某些神经元所在的空间位置给予更多的权重</p>
+</li>
+<li class="lvl-2">
+<p>$F_{\max }^{p}(A)=\max <em>{i=1, C}\left|A</em>{i}\right|^{p}$，每次仅仅携带单个激活程度最好的神经元</p>
+</li>
 </ul>
-<p>我们可以挑选教师模型和学生模型特定的residual block之后的输出层作为注意力映射匹配的pair: <span class="math display">\[
-\mathcal{L}_{A T}=\mathcal{L}\left(\mathbf{W}_{S}, x\right)+\frac{\beta}{2} \sum_{j \in \mathcal{I}}\left\|\frac{Q_{S}^{j}}{\left\|Q_{S}^{j}\right\|_{2}}-\frac{Q_{T}^{j}}{\left\|Q_{T}^{j}\right\|_{2}}\right\|_{p}
-\]</span> 上面是定义的损失函数，其中Q代表的是注意力映射函数的向量化表示，p是范数，通常采用l-2范数进行归一化。</p>
-<h4 id="gradient-based-attention">Gradient-based Attention</h4>
+<p>我们可以挑选教师模型和学生模型特定的residual block之后的输出层作为注意力映射匹配的pair:<br>
+$$<br>
+\mathcal{L}<em>{A T}=\mathcal{L}\left(\mathbf{W}</em>{S}, x\right)+\frac{\beta}{2} \sum_{j \in \mathcal{I}}\left|\frac{Q_{S}<sup>{j}}{\left|Q_{S}</sup>{j}\right|<em>{2}}-\frac{Q</em>{T}<sup>{j}}{\left|Q_{T}</sup>{j}\right|<em>{2}}\right|</em>{p}<br>
+$$<br>
+上面是定义的损失函数，其中Q代表的是注意力映射函数的向量化表示，p是范数，通常采用l-2范数进行归一化。</p>
+<h4 id="Gradient-based-Attention">Gradient-based Attention</h4>
 <p>简而言之就是可以看成为一个输入敏感性映射，在某些空间位置的attention的意思就是代表这个空间位置的输入的微小改变能够带来结果上的很大变化，也就是需要<strong>特别关注的地方</strong>。</p>
-<p>我们先定义教师和学生网络关于输入的梯度： <span class="math display">\[
-J_{S}=\frac{\partial}{\partial x} \mathcal{L}\left(\mathbf{W}_{\mathbf{S}}, x\right), J_{T}=\frac{\partial}{\partial x} \mathcal{L}\left(\mathbf{W}_{\mathbf{T}}, x\right)
-\]</span> 然后再定义优化函数，也就是需要让学生网络靠近教师网络关注的目标： <span class="math display">\[
-\mathcal{L}_{A T}\left(\mathbf{W}_{\mathbf{S}}, \mathbf{W}_{\mathbf{T}}, x\right)=\mathcal{L}\left(\mathbf{W}_{\mathbf{S}}, x\right)+\frac{\beta}{2}\left\|J_{S}-J_{T}\right\|_{2}
-\]</span></p>
-<h3 id="activation-boundaries-pre-relu">Activation Boundaries (Pre-ReLU)</h3>
-<p>这篇文章主要想做的就是在学生网络开始训练之前就将教师有关神经元的相关信息转移到学生模型上。之前的损失函数都是基于神经元的响应的均方差损失，但是这些损失都是建立在强响应上的，但是神经元的决策边界通常是介于零响应和无响应的 <span class="math display">\[
-\mathcal{L}(\boldsymbol{I})=\|\sigma(\mathcal{T}(\boldsymbol{I}))-\sigma(\mathcal{S}(\boldsymbol{I}))\|_{2}^{2}
-\]</span> <img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220311162135.png" /></p>
-<p>所以他们定义了一种元素级别的激活指标函数来表示，并且给出了离散形式的损失函数 <span class="math display">\[
-\rho(x)=\left\{\begin{array}{ll}
-1, &amp; \text { if } x&gt;0 \\
-0, &amp; \text { otherwise }
-\end{array}\right. \\
-\mathcal{L}(\boldsymbol{I})=\|\rho(\mathcal{T}(\boldsymbol{I}))-\rho(\mathcal{S}(\boldsymbol{I}))\|_{1}
-\]</span> 为了使得这种损失可以被梯度下降的方法进行优化，作者采取了在支持向量机里用到的一种损失：hingle loss，并且给出了在不同的情况下，损失函数求导的结果： <span class="math display">\[
-\mathcal{L}(\boldsymbol{I})=\| \rho(\mathcal{T}(\boldsymbol{I})) \odot \sigma(\mu \mathbf{1}-\mathcal{S}(\boldsymbol{I})) 
-+(\mathbf{1}-\rho(\mathcal{T}(\boldsymbol{I}))) \odot \sigma(\mu \mathbf{1}+\mathcal{S}(\boldsymbol{I})) \|_{2}^{2} \\
--\frac{\partial \mathcal{L}(\boldsymbol{I})}{\partial s_{i}}=\left\{\begin{array}{ll}
-2\left(s_{i}-\mu\right), &amp; \text { if } \rho\left(t_{i}\right)=1 \text { and } s_{i}&lt;\mu \\
--2\left(s_{i}+\mu\right), &amp; \text { if } \rho\left(t_{i}\right)=0 \text { and } s_{i}&gt;-\mu \\
-0, &amp; \text { otherwise. }
-\end{array}\right.
-\]</span> 以上方法是建立在老师和学生模型的神经元数量完全一致的情况下。当我们 考虑到模型压缩的时候，老师和学生模型的结构就会产生差别，所以一般会使用一个全连接层或者是批处理规范化层。定义一连接器的功能将学生的response的大小转化为和老师一样的respense向量的大小。</p>
-<h2 id="relation-based-knowledge">Relation-based Knowledge</h2>
+<p>我们先定义教师和学生网络关于输入的梯度：<br>
+$$<br>
+J_{S}=\frac{\partial}{\partial x} \mathcal{L}\left(\mathbf{W}<em>{\mathbf{S}}, x\right), J</em>{T}=\frac{\partial}{\partial x} \mathcal{L}\left(\mathbf{W}<em>{\mathbf{T}}, x\right)<br>
+$$<br>
+然后再定义优化函数，也就是需要让学生网络靠近教师网络关注的目标：<br>
+$$<br>
+\mathcal{L}</em>{A T}\left(\mathbf{W}<em>{\mathbf{S}}, \mathbf{W}</em>{\mathbf{T}}, x\right)=\mathcal{L}\left(\mathbf{W}<em>{\mathbf{S}}, x\right)+\frac{\beta}{2}\left|J</em>{S}-J_{T}\right|_{2}<br>
+$$</p>
+<h3 id="Activation-Boundaries-Pre-ReLU">Activation Boundaries (Pre-ReLU)</h3>
+<p>这篇文章主要想做的就是在学生网络开始训练之前就将教师有关神经元的相关信息转移到学生模型上。之前的损失函数都是基于神经元的响应的均方差损失，但是这些损失都是建立在强响应上的，但是神经元的决策边界通常是介于零响应和无响应的<br>
+$$<br>
+\mathcal{L}(\boldsymbol{I})=|\sigma(\mathcal{T}(\boldsymbol{I}))-\sigma(\mathcal{S}(\boldsymbol{I}))|_{2}^{2}<br>
+$$<br>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220311162135.png" alt=""></p>
+<p>所以他们定义了一种元素级别的激活指标函数来表示，并且给出了离散形式的损失函数<br>
+$$<br>
+\rho(x)=\left{\begin{array}{ll}<br>
+1, &amp; \text { if } x&gt;0 \<br>
+0, &amp; \text { otherwise }<br>
+\end{array}\right. \<br>
+\mathcal{L}(\boldsymbol{I})=|\rho(\mathcal{T}(\boldsymbol{I}))-\rho(\mathcal{S}(\boldsymbol{I}))|<em>{1}<br>
+$$<br>
+为了使得这种损失可以被梯度下降的方法进行优化，作者采取了在支持向量机里用到的一种损失：hingle loss，并且给出了在不同的情况下，损失函数求导的结果：<br>
+$$<br>
+\mathcal{L}(\boldsymbol{I})=| \rho(\mathcal{T}(\boldsymbol{I})) \odot \sigma(\mu \mathbf{1}-\mathcal{S}(\boldsymbol{I}))<br>
++(\mathbf{1}-\rho(\mathcal{T}(\boldsymbol{I}))) \odot \sigma(\mu \mathbf{1}+\mathcal{S}(\boldsymbol{I})) |</em>{2}^{2} \<br>
+-\frac{\partial \mathcal{L}(\boldsymbol{I})}{\partial s_{i}}=\left{\begin{array}{ll}<br>
+2\left(s_{i}-\mu\right), &amp; \text { if } \rho\left(t_{i}\right)=1 \text { and } s_{i}&lt;\mu \<br>
+-2\left(s_{i}+\mu\right), &amp; \text { if } \rho\left(t_{i}\right)=0 \text { and } s_{i}&gt;-\mu \<br>
+0, &amp; \text { otherwise. }<br>
+\end{array}\right.<br>
+$$<br>
+以上方法是建立在老师和学生模型的神经元数量完全一致的情况下。当我们 考虑到模型压缩的时候，老师和学生模型的结构就会产生差别，所以一般会使用一个全连接层或者是批处理规范化层。定义一连接器的功能将学生的response的大小转化为和老师一样的respense向量的大小。</p>
+<h2 id="Relation-based-Knowledge">Relation-based Knowledge</h2>
 <p>之前的方法主要关注的都是单个数据本身能够体现的知识，并且利用教师模型中某些特定层的输出。我们可以考虑基于relation的知识，这种关系有两种来源：来自不同层之间的关系，以及来自不同样本数据之间的关系。</p>
-<h3 id="singular-value-decomposition-in-kd-between-layers">Singular Value Decomposition in KD (between layers)</h3>
-<ul>
-<li>用奇异值分解的方法对特征信息进行降维，并且通过一个RBF函数来描述特征映射函数之间的关系，也就是通常的核学习（kernalize learning）</li>
-<li>采用自监督的方法，自己产生标签。这可以解决知识遗忘问题，并且提供更有力的正则化手段。</li>
+<h3 id="Singular-Value-Decomposition-in-KD-between-layers">Singular Value Decomposition in KD (between layers)</h3>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>用奇异值分解的方法对特征信息进行降维，并且通过一个RBF函数来描述特征映射函数之间的关系，也就是通常的核学习（kernalize learning）</p>
+</li>
+<li class="lvl-2">
+<p>采用自监督的方法，自己产生标签。这可以解决知识遗忘问题，并且提供更有力的正则化手段。</p>
+</li>
 </ul>
 <p>方法没怎么看懂</p>
-<h3 id="information-flow-model.-between-data-samples">Information Flow Model. (between data samples)</h3>
+<h3 id="Information-Flow-Model-between-data-samples">Information Flow Model. (between data samples)</h3>
 <p>这个方法对于教师模型的不同层之间的信息流进行建模。</p>
 <p>实验表明，在训练的早期，会形成神经元之间的关键连接道路，经过了这几轮训练之后，信息可塑性就会下降，事实上学生模型能够从教师模型那里学到的知识就会变得有限。那么文章提出了一种可能性，就是在模型训练的不同阶段，使用不同强度的监督。具体来说，采用以下的方法：</p>
-<ul>
-<li>设计辅助教师模型（size和学生模型差不多）来帮助在教师模型和学生模型之间建立一对一的、有效的匹配</li>
-<li>在关键学习路径上模仿教师模型的信息流</li>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>设计辅助教师模型（size和学生模型差不多）来帮助在教师模型和学生模型之间建立一对一的、有效的匹配</p>
+</li>
+<li class="lvl-2">
+<p>在关键学习路径上模仿教师模型的信息流</p>
+</li>
 </ul>
-<p>需要用到核函数（<span class="math inline">\(Kernal \ Function\)</span>），待研究。</p>
+<p>需要用到核函数（$Kernal \ Function$），待研究。</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
