@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2022年暑假的开端……</title>
+    <url>/2022/06/19/2022%E5%B9%B4%E6%9A%91%E5%81%87%E7%9A%84%E5%BC%80%E7%AB%AF%E2%80%A6%E2%80%A6/</url>
+    <content><![CDATA[<p>其实我这个人不是很擅长写总结啊、展望啊还有flag之类的哈哈哈哈，所以博客的更新速度也是肉眼可见的慢。今天是6月19日，正好是我20岁生日的前一天，仔细想一想，还是有很多可以说道的地方，尤其是这个年龄段摆在这，很难让人不注意到，从“1”字打头的年纪到“2”字打头的年纪，这中间带来的变化。</p>
+<p>一年之前，乃至半年之前的时候，我都是一个情绪上很敏感、波动比较大的人。尤其是回想或者遭遇了一些悲伤和痛苦的经历，一些道德上的思考和拷问，常常让我深深陷入、无法自拔，从而很严重地影响到我的日常生活和工作。并且这种忧郁的瘾症会不断地扩散、蔓延，变成了有的时候仿佛是“为了忧郁而忧郁”。是的，我也曾和无数人一样，将自己多愁善感、敏感的内心当做是一种上天的馈赠，小心翼翼地与别人分享，而当这种分享得到正面的、积极的乃至是和自身经历几乎一样的回应的时候，就会觉得欣喜若狂，有一种情感上的“慰藉”。但经过这半年的“消停”之后，我倏忽地有一种想法——这些因为情感问题而产生的共鸣，只能是一种“短效药、特效药”，它是沙漠中的海市，是遥不可及的梅林。我们永远不能依赖这种“放纵”，因为我深刻地意识到了人的精神是多么地能够欺骗肉体，利用一些虚无的事情来换取物质上的、实在的利益。人总是有这种倾向。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220620004541687.png" alt="image-20220620004541687" style="zoom:50%;" /></p>
+<p>上面是今年年初的时候写的总结报告，也给自己定了一些flag，现在看来，除了手臂骨折带来的一些意外情况，我想，大多数flag确实已经完成了，现在想起来，真的是很惊喜，也很感动。经历了那么大的变故，对于我这样一个极其看重尊严和要强的人来说，能够缓和到今天这个地步，取得阶段性的成就，确实是一个很好的兆头。这个暑假我想，多少也得继续一下flag的制定，延续传统，不要让势头断了，那可就不太好了。</p>
+<blockquote>
+<ol type="1">
+<li>争取135跑步/游泳/桌球，
+246去健身房。尤其是健身房，真的不能再耽搁了。</li>
+<li>争取今年暑假完成FL论文的写作（更重要），完成下一篇CV的写作调研构思。</li>
+<li>争取学会口琴（不开玩笑。</li>
+<li>学完托福，并且抢到考位，小试一把。</li>
+</ol>
+</blockquote>
+<p>值得一提的是，去年生日的时候，我在熬夜写一篇关于建筑学的论文。当时，我开了一瓶rose的低度酒，但是不小心把瓶子打碎了，导致我的手被划伤了一大块口子。我当时还很害怕地告诫自己，不要做心理暗示，也许我的明年会过的很不顺利，也许会，这都是不一定的。今年我也遵循传统，买了一瓶真露。在结账的时候，我不小心打翻了柜台上的真露。当时我的心理真的是一颤，我真的以为剧情要重演了。可是瓶子没有碎。</p>
+<p>于是我高高兴兴地回到了寝室，准备开酒独自庆祝这个对我自己来说也许是意义非凡的节日。谁能料想，在开酒瓶的时候，我再一次毫无理由和征兆地被铝制的瓶盖划伤。当汩汩鲜血从掌间流出的时候，我恍惚间意识到，很多事情，冥冥之中都是命中注定的。没有什么可以阻挡人的前进。<strong>或者更准确地来说，没有什么能够阻挡命运车轮的滚滚向前。</strong></p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cocos Creator使用心得（一）</title>
+    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
+]]></content>
+      <categories>
+        <category>游戏引擎</category>
+      </categories>
+      <tags>
+        <tag>Cocos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DARPA互联网的设计哲学</title>
     <url>/2022/03/03/DARPA%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6/</url>
     <content><![CDATA[<p>这篇文章的题目非常好理解，<span class="math inline">\(The \ Design
@@ -102,18 +140,6 @@ alt="在这里插入图片描述" /></li>
 <img src="https://img-blog.csdnimg.cn/20201230144547607.png"
 alt="在这里插入图片描述" /></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Cocos Creator使用心得（一）</title>
-    <url>/2022/01/11/Cocos-Creator%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[<p>今天小小地起一个头，接下来可能会花费大致一个寒假的时间简单地梳理一下Cocos这款游戏引擎的使用心得和总结。整体来说，Cocos首先是一款国产引擎这没的跑了，前期主攻2d游戏的开发制作，后期也上线了3d游戏。3d-x系列中我唯一知道稍微有点名气的应该是《捕鱼达人3》了。可以看出来，游戏框架应该还是稳定的。<strong>但是和Unity相比，明显可以看出，无论是市场占有率还是名气，都是远远不如后者的。从我的将近半年的断断续续地开发体验来说，编辑器的功能也是一言难尽。</strong>不过，调试起来倒是方便很多，当然只是相对而言。</p>
-]]></content>
-      <categories>
-        <category>游戏引擎</category>
-      </categories>
-      <tags>
-        <tag>Cocos</tag>
-      </tags>
   </entry>
   <entry>
     <title>Django配置中的一系列问题</title>
@@ -285,37 +311,16 @@ class="math inline">\(\#\)</span>符号表示的注释。yaml支持的数据类�
       </tags>
   </entry>
   <entry>
-    <title>YML配置文件使用小结（二）</title>
-    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
-<h2
-id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
-<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
-<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
-<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
-<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
-读入YAML文件并且对其进行修改</h2>
-<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
-<ul>
-<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
-<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
-<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
-</ul>
-<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
-<p><img
-src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
+    <title>gitignore不生效问题</title>
+    <url>/2022/02/17/gitignore%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>因为年前换了两台电脑，需要在不同的地方管理我的hexo博客，所以我采取了git存储一份source资源，两边每次都需要先拉取云端资源，再做本地更新，然后再deploy到hexo分支。因为有些步骤是重复的，所以我就写了一个脚本，短短的几句话：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git status</span><br><span class="line">git add --all</span><br><span class="line">git commit -m &quot;mac部署&quot;</span><br><span class="line">git push origin master:source</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p>但是因为我的mac和win语句不一样，所以显然这个不能被push到source分支里，所以我把它添加到<code>.gitignore</code>文件里了。可是最近经过我观察发现，它依然出现在了我的git远程仓库里！不仅如此，<code>.gitignore</code>里的文件都没有被忽略，甚至连ignore文件自己都被上传了上去。所以我才研究了一下，发现是我当时添加<code>.gitignore</code>文件比较迟，并没有在init的同时添加，导致文件时无效的。解决办法也很简单，只需要用下面的命令删除缓存即可：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意后面有一个点</span></span><br><span class="line">git rm -rf --cache .</span><br></pre></td></tr></table></figure>
+<p>然后在重新添加所有的更改并且commit提交即可。</p>
 ]]></content>
-      <categories>
-        <category>配置文件语言</category>
-      </categories>
       <tags>
-        <tag>YML</tag>
+        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -350,16 +355,138 @@ href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
   <entry>
-    <title>gitignore不生效问题</title>
-    <url>/2022/02/17/gitignore%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>因为年前换了两台电脑，需要在不同的地方管理我的hexo博客，所以我采取了git存储一份source资源，两边每次都需要先拉取云端资源，再做本地更新，然后再deploy到hexo分支。因为有些步骤是重复的，所以我就写了一个脚本，短短的几句话：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git status</span><br><span class="line">git add --all</span><br><span class="line">git commit -m &quot;mac部署&quot;</span><br><span class="line">git push origin master:source</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<p>但是因为我的mac和win语句不一样，所以显然这个不能被push到source分支里，所以我把它添加到<code>.gitignore</code>文件里了。可是最近经过我观察发现，它依然出现在了我的git远程仓库里！不仅如此，<code>.gitignore</code>里的文件都没有被忽略，甚至连ignore文件自己都被上传了上去。所以我才研究了一下，发现是我当时添加<code>.gitignore</code>文件比较迟，并没有在init的同时添加，导致文件时无效的。解决办法也很简单，只需要用下面的命令删除缓存即可：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 注意后面有一个点</span></span><br><span class="line">git rm -rf --cache .</span><br></pre></td></tr></table></figure>
-<p>然后在重新添加所有的更改并且commit提交即可。</p>
+    <title>VQ-VAE</title>
+    <url>/2022/07/18/VQVAE/</url>
+    <content><![CDATA[<h2 id="vae">VAE</h2>
+<p>先让我们简单地看一下 VQGAN+CLIP 的效果。这是 2021
+年开源的一套自然语言+视觉处理的结合实验，人类可以输入一些句子和短语，在经过分析之后，从
+text 转为 image
+的过程。并且在合成图片的过程中，模型还会注意风格的融合。最新的研究成果是谷歌发布的
+DALLE-2，风格非常炫酷，可惜没有开源，只有“内部人员”才能玩。下面是我在
+Colab 上训练了 10 min 的结果，输入的 texts 是
+<code>grown bears in the grass. |  a beautiful forest.</code></p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesmovie.gif"
+alt="movie" />
+<figcaption aria-hidden="true">movie</figcaption>
+</figure>
+<p>现实中，很多输入的信息大量都是冗余无用的，我们可以使用某些压缩的、离散的表示就能够概括大部分内容。什么是
+<code>AE</code>？自编码器，一般由三个部分构成：编码器、解码器以及中间隐藏层表示。我们可以将高维度的输入编码为低维度的表示，然后再通过解码器对该特征表示进行重建，<strong>训练的损失就是重建的输出与原始输入之间的误差。</strong>这样训练完成之后的编码器，可以结合
+<code>few-shot learning</code>
+进行特征学习，然后将学习后的特征用于分类任务；解码器则可以用于在特征空间上采样，生成新的输出。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesMDpicturesv2-ba9d7206d08e072b82401cec25415d2b_720w.jpg" alt="img" style="zoom: 67%;" /></p>
+<p>而所谓
+<code>VAE</code>，就是变分自编码器。为什么要产生变分自编码器？因为仅仅使用自编码器时，产生的隐式空间往往是离散的，如果我们从训练集没有覆盖的特征空间进行采样时，往往无法达到很好的效果，导致生成的图片
+“四不像”。所以我们可以学习一个分布，编码器产生一个均值和另一个类似于
+“标准差”
+的输出，然后我们从正态分布中进行采样来给图片的特征向量加一个噪声。我们将这种扰动后的特征进行重建来生成输出。<strong>训练损失我们采用重建后的误差
++ 与混合高斯分布之间的 KL 散度两项</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220713111254448.png" alt="image-20220713111254448" style="zoom: 25%;" /></p>
+<p>混合模型 <code>GMM</code>，<span
+class="math inline">\(P(x)=\sum_{m}P(m)P(x|m) \quad x|m \sim N(\mu(m),
+\sigma(m))\)</span>。为了学习更加连续的分布，采用积分神经网路的方法，生成无限个高斯组件拟合真实分布，<span
+class="math inline">\(P(x) = \int
+P(m)P(x|m)\)</span>。我们采用一个向量<span class="math inline">\(z \sim
+N(0, 1)\)</span>来生成分布。编码器把输入向量 <code>x</code>
+映射到最可能的高斯分布 <code>z</code>
+上，然后解码器将该分布生成网络。但是生成的图片质量往往较低。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220713123751929.png" alt="image-20220713123751929" style="zoom:25%;" />
+<span class="math display">\[
+KL(N(\mu, \sigma), N(0, 1)) = \log \frac{1}{\sigma} + \frac{\sigma^2 +
+\mu^2}{2} - \frac{1}{2}
+\]</span></p>
+<h2 id="neural-discrete-representation-learning">Neural Discrete
+Representation Learning</h2>
+<p><code>Aaron van den Oord Oriol Vinyals Koray Kavukcuoglu， NIPS'17</code></p>
+<ul>
+<li><code>the Vector Quantised Variational AutoEncoder (VQ-VAE)</code>矢量量化自动微分编码器</li>
+<li><code>It can successfully model important features that usually span many dimensions in data space as opposed to focusing or spending capacity on noise and imperceptible details which are often local.</code>
+成功让潜在空间离散化，能够更加充分地屏蔽噪声，更好地利用潜在空间。</li>
+</ul>
+<p>虽然说是 VAE，但其实模型建立过程中几乎没有涉及到变分的环节，看起来和
+AE 倒是更像。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220718102702579.png" alt="image-20220718102702579" style="zoom:60%;" /></p>
+<h2
+id="generating-diverse-high-fidelity-images-with-vq-vae-2">Generating
+Diverse High-Fidelity Images with VQ-VAE-2</h2>
+<p>VQ-VAE
+的进阶版本，本质上并没有作出结构上的创新。主要针对经典版本作出了以下两点修改：</p>
+<ul>
+<li><p>对原始像素图片进行了分层编码，分层量化，并且最终根据分层的结果重建图像。这样的方法可以充分把握全局视野，也可以细化局部细节，生成更加逼真，细节更加清晰的图像。</p></li>
+<li><p>在对离散编码的先验知识的拟合阶段，采用了 PixelCNN 网络结构。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220718102402641.png" alt="image-20220718102402641" style="zoom: 67%;" ></p></li>
+</ul>
+<h2
+id="vector-quantized-image-modeling-with-improved-vqgan">VECTOR-QUANTIZED
+IMAGE MODELING WITH IMPROVED VQGAN</h2>
+<p>这篇工作可以说是对 VQGAN
+的改进，但其实我读的也不是特别明白，他到底改进了个啥……</p>
+<ul>
+<li>当然，第一个改进的地方就是把带有局部注意力模块的 CNN
+编码器干脆直接换成了 Vision Transformer。</li>
+<li>第二个改进是在 codebook 方面。这篇工作首先将 codebook
+因子化，简单来说可能就是先从低维的空间寻找匹配的 latent code,
+然后再映射到更高维度的 latent
+code。这样做可以提高码本的使用率和重建图像的质量。</li>
+<li>第三个小的 trick 就是文章将 latent code
+进行了二范数归一化，所有向量的二范数都是一样大的，所以向量之间的欧氏距离就变成了类似余弦相似度，进一步提高了训练的稳定性。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220718102746627.png" alt="image-20220718102746627" style="zoom:67%;" /></p>
+<h2 id="maskgit-masked-generative-image-transformer">MaskGIT: Masked
+Generative Image Transformer</h2>
+<p>这一连着的四篇工作都是出自谷歌的实验室。这一篇其实也是将 NLP 中的
+BERT
+模型的优化方法带到了图像合成的任务中。作者认为，在做序列译码的时候，从左上到右下进行逐个译码是非常不自然的行为。首先将图像全部展平会导致图像序列非常长，很少有实际的自然语言任务需要这么长的序列。其次，人类画家在创造作品的时候，也并不是按照从左上到右下进行绘画的，他们一般都是先绘画出一部分的轮廓，再跳到另一部上色……等等，具有一定的随机性。所以这篇文章也是借用了这种思想。</p>
+<ul>
+<li>第一阶段训练 Encoder 和 Decoder 的设置和 VQGAN
+相比没有太大的差别，作者沿用了之前的配置。</li>
+<li>第二阶段训练先验分布的时候，文章采用了 MVTM 的方法，使用双向
+Transformer 的机制并且设计掩码函数来帮助 Transformer
+快速且并行地学习压缩后的 code matrix。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220718102820012.png" alt="image-20220718102820012" style="zoom: 60%;" /></p>
 ]]></content>
+      <categories>
+        <category>深度学习</category>
+        <category>CV</category>
+      </categories>
       <tags>
-        <tag>git</tag>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>YML配置文件使用小结（二）</title>
+    <url>/2022/01/10/YML%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>咱们书接上回。说到了我想要配置hexo中的封面背景图片。但是有几个问题急需解决。第一个就是我想要大量的图片源，这些可能是外链、也有可能是本地图片。（大概率是本地图片，因为我想要对网络图片进行压缩之后再作上传处理）。然后<strong>我想要交给一个脚本进行定期的更新，每次操作都会载入100张全新的图片进入yml配置文件。</strong>打算分为以下几个步骤：</p>
+<h2
+id="步骤一使用python脚本爬取网络图片并且进行压缩">步骤一：使用python脚本爬取网络图片并且进行压缩</h2>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures37a1f0278433ff8ae9dc802f03861b5.png" /></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110031701.png" /></p>
+<p>这里直接使用了网络上一个爬取4K壁纸的爬虫，略加修改得到的。每次都会定期爬取大约100张图片，并且清空原有的文件夹中的图片。</p>
+<p>然后我们使用<code>PIL</code>库，也就是我们熟知的pillow中的Image功能组件，对图片进行压缩处理。<strong>这里有一个比较坑的地方是<code>resize()</code>方法中的长和宽是要加上括号的，是一个二元组。</strong></p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110112406.png" /></p>
+<p>这样一来所有压缩后的图片就已经完全躺在了compressed文件夹中了。每次我们会通过遍历文件夹中的文件数来确定新的文件应该如何命名。</p>
+<h2 id="步骤二-读入yaml文件并且对其进行修改">步骤二：
+读入YAML文件并且对其进行修改</h2>
+<p>这一块我们依然使用上一次的Python脚本进行批量处理。我们想要做到的是随机选取60张图片作为图片库，注入到yml文件。</p>
+<ul>
+<li><p>首先，我们需要引入<code>yaml</code>库，这一块需要<code>pip install pyyaml</code>来安装包。</p></li>
+<li><p>然后我们使用Load方法打包yaml文件中的内容，获取其中的解析格式。</p></li>
+<li><p>最后我们将修改后的列表插入到解析的字典当中替换原列表，然后通过<code>dump</code>方法加载到config文件中</p></li>
+</ul>
+<p>这样我们的就大功告成了，可以通过脚本每次完成自动更新，更换主页的图片。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220110150813.png" /></p>
+]]></content>
+      <categories>
+        <category>配置文件语言</category>
+      </categories>
+      <tags>
+        <tag>YML</tag>
       </tags>
   </entry>
   <entry>
@@ -387,49 +514,6 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220215183333
       </categories>
       <tags>
         <tag>Pycharm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>wireshark抓包实验</title>
-    <url>/2022/03/05/wireshark%E6%8A%93%E5%8C%85%E5%AE%9E%E9%AA%8C/</url>
-    <content><![CDATA[<h2 id="抓包实验一">抓包实验一</h2>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082106.png" style="zoom:25%;" /></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082250.png" style="zoom: 25%;" /></p>
-<ol type="1">
-<li>观察上述抓包过程可以得知，涉及到39.156.66.14(www.baidu.com)的ping功能采取的都是<span
-class="math inline">\(ICMP \ protocol\)</span>。</li>
-<li>主机host会先向远程服务器发送一个request请求，并且携带时间戳；然后服务器返回一个response的事件，这样就可以计算出ping的延时。</li>
-</ol>
-<h2 id="抓包实验二">抓包实验二</h2>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313215119.png" style="zoom:25%;" /></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221113.png" style="zoom:25%;" /></p>
-<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221143.png" style="zoom:25%;" /></p>
-<ol type="1">
-<li>我们观察发现，抓取中国政府网(http://www.gov.cn/)的数据是可以从中直接看到html网页源代码内容的。</li>
-<li>抓取清华首页(https://www.tsinghua.edu.cn/)的数据得到的是乱码，无法获取html网页源代码的内容。</li>
-</ol>
-<h2 id="抓包实验三">抓包实验三</h2>
-<p><img src="/Users/wangwenqi/Library/Application Support/typora-user-images/image-20220313224114381.png" alt="image-20220313224114381" style="zoom:25%;" /></p>
-<p>我们首先关闭foxmail的ssl安全连接，然后登陆tsinghu邮箱，然后开启wireshark进行抓包。紧接着我们开启smtp过滤，这样就可以专注地看到和邮件收发相关的信息。紧接着我们看到user，password以及发送邮箱的from和to以及内容都可以看见，只不过是经过<strong>base64加密后的数据</strong>。</p>
-<ol type="1">
-<li>可以看见发送邮件的收发方以及发送内容等等信息。</li>
-<li>我们可以直接使用在线的base64解码器获取user的密码信息，可见不加ssl安全验证证书的连接是极其不安全的。</li>
-</ol>
-<h2 id="协议分层结构">协议分层结构</h2>
-<p>ICMP协议：</p>
-<p>ICMP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt; 物理层</p>
-<p>http协议：</p>
-<p>HTTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame 数据帧 -&gt;
-物理层</p>
-<p>邮件协议（SMTP协议）:</p>
-<p>SMTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt;
-物理层</p>
-]]></content>
-      <categories>
-        <category>实验报告</category>
-      </categories>
-      <tags>
-        <tag>计算机网络原理</tag>
       </tags>
   </entry>
   <entry>
@@ -594,6 +678,49 @@ Function\)</span>），待研究。</p>
       </categories>
       <tags>
         <tag>联邦学习，知识蒸馏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wireshark抓包实验</title>
+    <url>/2022/03/05/wireshark%E6%8A%93%E5%8C%85%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<h2 id="抓包实验一">抓包实验一</h2>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082106.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220305082250.png" style="zoom: 25%;" /></p>
+<ol type="1">
+<li>观察上述抓包过程可以得知，涉及到39.156.66.14(www.baidu.com)的ping功能采取的都是<span
+class="math inline">\(ICMP \ protocol\)</span>。</li>
+<li>主机host会先向远程服务器发送一个request请求，并且携带时间戳；然后服务器返回一个response的事件，这样就可以计算出ping的延时。</li>
+</ol>
+<h2 id="抓包实验二">抓包实验二</h2>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313215119.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221113.png" style="zoom:25%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/blog/20220313221143.png" style="zoom:25%;" /></p>
+<ol type="1">
+<li>我们观察发现，抓取中国政府网(http://www.gov.cn/)的数据是可以从中直接看到html网页源代码内容的。</li>
+<li>抓取清华首页(https://www.tsinghua.edu.cn/)的数据得到的是乱码，无法获取html网页源代码的内容。</li>
+</ol>
+<h2 id="抓包实验三">抓包实验三</h2>
+<p><img src="/Users/wangwenqi/Library/Application Support/typora-user-images/image-20220313224114381.png" alt="image-20220313224114381" style="zoom:25%;" /></p>
+<p>我们首先关闭foxmail的ssl安全连接，然后登陆tsinghu邮箱，然后开启wireshark进行抓包。紧接着我们开启smtp过滤，这样就可以专注地看到和邮件收发相关的信息。紧接着我们看到user，password以及发送邮箱的from和to以及内容都可以看见，只不过是经过<strong>base64加密后的数据</strong>。</p>
+<ol type="1">
+<li>可以看见发送邮件的收发方以及发送内容等等信息。</li>
+<li>我们可以直接使用在线的base64解码器获取user的密码信息，可见不加ssl安全验证证书的连接是极其不安全的。</li>
+</ol>
+<h2 id="协议分层结构">协议分层结构</h2>
+<p>ICMP协议：</p>
+<p>ICMP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt; 物理层</p>
+<p>http协议：</p>
+<p>HTTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame 数据帧 -&gt;
+物理层</p>
+<p>邮件协议（SMTP协议）:</p>
+<p>SMTP -&gt; TCP -&gt; IPV4 -&gt; Ethernet II -&gt; Frame数据帧 -&gt;
+物理层</p>
+]]></content>
+      <categories>
+        <category>实验报告</category>
+      </categories>
+      <tags>
+        <tag>计算机网络原理</tag>
       </tags>
   </entry>
   <entry>
@@ -828,6 +955,118 @@ class="math inline">\(n_{k}\)</span>个样例，</p>
       </tags>
   </entry>
   <entry>
+    <title>四看六淡然</title>
+    <url>/2022/03/29/%E5%9B%9B%E7%9C%8B%E5%85%AD%E6%B7%A1%E7%84%B6/</url>
+    <content><![CDATA[<p>王夫之在解读庄子的时候提出了著名的“四看六淡然”的说法，分别是：</p>
+<blockquote>
+<p>大事难事看担当</p>
+<p>逆境顺境看襟怀</p>
+<p>临喜临怒看涵养</p>
+<p>群行群止看识见</p>
+<p>自处超然、处人蔼然、无事澄然、处事断然、得意淡然、失意泰然</p>
+</blockquote>
+<p>仔细一看，发现这十点我都没有……如果强行要说的话，我觉得大学也许是一个很好的机会来磨炼自己，但是我已经荒芜了一年半的时间。希望可以在接下来的大学生活中好好锻炼这几点。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活，庄子</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>年度总结</title>
+    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>姓名</th>
+<th style="text-align: left;">王文琦</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>生活情况</td>
+<td
+style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
+</tr>
+<tr class="even">
+<td>社工情况</td>
+<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
+</tr>
+<tr class="odd">
+<td>文体情况</td>
+<td
+style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
+</tr>
+<tr class="even">
+<td>实践情况</td>
+<td
+style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
+</tr>
+<tr class="odd">
+<td>个人总结</td>
+<td
+style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
+</tr>
+<tr class="even">
+<td>FLAG</td>
+<td
+style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
+1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
+好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
+争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
+争取暑假的时候可以去业界完成一次实习。<br>6.
+争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
+争取明年能和室友一起出去游玩一次…………</td>
+</tr>
+</tbody>
+</table>
+<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
+<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
+<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>庄子笔记（一）</title>
+    <url>/2022/02/22/%E5%BA%84%E5%AD%90%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>“取法其上，得乎其中；取法其中，得乎其下。”所以读书一定要读最好的书，最好的书就是经典。<strong>因为他们关心的通常是永恒的问题。</strong></p>
+<p>顾随说，读经典，不了解古人是辜负古人，只了解古人是辜负自己。必要在了解之后还要一番生发。</p>
+<p>我也持有相同的观点，我认为近代以来有一种薄古厚今的趋势。中国人的文化自信还没有完全被激发出来。大多数中国人缺乏一种理性的理解。</p>
+<p>《文子·道德》篇说：“上学以神听，中学以心听，下学以耳听。以耳听者学在皮肤,以心听者学在肌肉,以神听者学在骨髓。故听之不深,即知之不明。”</p>
+<p>人--人学</p>
+<p>道--哲学</p>
+<p>游--代表了自由的思想</p>
+<p>偶然听说了安徽合肥人刘文典的故事，觉得此人很有意思，而且对于庄子似乎颇有研究。</p>
+<p>海德堡大学，盛产哲学家</p>
+<p>三个盛产寓言的国家，古希腊，中国，古印度。</p>
+<p>如行云流水，初无定质，但常行于所当行，止于所不可不止。</p>
+<p>汪洋辟阖，仪态万方。</p>
+<p>庄子寓言，《秋水篇》——观名利。</p>
+<p>决定一个人美或者不美的根本元素是道德，德有所长而形有所忘。</p>
+<p>所谓无用之用其实是一个已经被人所能理解的观点了，胡适曾经对他们的学生说过这么一句话：功不唐捐。</p>
+<p>物物而不物于物，也可以简单地理解为，不要成为物质的奴隶。我现在倒是觉得我失去了曾经的那种感觉，也就是从心所欲不为成绩所羁绊。遁天倍情，忘其所受。</p>
+<p>今天听完了第一节庄子课之后，学到了很多新的故事，整体的观点和我之前所感受到的几乎相同。以人生哲学和生死哲学为主要精华。听了一个庄子与骷髅头聊天的故事。庄子问骷髅，如果我让你重返人间，回到你的家人朋友身边，你愿意吗？骷髅头表示很不解，死亡不用考虑那么多的羁绊，那么为什么还要去人间操劳呢？</p>
+<p>虽然老师的解读为善生善死，并且引向了珍惜生命、知道了生命的意义所在。我觉得超越人事是不太可能的存在，结合今天我想到的一些事情。我才觉得如果做事的话，需要分清什么是必须要做的事情，什么是自己喜欢做的事情。只有这两件事都做好了，我们的生活才能变得很有意思而不劳累。至于其他的因素，都不应该成为我们主要考虑的目标。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活，庄子</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于高效同态加密的Cross-silo联邦学习</title>
     <url>/2021/12/03/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%95%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E7%9A%84Cross-silo%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="background">Background</h2>
@@ -934,98 +1173,6 @@ Learning\)</span>相比还是有很大的进步空间。</p>
       </tags>
   </entry>
   <entry>
-    <title>年度总结</title>
-    <url>/2022/02/16/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 88%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>姓名</th>
-<th style="text-align: left;">王文琦</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>生活情况</td>
-<td
-style="text-align: left;">生活不是特别的顺利，年前分了个手。个人方向有点迷茫，目前在跟人工智能产业研究院做研究。成绩不是特别理想，但是状态正在恢复当中。</td>
-</tr>
-<tr class="even">
-<td>社工情况</td>
-<td style="text-align: left;">计算机系学生科协智能体部开发。</td>
-</tr>
-<tr class="odd">
-<td>文体情况</td>
-<td
-style="text-align: left;">体育正在加强锻炼，喜欢看书，但是自觉需要转移书的方向和内容。</td>
-</tr>
-<tr class="even">
-<td>实践情况</td>
-<td
-style="text-align: left;">参加班级实践，想要在暑假组织一次实践活动</td>
-</tr>
-<tr class="odd">
-<td>个人总结</td>
-<td
-style="text-align: left;">整体来说上学期可以说是我人生的低谷了，本来以为gpa可以稳稳地上3.8，结果掉的差点连3.7都没有。情感方面，谈了两年多的女朋友也分手了，而且极其的不顺利，生活的各个方面都收到了很大的影响。再加上形势的变化，我的内心也没有拿稳到底是要出国还是在国内读书，<strong><em>*以及有没有的书读这个方面*</em><em>*，*</em></strong>都让我感到有一些迷茫。</td>
-</tr>
-<tr class="even">
-<td>FLAG</td>
-<td
-style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友是不可能找的，我只想要我的生活稳定下来。20多岁，<strong>也到了该考虑生活的年纪了</strong>。我以前觉得只要顺着走就行了，现在觉得方向感甚至比你做了多少更重要。无论在感情还是工作都是这样。现在路已经走到这了，回头也不可能回头了，只能硬着头皮做下去：
-1. 争取在上半年到暑假的时间内完成一篇完整的论文投稿。<br>2.
-好好锻炼身体，争取上半年在健身房有所成果，体育成绩改善。<br>3.
-争取全年的夜跑满勤。<br/>4. 争取上半年的gpa能够上3.9（只是争取）<br>5.
-争取暑假的时候可以去业界完成一次实习。<br>6.
-争取能够竞选上科协的副主席，继续我的智能体生涯。<br>7.
-争取明年能和室友一起出去游玩一次…………</td>
-</tr>
-</tbody>
-</table>
-<p>实在是绷不住了，学校竟然要求填这种东西。不过回头看过来，对每个人来说，<strong>总是期望大于回忆</strong>，我想这也是人之所以能够在不同环境、不同的时间点下调整自己的原因吧。</p>
-<p>同时，今天跟学姐吃了晚饭，一来是确定了自己接下来一定会有活干，不至于像个没头苍蝇一样乱晃。二来，我也是得到了一些比较重要的信息，那就是说，<strong>即使是在学术圈，人脉资源也是相当重要的一件事情。</strong>也许之前我过于轻视这里面的一些内容了，再加上我本人并不是特别喜欢。接下来的这一年里我还是会留意的。</p>
-<p>有一个英语的任务，等待观察。希望下半年能够把托福考过去。</p>
-]]></content>
-      <categories>
-        <category>日记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>庄子笔记（一）</title>
-    <url>/2022/02/22/%E5%BA%84%E5%AD%90%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>“取法其上，得乎其中；取法其中，得乎其下。”所以读书一定要读最好的书，最好的书就是经典。<strong>因为他们关心的通常是永恒的问题。</strong></p>
-<p>顾随说，读经典，不了解古人是辜负古人，只了解古人是辜负自己。必要在了解之后还要一番生发。</p>
-<p>我也持有相同的观点，我认为近代以来有一种薄古厚今的趋势。中国人的文化自信还没有完全被激发出来。大多数中国人缺乏一种理性的理解。</p>
-<p>《文子·道德》篇说：“上学以神听，中学以心听，下学以耳听。以耳听者学在皮肤,以心听者学在肌肉,以神听者学在骨髓。故听之不深,即知之不明。”</p>
-<p>人--人学</p>
-<p>道--哲学</p>
-<p>游--代表了自由的思想</p>
-<p>偶然听说了安徽合肥人刘文典的故事，觉得此人很有意思，而且对于庄子似乎颇有研究。</p>
-<p>海德堡大学，盛产哲学家</p>
-<p>三个盛产寓言的国家，古希腊，中国，古印度。</p>
-<p>如行云流水，初无定质，但常行于所当行，止于所不可不止。</p>
-<p>汪洋辟阖，仪态万方。</p>
-<p>庄子寓言，《秋水篇》——观名利。</p>
-<p>决定一个人美或者不美的根本元素是道德，德有所长而形有所忘。</p>
-<p>所谓无用之用其实是一个已经被人所能理解的观点了，胡适曾经对他们的学生说过这么一句话：功不唐捐。</p>
-<p>物物而不物于物，也可以简单地理解为，不要成为物质的奴隶。我现在倒是觉得我失去了曾经的那种感觉，也就是从心所欲不为成绩所羁绊。遁天倍情，忘其所受。</p>
-<p>今天听完了第一节庄子课之后，学到了很多新的故事，整体的观点和我之前所感受到的几乎相同。以人生哲学和生死哲学为主要精华。听了一个庄子与骷髅头聊天的故事。庄子问骷髅，如果我让你重返人间，回到你的家人朋友身边，你愿意吗？骷髅头表示很不解，死亡不用考虑那么多的羁绊，那么为什么还要去人间操劳呢？</p>
-<p>虽然老师的解读为善生善死，并且引向了珍惜生命、知道了生命的意义所在。我觉得超越人事是不太可能的存在，结合今天我想到的一些事情。我才觉得如果做事的话，需要分清什么是必须要做的事情，什么是自己喜欢做的事情。只有这两件事都做好了，我们的生活才能变得很有意思而不劳累。至于其他的因素，都不应该成为我们主要考虑的目标。</p>
-]]></content>
-      <categories>
-        <category>读书笔记</category>
-      </categories>
-      <tags>
-        <tag>贵系生活，庄子</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>庄子（三）-齐物论</title>
     <url>/2022/02/26/%E5%BA%84%E5%AD%90%EF%BC%88%E4%B8%89%EF%BC%89-%E9%BD%90%E7%89%A9%E8%AE%BA/</url>
     <content><![CDATA[<ul>
@@ -1097,6 +1244,95 @@ style="text-align: left;"><strong>官方给的FLAG就算了。</strong>女朋友
       </categories>
       <tags>
         <tag>贵系生活，庄子</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>暑假中期</title>
+    <url>/2022/07/21/%E6%9A%91%E5%81%87%E4%B8%AD%E6%9C%9F/</url>
+    <content><![CDATA[<p>今天是 7.21
+日，虽然说假期还有大约整整四五十天的样子，但是我更愿意承认对我来说，暑假已经到了一半的地步。我的室友们大多数考驾照去了。今年的夏天格外炎热。</p>
+<p>前几天晚上我骑着车从新民路上走过，看着满地飘零的槐花，倏忽地有了一些感想。不出意料的，这个暑假前半段又和我设想的不太一样。原本预想的可能和社工的关系更大一些，没想到目前我对于社工的热情已经类似指数一般衰减到几近为零了。我早该听从卓君学长的建议，抛弃一些虚名和外在的束缚、要求，去追寻更符合自己内心、更符合当下需求的东西。</p>
+<p>所以关于 Saiblo
+开发和智能体的工作，基本上处于一种停摆的状态。停摆就停摆吧，反正目前还没有到特别急迫的那种地步。从七月初起到现在，我倒是收获了另一个意外的惊喜——这种惊喜原本不应该出现在我的计划里，不仅是当下的计划，甚至于我原本的更长远的计划里也不应该有这样的惊喜——我遇见了一个女孩子。</p>
+<p>我们聊得非常合适。而且从前一段事情中走出来之后，很明显地能够感受到不一样。我希望我的感觉是对的，我说过，我不想再折腾了，我并不想再让我的情感毫无回报，像春水一样流逝，变得在我的生活中几乎没有任何痕迹。也许我的未来就是她了，我也不想再改变。她是个很好的姑娘，我们在生活、艺术和世俗、三观上都比较契合。剩下的就是交给时间了，等到共同经历的事情越来越多，我们再慢慢糅合。我是个重感情的人，但我希望我能够从这段关系里，重新定义我对于感情的认识。也许我之前自我表演的成分太多。</p>
+<p>可以说是收获吗？应该算是吧。同时，我也决定退掉了托福的课程，我觉得没有太大的用处，占用了我过多的时间。但距离退课已经过去一个礼拜了，我好像也并没有做太多的事情。关于联邦学习的那一篇论文，我和学姐商量之后，觉得既然都是二作，那不如别让我来主要推进工作了。我做一些后续的工作，赶着投下一篇顶会。学姐让我多刷刷
+GPA，我确实也这样做了。所以上半年投一篇顶会的愿望又泡汤了，大约九月份可能会有一个二作。希望下半年可以好好刷一篇一作。</p>
+<p><img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures%E6%B3%B8%E5%B7%9E.gif" /></p>
+<p>第二就是关于旷视的实习。旷视的 mentor
+总有一种画饼的感觉。但是我看了他本人还是有一定的论文产出的，我想作为公司可能也会有类似的业务要求吧。时至如今我也只能选择相信了。他也听我阐述了我的出国规划，并且表示支持。会尽力帮助我多发几篇论文。</p>
+<p>健身房这里也成功请到了教练，下半年也好好锻炼身体吧。就算不是为了自己，也是为了以后的家庭和生活。同时前几天我也找到了胡事民老师的实验室的一位学长。我本来可能想说加入这个实验室，多做一些论文的工作。后来发现博士学长似乎在暗示我，可能到最后也没有论文的产出，可能更多想要让我做一些
+JNeRF
+的生态建设工作，即使想要保研也是没有问题的，目前胡老师实验室也没有太多的人。我转念一想，也不是不可以。我可以拿着胡老师的推荐信，同时和其他论文去申请，也不是不行。</p>
+<p>所以整体来说，我接下来的规划有所改变，需要按照事情的重要程度来分配自己的精力吧。最近总是觉得注意力不足，无法集中精神。</p>
+<ol type="1">
+<li>首要重要的还应该是英语吧。我觉得至少要占 40%
+左右的时间精力。我不能轻视这一块。到了开学就更没有时间来大批量地学习英语了。更何况要申请一些官方的项目，还是需要语言标化成绩的。</li>
+<li>然后是先学习一些关于 NeRF
+的内容，一边是胡老师这边要求，另一边也是旷视的要求，我觉得可能需要占用我
+30% 左右的时间。</li>
+<li>关于 FedScale 和 VQ-VAE
+的工作利用剩余的时间。而且我想以周期，比如一两个礼拜肝完的方式做这件事。</li>
+<li>Saiblo 和 智能体就往后排一排了，反正还有其他人（</li>
+</ol>
+<p>先列个清单，完成了就画个叉，及时更新，我觉得还是蛮有作用的（</p>
+<ul>
+<li>做 50 篇阅读</li>
+<li>做 50 篇听力</li>
+<li>听完 Games 101</li>
+<li>复现完 EG3D</li>
+<li>看 20 篇 NeRF 并且做汇报</li>
+<li>看 50 篇 NeRF 并且做汇报</li>
+<li>看 100 篇 NeRF 并且做汇报</li>
+<li>完成 FedScale 并且做汇报</li>
+<li>Saiblo 开发</li>
+<li>做 100 篇阅读</li>
+<li>做 100 篇听力</li>
+<li>……</li>
+</ul>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>暑期第一天</title>
+    <url>/2022/06/20/%E6%9A%91%E6%9C%9F%E7%AC%AC%E4%B8%80%E5%A4%A9/</url>
+    <content><![CDATA[<p>今天是暑期正式开始的第一天（，第一天就有巨大的事务（指科协开会。所以今天的第一件事就是记录一下会议的经过和下一年的工作安排。</p>
+<p>首先是主席介绍了去年一年的工作，以及对明年的展望。</p>
+<p><strong>网络部：</strong></p>
+<blockquote>
+<p><strong>技能引导文档</strong></p>
+<p><strong>兴趣小组</strong></p>
+</blockquote>
+<p><strong>智能体部：</strong></p>
+<blockquote>
+<p><strong>保持住去年的创新成果，站稳脚跟</strong></p>
+</blockquote>
+<p><strong>联创部：</strong></p>
+<blockquote>
+<p><strong>填饼</strong></p>
+</blockquote>
+<h3 id="招新工作">1. 招新工作</h3>
+<p>第一个需要做的工作是，需要自行宣传+面试招新同学。尽量做到在科协自己的招新群输出一些招新活动的内容。第一件事情是，需要完成一部分的工作总结，主要是客观的过程总结。智能体部和网络部去年的工作总结还没有写。</p>
+<p>线下交流活动。紫操闲谈（没有人了）；线上会议（确定主题）。</p>
+<p>面试。暂定时间是6.26，面试时间、面试方案：面试地点、面试问题，自我介绍+提问环节。</p>
+<p>重复报科协的不同部门，联合面试。24号准备问题，25号准备安排，先建群，拉微信，邮箱。</p>
+<h3 id="工作规划">2. 工作规划</h3>
+<p>对工作的时间线进行安排，主要是一些更加细致的时间点，和未来一年想要完成的事情。ddl在两周之后。</p>
+<h3 id="工作总结访谈推送">3. 工作总结+访谈推送</h3>
+<p>智能体游戏的总结推送，访谈。</p>
+<p>以上是会议记录。</p>
+<p><strong>今天还完成了招新工作的计划文档。并且我对于科协的事还是有一定看法的。计算机系的传统是多做事少废话，清华的传统也是这样。我不喜欢那种话语多于行动，除了会说没有任何技术硬本事的人进入科协。不管是成为我的同事，还是我的部员，我都不希望这样的事情发生。</strong></p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
       </tags>
   </entry>
   <entry>
@@ -1505,6 +1741,224 @@ src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20220
       </tags>
   </entry>
   <entry>
+    <title>神经网络处理文本情感分类</title>
+    <url>/2022/05/18/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%A4%84%E7%90%86%E6%96%87%E6%9C%AC%E6%83%85%E6%84%9F%E5%88%86%E7%B1%BB/</url>
+    <content><![CDATA[<h1 id="文本情感分类任务实验报告">文本情感分类任务实验报告</h1>
+<h5 id="计03-王文琦-2020010915">计03 王文琦 2020010915</h5>
+<h2 id="完成情况">0. 完成情况</h2>
+<p>本次实验完成了以下成果：</p>
+<ol type="1">
+<li>使用<strong>改进后的TextCNN网络</strong>对文本情感进行分类预测。</li>
+<li>使用<strong>单层RNN网络</strong>对文本情感进行分类预测。</li>
+<li>使用<strong>双向多层LSTM循环神经网络</strong>完成同样的任务。</li>
+<li>使用<strong>全连接神经网络MLP</strong>完成同样的任务。</li>
+<li><strong>不使用给定的word2vector分词模型</strong>，转而使用<strong>Albert大规模预训练神经网络进行同样的任务</strong>，并且对比与传统神经网络之间的差别。</li>
+</ol>
+<p>代码已打包成zip，清华云盘链接:https://cloud.tsinghua.edu.cn/f/71d9a0461ff546cda8cc/?dl=1</p>
+<h2 id="原理分析">1. 原理分析</h2>
+<p>首先，我们依次介绍模型的结构图以及原理实现。</p>
+<h3 id="textcnn卷积神经网络">1.1 TextCNN卷积神经网络</h3>
+<p>卷积神经网络被大量应用在图像处理上。我们知道图像通常是二维的(我们现在将忽略存在第三个“颜色”维度的事实)，而文本是一维的。如何将一维的句列转化为二维的“可视化”的图像？我们注意到，训练的过程中并不是直接把每一个中文字符作为输入的元单位，而是先将一组中文字符（比如一个单词）转化为相应的词嵌入向量，然后再成批次地输入进入神经网络。所以我们可以让每一个单词的词向量作为横轴，句子的长度作为纵轴，“拼接”成为一个神经网络，如下图所示：</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20210118160937262.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20210118162157527.png" alt="在这里插入图片描述" style="zoom:80%;" /></p>
+<p>所以我们可以使用不同的<span class="math inline">\(filter \
+size\)</span>的过滤器，例如<span class="math inline">\([n,
+embedding]\)</span>大小的过滤器，一次就会覆盖二维图像中的两行，也就是句子中的两个单词。过滤器中为每一个格子上的元素都配置了权重，每次移动，都会计算出所有元素的加权和作为输出。这样计算后，我们最终的输出拼接起来将是一个一维的向量，大小为<span
+class="math inline">\([1, sentence\ length - filter \ size +
+1]\)</span>。对于这一个卷积层的输出，我们采取一次最大池化，含义是取其中最情感最为丰富的维数加以池化、连接。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220517090736765.png" alt="image-20220517090736765" style="zoom:50%;" /></p>
+<p>上图是<span
+class="math inline">\(TextCNN\)</span>神经网络的结构示意图，限于篇幅，只选择了一种<span
+class="math inline">\(filter \
+size\)</span>和20个卷积核。在我们的实际模型中，选择了100个卷积核和<span
+class="math inline">\([3,4,5]\)</span>三种<span
+class="math inline">\(filter \
+size\)</span>。最终的结果使用一个线性层来连接所有隐层的输出。<strong>值得注意的是，我们最后选择了一个输出而并不是二分类输出，最终的<span
+class="math inline">\(criterion\)</span>选择的是<span
+class="math inline">\(BCELoss\)</span>均方误差而不是交叉熵损失，越靠近0，就代表预测为<span
+class="math inline">\(positive\)</span>的可能性更大；反之同理即可。下面我们所有的模型都是基于上述损失函数，将不再赘述</strong>。</p>
+<h3 id="简单rnn循环神经网络">1.2 简单RNN循环神经网络</h3>
+<p>RNN的最基本的原理是，利用相同的神经元接受单词的序列，一次接受一个，生成一个隐藏状态。然后下一次的输出是由当前输入的单词和前一次的隐藏状态决定的。状态转移方程：<span
+class="math inline">\(h_t = RNN(x_t,
+h_{t-1})\)</span>。当我们有了最后的隐藏状态输出的时候，我们通过一个全连接层接受我们预测的信息，损失函数说明和之前一样。数据的预处理部分（词向量的嵌入）由<code>word2vector</code>模型给出。最后同样采取一个全连接层将隐藏层的所有输出转化为最终的单元素输出。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures20210109212011448.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h3 id="双向多层lstm循环神经网络">1.3 双向多层LSTM循环神经网络</h3>
+<p>在实验过程中我们发现单层RNN的实验训练效果并不好，而且存在着很明显的梯度消失<span
+class="math inline">\((vanishing \
+gradient)\)</span>问题。达到几个训练epoch之后就很难再有效果上的很大改进。为了改进，我们采用LSTM神经单元。简单来说，RNN在预测较近的单词的时候，会更有效，但是它很难记住更远处的上下文信息。在情感分类任务中同样如此。如果采用LSTM模块，因为内部采用更为复杂的四层非线性模块，通过一个<span
+class="math inline">\(cell\)</span>的额外状态会更容易解决文本的长期依赖问题。状态函数为<span
+class="math inline">\((h_t, c_t)=LSTM(x_t, h_t,
+c_t)\)</span>在下图中展现出了基本模型：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210116140120109.png" alt="在这里插入图片描述" style="zoom:80%;" /></p>
+<p>同时我们还采用了双向神经网络，一个从前往后输入句列信息，另一个从后往前输入句列信息，以二者的最终隐藏层输出叠加形成的张量作为最后的隐藏层输出。同时我们还可以加入多层RNN。当输入<span
+class="math inline">\(x_t\)</span>序列时，低一层的RNN的隐藏层输出作为高一层的RNN的输入。取最高层RNN的最后一次隐藏层输出作为最终输出。在本次实验中，我们选择双层双向的LSTM网络作为训练结构。</p>
+<figure>
+<img
+src="https://img-blog.csdnimg.cn/20210116142836889.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDYwNTU3Mw==,size_16,color_FFFFFF,t_70"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<p><img src="https://img-blog.csdnimg.cn/20210116144407190.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDYwNTU3Mw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" style="zoom:80%;" /></p>
+<h3 id="mlp全连接神经网络">1.4 MLP全连接神经网络</h3>
+<p>全连接神经网络在原理上非常简单，由若干全连接层和若干非线性层组成。通过模拟神经元之间的完全连接来构建复杂的非线性关系。在本次实验中，我们实现以下的全连接网络作为<span
+class="math inline">\(baseline\)</span>用于对比参考，对于句子长度不一的情况，我们采用最大池化的方法进行降维。<strong>（限于篇幅，图中参数与真实训练不同。真实训练过程中选取<span
+class="math inline">\(input \ dim = 50, hidden \ dim = 256, output \ dim
+= 1\)</span>）</strong>：</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesimage-20220517163546287.png" alt="image-20220517163546287" style="zoom:50%;" /></p>
+<h3 id="albert大规模预训练模型">1.5 Albert大规模预训练模型</h3>
+<p>除了以上基于<code>word2vector</code>的模型以外，本次实验还实现了大规模预训练模型<span
+class="math inline">\(albert\)</span>，相对于之前的模型作为另一个<span
+class="math inline">\(baseline\)</span>。<code>word2vector</code>是一个上游模型，将稀疏的词向量转化为稠密的语义向量，但是却只能是静态表征。我们知道，同一个词在不同的上下文语境下是有着不同的含义的，比如“苹果”公司的苹果和我们日常所吃的苹果就是不同的含义，但是在<code>word2vector</code>中他们有着相同的词向量表示，这显然有着继续优化的空间。</p>
+<p><code>Bert</code>模型是针对语言训练的一个双向Transformers模型，我们可以利用<code>Bert</code>的预训练模型。首先加载预训练模型，利用单词的上下文信息作特征提取，<strong>注意这里，CNN是在一个特定的划定窗口对语句做特征提取；RNN是分别单独利用上文、下文作特征提取，但是Bert模型能够利用每个单词完整的上下文信息，动态调整词向量，这与静态的word2vector完全不同</strong>。接下来我们只需利用其输出的特征向量连接下游的任务即可，也即<span
+class="math inline">\(Fine-Tuning\)</span>过程。在本次实验中，因为运算资源的限制，我们采取了<code>voidful/albert_chinese_small</code>的微缩版<code>Bert</code>模型，在预训练模型之后，再添加一个全连接层输出结果。</p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures2a24891beb853e2e6b3be03487fe1772.png" alt="img" style="zoom: 33%;" /></p>
+<h2 id="训练过程与实验结果">2. 训练过程与实验结果</h2>
+<p>训练过程中，我们采用了<code>wandb</code>可视化的方法，将需要展现的参数例如训练准确率和损失函数的输出动态展示在面板上，并且横向比较不同的模型之间的性能。从训练的结果就可以明显看出，<strong>在五个模型中，统一训练30个epoches的情况下，<code>Bert</code>模型的收敛速度最快，训练集上的准确率也最高，超过99％；相较来说，<code>MLP</code>模型的表现最差，在前几轮epoch就几乎已经收敛，最终准确率也没有超过80%；<code>TextCNN</code>和<code>LSTM</code>的效果相近，几乎可以达到95%左右；<code>单层RNN</code>模型的效果位于<code>MLP</code>以上，不如<code>TextCNN</code>和<code>LSTM</code>，且损失函数也出现了较大的波动情况。</strong></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesW%26B%20Chart%202022_5_17%20%E4%B8%8B%E5%8D%887_35_33.png" alt="W&B Chart 2022_5_17 下午7_35_33" style="zoom: 15%;" /></p>
+<p><img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpicturesW%26B%20Chart%202022_5_17%20%E4%B8%8B%E5%8D%887_41_22.png" alt="W&B Chart 2022_5_17 下午7_41_22" style="zoom:15%;" /></p>
+<p>最终的测试准确率以及算出的<span
+class="math inline">\(F-Score\)</span>如下表格所示：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Model</th>
+<th style="text-align: center;">Test Accuracy(%)</th>
+<th style="text-align: center;">F-Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">CNN</td>
+<td style="text-align: center;">81.75</td>
+<td style="text-align: center;">0.8101</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">单层RNN</td>
+<td style="text-align: center;">81.84</td>
+<td style="text-align: center;">0.8091</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">双向多层LSTM</td>
+<td style="text-align: center;">84.28</td>
+<td style="text-align: center;">0.8432</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MLP</td>
+<td style="text-align: center;">76.69</td>
+<td style="text-align: center;">0.7637</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">AlBert</td>
+<td style="text-align: center;">91.01</td>
+<td style="text-align: center;">0.9319</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参数调整过程">3. 参数调整过程</h2>
+<p>在参数调整的过程中，我尝试了使用wandb+sweep的方式进行自动调参，但是鉴于每次训练运行的时间过长，仅在<code>textCNN</code>上做过实验，因为参数搜索的空间非常大，不同实验之间相差无几，在短时间内无法得到最优解。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 超参数搜索方法，可以选择：grid random bayes</span></span><br><span class="line">sweep_config = &#123;</span><br><span class="line">    <span class="string">&#x27;method&#x27;</span>: <span class="string">&#x27;random&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数范围</span></span><br><span class="line">parameters_dict = &#123;</span><br><span class="line">    <span class="string">&#x27;num_filter&#x27;</span>:&#123;</span><br><span class="line">        <span class="string">&#x27;values&#x27;</span>:[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">&#x27;optimizer&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;values&#x27;</span>: [<span class="string">&#x27;adam&#x27;</span>, <span class="string">&#x27;sgd&#x27;</span>]</span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">&#x27;dropout&#x27;</span>: &#123;</span><br><span class="line">          <span class="string">&#x27;values&#x27;</span>: [<span class="number">0.3</span>, <span class="number">0.4</span>, <span class="number">0.5</span>]</span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">&#x27;learning_rate&#x27;</span>: &#123;</span><br><span class="line">        <span class="comment"># a flat distribution between 0 and 0.1</span></span><br><span class="line">        <span class="string">&#x27;distribution&#x27;</span>: <span class="string">&#x27;uniform&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;min&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;max&#x27;</span>: <span class="number">0.1</span></span><br><span class="line">      &#125;,</span><br><span class="line">    <span class="string">&#x27;batch_size&#x27;</span>: &#123;</span><br><span class="line">        <span class="comment"># integers between 32 and 256</span></span><br><span class="line">        <span class="comment"># with evenly-distributed logarithms </span></span><br><span class="line">        <span class="string">&#x27;distribution&#x27;</span>: <span class="string">&#x27;q_log_uniform&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;q&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;min&#x27;</span>: math.log(<span class="number">32</span>),</span><br><span class="line">        <span class="string">&#x27;max&#x27;</span>: math.log(<span class="number">256</span>),</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">sweep_config[<span class="string">&#x27;parameters&#x27;</span>] = parameters_dict</span><br></pre></td></tr></table></figure>
+<p>所以我在实验的过程中采取了经验调参法。关于<code>batch_size</code>，因为句子的长短不一，采取padding或者truncate手段会导致文本信息不全，经过实验显示设置batch_size为1较为合适（除去<code>AlBert</code>模型采用了16，因为模型的对齐性要求以及大规模模型需要batch更大效果更好）；关于优化器，<code>sgd</code>的稳定性较差并且学习率无法动态调整，容易出现震荡，故选择<code>adam</code>；<code>dropout</code>采用半丢弃，即0.5效果较好，若选择高丢弃率（0.9），容易导致收敛时间长；<code>epoch</code>统一选择30轮，所有模型基本都能收敛；<code>learning-rate</code>一般初始值设为0.001，<code>Albert</code>模型初始值设为0.0001，因为模型的提取能力很强，学习率需要降低，否则会很容易出现震荡情况。</p>
+<h2 id="模型表现差异">4. 模型表现差异</h2>
+<p>模型结构层面的差异已经在第一部分给出。在表现方面，我们可以从最终测试的结果看到，<code>RNN</code>和<code>CNN</code>的表现所差无几，而<code>MLP</code>的表现则较差。实验后分析原因可知，我在MLP的数据输入处理上，对输入词嵌入向量事先采用了一层平均池化进行降维，这可能大大降低了句子中所包含的有效信息含量。<code>LSTM</code>神经网络则大大提高了对上下文特征的捕捉能力，在测试准确度上也有所提升。而采用了预训练模型和<code>Fine-Tuning</code>方法的<code>AlBert</code>模型的表现则超越了传统模型，说明动态获取词在上下文之间的含义，从而得出语义向量比直接使用静态的效果要好。</p>
+<h2 id="问题与思考">5. 问题与思考</h2>
+<ol type="1">
+<li>可以每一轮epoch设置validation数据集进行验证，保存效果最佳的模型，舍弃出现过拟合后效果下降的模型；也可以判断当前准确率低于某一个阈值的时候强制停止训练。我采用的是前者。前者可以直观观测在验证集上的准确率变化，全局选择，但是实验时间较长；后者实验时间段，灵活方便，但是模型之间不方便横向对比。</li>
+<li>一般用均匀或正态的零均值分布来初始化线性层、卷积层的权重矩阵和偏置，根据系数的不同，又分为
+xavier 的均匀、正态分布，kaiming 的均匀、正态分布。xavier
+的分布适用于激活函数是 tanh 的初始化，不太适用于 ReLU。而 kaming
+则非常适用于带 ReLU 激活函数的地方。PyTorch 里的线性层的初始化为均匀分布
+U(-sqrt(1/in), sqrt(1/in))（a = sqrt(5) 的 kaiming 分布，in
+为矩阵的第二维大小）。在本次实验中，我尝试了正态分布初始化，发现效果并没有明显的变化，故统一采用Pytorch默认初始化权重。</li>
+<li>一般有<code>Batch Normalization</code>和<code>Dropout</code>两种方法。BN方法可以有效地避免两种极端情况：梯度爆炸和梯度消失，但是容易延长收敛的时间；Dropout方法比较方便快捷，效果也很不俗。本次实验我采用的是Dropout方法。</li>
+<li><ul>
+<li>MLP网络结构简单，方便GPU加速计算，但是输入维数固定不够灵活，参数数量和效果不成正比。</li>
+<li>CNN网络结构易于理解，对于局部特征提取效果优秀，但是对于全局信息完全无法获知。</li>
+<li>RNN网络可变性较强，如果使用LSTM变体和双层双向等方法，对于全局信息有较好的把握，但是训练时间很长，收敛速度慢。</li>
+</ul></li>
+</ol>
+<h2 id="心得体会">6. 心得体会</h2>
+<p>因为实验室正在研究的课题是联邦学习相关，也需要书写一些机器学习的代码，这次大作业让我对整个机器学习的过程（Pytorch代码层面）有了比较全面的认识，也对实验室的工作有很大的帮助。平心静气地说，无论原理是否理解，当代信息专业的学生都应当学会机器学习的思想和它的应用，在很多领域它确实是一个非常优秀的工具。</p>
+]]></content>
+      <categories>
+        <category>深度学习，作业文档</category>
+      </categories>
+      <tags>
+        <tag>深度学习，贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>秋日里的独白</title>
+    <url>/2022/10/20/%E7%A7%8B%E6%97%A5%E9%87%8C%E7%9A%84%E7%8B%AC%E7%99%BD/</url>
+    <content><![CDATA[<p><strong>前言：这是戏剧课的一次独白作业，我顺便也当成日记放在博客里了。</strong></p>
+<p>我还依稀记得，上一次动手写日记是在暑假中期的时候。距今约摸着有三个月的时间了。三个月之间，昼短夜长，霜飞露打。每到九十月份萧索的时候，我就常常感叹难怪古人要说
+“常恐秋节至”，在京城居住的这几年，此番感觉愈加强烈。如今靠近年关，百般杂事也都到了
+“秋后算账” 的时候。一想起这些，愁容就爬上了眉梢，高兴不起来。</p>
+<p>大约从夏天起，每日通勤的路上，我就会开始留意身旁花花草草的变化。上半年早些日子，与友人同去植物园郊游的时候，才猛然发现园子里的春色竟要更加浓烈一些。起初，我时常看见一些我也叫不上名儿的小花，倏忽地出现在路的转角处，惹得我一阵侧目。园子里的春天是浸润在花彩之中的。而后，我也慢慢开始把这些花儿的名字学了去，有时候是去查一查图鉴，有时候是同行的朋友们帮忙指出。渐渐地我也算是摸了一小半这里的花草品种了。秋日里园子里开的花便少了，但不是全然消失，也有紫菀、糯米条还有香水月季这些品种，逆着时节打苞。比如上周，在去食堂的路上，我就看见了竹叶菊，一簇簇矮矮小小的白花，花瓣稀疏慵懒地横插在金黄色的花蕊四周，就这样兀自在路旁开着。我留心拍了下来，回去仔细欣赏，越觉得奇妙——像是一幅油画一样忧伤而又悲壮的色彩，让人不禁想起了魔戒里法拉米尔出行前，城中的百姓们满怀悲伤地给战士们撒下永志花的场景。</p>
+<center>
+<img src="https://raw.githubusercontent.com/wenqi-wang20/img/main/img/MDpictures9d570bdca901626c353dba8582e0138.jpg" alt="9d570bdca901626c353dba8582e0138" style="zoom: 25%;" />
+</center>
+<p>至于我为什么会突然联想到这个场景，谁也说不清楚。事后我满心欢喜地把照片分享给朋友们看时，大多也只是漫不经心地回一句
+“真好看啊” “某君的拍照水平又提高了”
+云云。于是便不再去理会。但是心头笼罩的阴云确是真实存在的，长此以来，挥之不去。理论上来说，作为大学生，至少应当是
+“朝气蓬勃”
+“向上的一代”，可是从最近我爬起床来的时间来看，实在是和这些词沾不上一点边。烦躁或者焦虑时，我就会去睡一觉。我常常对所谓
+“教授”
+的话感到不那么公平，我并不觉得有些事情一定要和年龄扯上什么关系。这里面首当其冲的就是迷茫和焦虑。</p>
+<p>到明年这个时候，我就要面临着人生中另一个重要的选择了。本科毕业之后，我该去哪里……看着身边的同学们好像都有了归宿的方向，有的也和我一样迷茫，有的不是——至少看起来不是。但是成年人很难像孩子一样产生所谓幸灾乐祸的情绪，人们往往只关心自己。有时候我想起曾经做的那些事，悔恨光阴的虚度；有时候手头的工作进展不顺利，毫无头绪，又会难免质疑自己，是否适合这份工作，有没有研究的天赋，又或是我当初的选择是否正确。“乱我心者，今日之日多烦忧”。</p>
+<p>比职业规划焦虑更可怕的是人生目标的迷茫。我一直以来认为自己是一个随性的人，常常不给自己定一些硬性的规矩，往往随着生活环境的改变，让
+“他人”
+给我定下生活的目标。有时我觉得这是我适应性强的优势，现在我却慢慢为此而苦恼。我到底在追求什么呢？
+“人应当诗意地栖居在大地上。”
+目力所及的地方，何处让我感到诗意？我只看到了生活的重担，朋辈的攀比，那些所谓的光鲜亮丽的人或事背后肮脏的内幕，普通人为了实现自己的生命价值不得不卑躬屈膝，服从于社会法则。现在，即使是
+“活出生命的意义就好”
+这种空话也完全没办法触动我了。一方面我这样想着，一方面我又不停地督促自己压制类似的想法，放弃对卓越的追求，只要尽力做好手头的事情就行，哪怕因此逐渐沉沦成为了一个普通人，以后也未必就不会感谢今天的决定。</p>
+<p>我感到自己像一滩流水，在路上默默地走着，适应着各种形状，从来不会以浪花来抗议。我走了多长时间？我甚至不知道，我究竟是从山川奔向大海，还是从哪户胡同里的澡堂淌向污水处理盖。</p>
+<p>天黑了，该去吃饭了。今天再去看看可怜的竹叶菊是否还在冷风中活着。回来无事，那便睡一觉罢。</p>
+<p>壬寅年九月廿五 黄昏 于清华园</p>
+<p>王文琦</p>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>贵系生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软工</title>
+    <url>/2022/03/01/%E8%BD%AF%E5%B7%A5/</url>
+    <content><![CDATA[<p>华为需求跟踪系统</p>
+<ul>
+<li>对开发过程进行分配和跟踪</li>
+<li>JIRA</li>
+</ul>
+<p>特性卡片系统</p>
+<ul>
+<li>制作特性卡片</li>
+<li>提取关键词</li>
+<li>Redis</li>
+</ul>
+<p>新人培训系统Bootcamp</p>
+<ul>
+<li>简洁高效地管理新人培训</li>
+<li>导师制，一名新人分配一名导师</li>
+<li>管理员 - HRDP - 导师 - 新人</li>
+<li>纯Web端应用</li>
+</ul>
+<p>AI图像修复</p>
+]]></content>
+  </entry>
+  <entry>
     <title>联邦学习论文汇总</title>
     <url>/2021/11/18/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<h4
@@ -1648,30 +2102,6 @@ Learning</a>是需要优先阅读的。进度先记录到这里。</p>
       <tags>
         <tag>Federated Learning</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>软工</title>
-    <url>/2022/03/01/%E8%BD%AF%E5%B7%A5/</url>
-    <content><![CDATA[<p>华为需求跟踪系统</p>
-<ul>
-<li>对开发过程进行分配和跟踪</li>
-<li>JIRA</li>
-</ul>
-<p>特性卡片系统</p>
-<ul>
-<li>制作特性卡片</li>
-<li>提取关键词</li>
-<li>Redis</li>
-</ul>
-<p>新人培训系统Bootcamp</p>
-<ul>
-<li>简洁高效地管理新人培训</li>
-<li>导师制，一名新人分配一名导师</li>
-<li>管理员 - HRDP - 导师 - 新人</li>
-<li>纯Web端应用</li>
-</ul>
-<p>AI图像修复</p>
-]]></content>
   </entry>
   <entry>
     <title>颜色基础、图像模型、Phong光照模型</title>
